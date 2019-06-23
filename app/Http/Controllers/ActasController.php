@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Proveedor;
 use App\Empresas;
@@ -10,6 +11,8 @@ use App\Participantes;
 use App\Acciones;
 use App\Mail\ActasMail;
 use App\Actas;
+use App\Fotos;
+use App\Observacion;
 use PDF;
 
 class ActasController extends Controller
@@ -46,7 +49,7 @@ class ActasController extends Controller
      */
     public function store(Request $request)
     {
-      //dd($request->all());
+      //dd(Input::file('foto'));
 
         //$codigo=rand(11111, 99999);
 
@@ -62,17 +65,49 @@ class ActasController extends Controller
 
         //dd($codigo);
 
+       
+
         
 
         $acta = new Actas;
         $acta->codigo = 'AC'.$codigo;
         $acta->id_user = Auth::user()->id;
         $acta->id_empresa = $request->id_empresa;
-        $acta->observaciones = $request->observaciones;
+        //$acta->observaciones = $request->observaciones;
         $acta->status = 1;
-
-
+        
+        
         if ($acta->save()) {
+        if(input::hasFile('foto'))
+        {
+             $file = Input::file('foto');
+
+                 foreach ( $file as $gImg ) {
+                        $filename = $gImg->getClientOriginalName();
+                        $patch = public_path()."/img/actas/fotos/";
+                        $gImg->move($patch,date("YmdHi").$filename);
+                        // \Image::make($gImg)->save($patch. $filename );
+                        // \Image::make($gImg)->resize(300, null, function ($constraint) {
+                        //                     $constraint->aspectRatio();
+                        //                 })->save($patch.'thumb_'.$filename );
+                        $name[] = $filename;   
+                    }
+                   // return response()->json($name);
+                    //$ultimo_id = Scort::orderBy('id', 'DESC')->first();//agarra el ultimo id
+                   // return response()->json($ultimo_id->id);
+                 //$scort->fotos = implode(',', $name);
+
+                    for ($i=0; $i < count($name) ; $i++) { // for para guardar todas las fotos
+                        //echo $name[$i];
+                        $foto = new Fotos;
+                        $foto->codigo_acta = 'AC'.$codigo;
+                        $foto->foto = $name[$i];
+                        $foto->save();
+                            //return response()->json(['status' => true , 'msg'=>'Se ha registrado esta scort con exito']);
+                        
+                    }
+        }
+
             
             for ($i=0; $i < count($request->nombre); $i++)
              { 
@@ -84,6 +119,15 @@ class ActasController extends Controller
                 $participante->cargo = $request->cargo[$i];
                 $participante->email = $request->email[$i];
                 $participante->save();
+             }//fin for
+
+             for ($i=0; $i < count($request->observaciones); $i++)
+             { 
+           
+                $observaciones = new Observacion;
+                $observaciones->codigo_acta = 'AC'.$codigo;
+                $observaciones->observacion = $request->observaciones[$i];
+                $observaciones->save();
              }//fin for
 
              //for acciones

@@ -107,8 +107,8 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<label class="control-label" for="razon_social">Observación: *</label>
-										<textarea class="form-control obs" name="observaciones" placeholder="Observación"></textarea>
-										<div class="contador"></div>
+										<textarea class="form-control obs" name="observaciones[]" placeholder="Observación"></textarea>
+										
 								</div>
 							</div>
 						</div>
@@ -121,7 +121,7 @@
 						<div class="row">
 						<div class="col-md-12">
 							<label class="control-label" for="razon_social">Fotos: *</label>
-							<input id="multimedia" name="input-b3[]" type="file" class="file" multiple 
+							<input id="multimedia" name="foto[]" type="file" class="file" multiple 
     						data-show-upload="false" data-show-caption="false"  required="">
 						</div>
 					</div>
@@ -159,15 +159,6 @@
              maxFileCount: 5
         });
 
-	 //observaciones
-	  var max_chars = 1000;
-	  $('#max').html(max_chars);
-	  $('.obs').keyup(function() {
-	    var chars = $(this).val().length;
-	    var diff = max_chars - chars;
-	    $('.contador').html(diff);   
-	  });
-
 	function mayus(e) {//poner datos en mayusula
 	    e.value = e.value.toUpperCase();
 	}
@@ -177,11 +168,15 @@
 			$("#form_pad").submit(function(e){
 				e.preventDefault();		
 			//alert("fdfdfd")
+			var formData = new FormData($("#form_pad")[0]);
 				$.ajax({
 					url: '{{route('actas.store')}}',
-					data: $("#form_pad").serialize(),
+					data: formData,
 					type: 'post',
 					dataType: 'json',
+					contentType: false,
+			        cache: false,
+			        processData:false,
 					success: function (response) {
 						alert(response.msg);
 					   window.location.replace(response.url);
@@ -269,10 +264,10 @@
     //fin agregar acciones
 
     /// aqui es para agregar observaciones
-    var maxField_acciones = 10; //Input fields increment limitation
-    var addButton_acciones = $('.add_button_observaciones'); //Add button selector
-    var wrapper_acciones = $('.field_wrapper_observaciones'); //Input field wrapper
-    var fieldHTML_acciones = '<div class="remove">'+
+    var maxField_observaciones = 10; //Input fields increment limitation
+    var addButton_observaciones = $('.add_button_observaciones'); //Add button selector
+    var wrapper_observaciones = $('.field_wrapper_observaciones'); //Input field wrapper
+    var fieldHTML_observaciones = '<div class="remove">'+
     					    '<div class="col-md-11">'+
 								'<div class="form-group">'+
 									'<label class="control-label" for="razon_social">Observación: *</label>'+
@@ -285,13 +280,13 @@
 						 '</div>';
 
     var x = 1; //Initial field counter is 1
-    $(addButton_acciones).click(function(){ //Once add button is clicked
-        if(x < maxField_acciones){ //Check maximum number of input fields
+    $(addButton_observaciones).click(function(){ //Once add button is clicked
+        if(x < maxField_observaciones){ //Check maximum number of input fields
             x++; //Increment field counter
-            if (x = 8) {
-            	alert("¡Ya tiene un maximo de 8 observaciones")
-            }
-            $(wrapper_acciones).append(fieldHTML_acciones); // Add field html
+           
+            $(wrapper_observaciones).append(fieldHTML_observaciones); // Add field html
+        }else{
+        	alert("¡Ya tiene un maximo de 8 observaciones")
         }
     });
     $(wrapper).on('click', '.remove_button_observaciones', function(e){ //Once remove button is clicked
