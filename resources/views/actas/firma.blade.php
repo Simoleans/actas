@@ -10,6 +10,19 @@
 @endsection
 @section('content')
 
+<style type="text/css">
+  .modal-dialog {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.modal-content {
+  height: 100%;
+  border-radius: 0;
+}
+</style>
+
 	<section class="perfil">
 		<div class="row">
     	<div class="col-md-12">
@@ -54,40 +67,22 @@
       </div>
       <div class="col-md-12">
      
-         <form method="POST" enctype="multipart/form-data" id="form_pad">
-         <meta name="csrf-token" content="{{ csrf_token() }}" />
-          <input type="hidden" name="id_participante" value="{{$participante->id}}">
-          <input type="hidden" name="firma" id="firma" required>
-          <div class="row">
-            @if(!$participante->firma)
-             <div class="col-md-6 col-md-offset-3">
-                {{-- <label class="control-label" for="Firma">Firma: *</label> --}}
-              <div id="signArea" >
-                <div class="sig sigWrapper" style="height:auto;">
-                  <div class="typed"></div>
-                  <canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
-                </div>
-                <h3 class="tag-ingo text-center">{{$participante->nombre.' '.$participante->apellido}}</h3>
-              </div>
-            </div>
-           @else
+          @if($participante->firma)
             <div class="col-md-6 col-md-offset-3">
               <img src="{{asset('img/actas').'/'.$participante->firma}}">
               <h3 class="tag-ingo text-center">{{$participante->nombre.' '.$participante->apellido}}</h3>
             </div>
-           @endif
-          </div>
-        @if(!$participante->firma)
-          <div class="row">
-            <div class="form-group text-center">
-              <button type="button" id="clear" class="btn btn-warning" align="center">Limpiar firma</button>
-              <button class="btn btn-flat btn-primary" type="submit"><i class="fa fa-send"></i> Guardar</button>
-            </div>
-          </div>
-        @endif
-         </form>
-      
-
+           @else
+         <div class="row">
+           <div class="col-md-5 col-md-offset-5">
+             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+              ¡Firma Aquí!
+            </button>
+           </div>
+         </div>
+         @endif
+          
+      <br>
       <img src="">
       </div>
     </div>
@@ -120,6 +115,51 @@
     </div>
 	</section>
 
+
+
+  <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">{{$participante->nombre.' '.$participante->apellido}}</h4>
+      </div>
+      <div class="modal-body">
+         <form method="POST" enctype="multipart/form-data" id="form_pad">
+         <meta name="csrf-token" content="{{ csrf_token() }}" />
+          <input type="hidden" name="id_participante" value="{{$participante->id}}">
+          <input type="hidden" name="firma" id="firma" required>
+          <div class="row">
+             @if(!$participante->firma)
+               <div class="col-md-6 col-md-offset-3">
+                  {{-- <label class="control-label" for="Firma">Firma: *</label> --}}
+                <div id="signArea" >
+                  <div class="sig sigWrapper" style="height:auto;">
+                    <div class="typed"></div>
+                    <canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
+                  </div>
+                  <h3 class="tag-ingo text-center">{{$participante->nombre.' '.$participante->apellido}}</h3>
+                </div>
+              </div>
+              <div class="row">
+              <div class="form-group text-center">
+               
+              </div>
+            </div>
+            @endif
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="clear" class="btn btn-warning" align="center">Limpiar firma</button>
+        <button class="btn btn-flat btn-primary" type="submit"><i class="fa fa-send"></i> Guardar</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+<!-- fin modal -->
+
 @endsection
 
 @section('script')
@@ -148,7 +188,6 @@
               $("p.error").text("Falta la firma del documento.");
               
             }else{
-              //alert("fdfdfd")
                 $.ajax({
                   headers: {
                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -159,6 +198,7 @@
                   dataType: 'json',
                   success: function (response) {
                     alert(response.msg);
+                    $('#myModal').modal('hide');
                      window.location.reload();
                   }
                 });
