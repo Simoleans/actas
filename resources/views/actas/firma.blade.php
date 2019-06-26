@@ -21,6 +21,33 @@
   height: 100%;
   border-radius: 0;
 }
+
+#sign-pad{
+   width:345px !important;
+}
+
+#signArea{
+  width:404px;
+  margin: 50px auto;
+}
+.sign-container {
+  width: 60%;
+  margin: auto;
+}
+.sign-preview {
+  width: 250px;
+  height: 50px;
+  border: solid 1px #CFCFCF;
+  margin: 10px 5px;
+}
+.tag-ingo {
+  font-family: cursive;
+  font-size: 12px;
+  text-align: left;
+  font-style: oblique;
+}
+
+
 </style>
 
 	<section class="perfil">
@@ -134,10 +161,10 @@
              @if(!$participante->firma)
                <div class="col-md-6 col-md-offset-3">
                   {{-- <label class="control-label" for="Firma">Firma: *</label> --}}
-                <div id="signArea" >
+                <div id="signArea">
                   <div class="sig sigWrapper" style="height:auto;">
                     <div class="typed"></div>
-                    <canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
+                    <canvas class="sign-pad" id="sign-pad"></canvas>
                   </div>
                   <h3 class="tag-ingo text-center">{{$participante->nombre.' '.$participante->apellido}}</h3>
                 </div>

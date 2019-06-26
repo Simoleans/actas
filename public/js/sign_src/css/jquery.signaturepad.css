@@ -137,8 +137,10 @@
   clear: both;
   height: 55px;
 
-  border: 1px solid #ccc;
+  border: 0px solid #ccc;
 }
+
+
 
 .sigWrapper.current {
   border-color: #666;
