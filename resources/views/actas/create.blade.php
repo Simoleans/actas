@@ -12,7 +12,7 @@
 		<!-- Formulario -->
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				
+
 			</div>
 		</div>
 
@@ -43,7 +43,7 @@
 						</div>
 					</div>
 					<hr>
-						<h2 class="text-center">Participantes</h2>
+						<h2 class="text-center">Clientes</h2>
 					<hr>
 						<div class="field_wrapper row">
 							<div class="col-md-3">
@@ -51,6 +51,7 @@
 									<label class="control-label" for="razon_social">Nombre: *</label>
 										<input id="razon_social" class="form-control" type="text" name="nombre[]" onkeyup="mayus(this);" placeholder="Nombre" required >
 								</div>
+								<small><a href="#">Registrar Cliente</a></small>
 							</div>
 
 							<div class="col-md-3">
@@ -66,7 +67,7 @@
 										<input id="razon_social" class="form-control" type="text" name="email[]"   placeholder="Email" required >
 								</div>
 							</div>
-							
+
 							<div class="col-md-3">
 								<div class="form-group {{ $errors->has('razon_social')?'has-error':'' }}">
 									<label class="control-label" for="razon_social">Cargo: *</label>
@@ -74,7 +75,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="row">
 							<div class="col-md-1 col-md-offset-6">
 						        <a href="javascript:void(0);" class=" btn btn-sm btn-success add_button" title="Add field"><i class="fa fa-plus"></i></a>
@@ -92,8 +93,8 @@
 								</div>
 							</div>
 						</div>
-						
-						
+
+
 						<div class="row">
 							<div class="col-md-1 col-md-offset-6">
 						        <a href="javascript:void(0);" class=" btn btn-sm btn-success add_button_acciones" title="Add field"><i class="fa fa-plus"></i></a>
@@ -108,7 +109,7 @@
 								<div class="form-group">
 									<label class="control-label" for="razon_social">Observación: *</label>
 										<textarea class="form-control obs" name="observaciones[]" placeholder="Observación"></textarea>
-										
+
 								</div>
 							</div>
 						</div>
@@ -121,16 +122,16 @@
 						<div class="row">
 						<div class="col-md-12">
 							<label class="control-label" for="razon_social">Fotos: *</label>
-							<input id="multimedia" name="foto[]" type="file" class="file" multiple 
+							<input id="multimedia" name="foto[]" type="file" class="file" multiple
     						data-show-upload="false" data-show-caption="false"  required="">
 						</div>
 					</div>
 
-						
-						
-					
+
+
+
 					</div>
-					
+
 					<div class="form-group text-right">
 						<a class="btn btn-flat btn-default" href="{{route('users.index')}}"><i class="fa fa-reply"></i> Atras</a>
 						<button class="btn btn-flat btn-primary" type="submit"><i class="fa fa-send"></i> Guardar</button>
@@ -191,8 +192,8 @@
 	$(document).ready(function(){
 		//registrar todo el fomulario
 			$("#form_pad").submit(function(e){
-				e.preventDefault();	
-				$('#exampleModal').modal('toggle');	
+				e.preventDefault();
+				$('#exampleModal').modal('toggle');
 				$("#text_response").text("Guardando...");
 			var formData = new FormData($("#form_pad")[0]);
 				$.ajax({
@@ -206,10 +207,10 @@
 					success: function (response) {
 						//alert(response.msg);
 						$("#text_response").text(response.msg);
-						$('#exampleModal').modal('hide');	
+						$('#exampleModal').modal('hide');
 					   window.location.replace(response.url);
 					},
-				});	
+				});
 			}); //fin guardar formulario
 
 /// aqui es para agregar personas
@@ -271,7 +272,7 @@
 										'<input id="razon_social" class="form-control" type="text" name="accion[]" onkeyup="mayus(this);" placeholder="Acción" required >'+
 								'</div>'+
 							'</div>'+
-								
+
 							'<div class="col-md-1"><div class="form-group"><label class="control-label" for="razon_social">Eliminar: *</label><br><a href="javascript:void(0);" class="btn btn-sm btn-danger remove_button_acciones" title="Remove field">X</a></div></div>'+
 						 '</div>';
 
@@ -303,7 +304,7 @@
 								'</div>'+
 								'<div class="contador"></div>'+
 							'</div>'+
-								
+
 							'<div class="col-md-1"><div class="form-group"><label class="control-label" for="razon_social">Eliminar: *</label><br><a href="javascript:void(0);" class="btn btn-sm btn-danger remove_button_observaciones" title="Remove field">X</a></div></div>'+
 						 '</div>';
 
@@ -311,7 +312,7 @@
     $(addButton_observaciones).click(function(){ //Once add button is clicked
         if(x < maxField_observaciones){ //Check maximum number of input fields
             x++; //Increment field counter
-           
+
             $(wrapper_observaciones).append(fieldHTML_observaciones); // Add field html
         }else{
         	alert("¡Ya tiene un maximo de 8 observaciones")

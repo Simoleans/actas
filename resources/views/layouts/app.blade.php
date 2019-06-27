@@ -21,25 +21,25 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('js/sign_src/css/jquery.signaturepad.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput.css')}}">
-    
 
 
-    
+
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/css/inputmask.min.css" rel="stylesheet"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{asset('css/_all-skins.min.css')}}">
-  	<style type="text/css">
-	    .perfil{
-			  position: relative;
-			  background: #fff;
-			  border: 1px solid #f4f4f4;
-			  padding: 20px;
-			  margin: 10px 25px;
-			}
+    <style type="text/css">
+      .perfil{
+        position: relative;
+        background: #fff;
+        border: 1px solid #f4f4f4;
+        padding: 20px;
+        margin: 10px 25px;
+      }
 
 
-     
+
       #btnSaveSign {
         color: #fff;
         background: #f99a0b;
@@ -87,8 +87,8 @@
         width: 100%;
         height: 100%;
         }
-    
-	  </style>
+
+    </style>
   </head>
   <body class="hold-transition skin-blue sidebar-mini @guest sidebar-collapse @endguest">
     <div class="wrapper">
@@ -97,7 +97,7 @@
         <a href="{{route('dashboard')}}" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini">
-          	<b>FR</b>
+            <b>FR</b>
           </span>
           <!-- logo for regular state and mobile devices -->
           <span class="logo-lg"><b>FIRMA</b></span>
@@ -127,14 +127,14 @@
                       <small>LEYENDA DEL USUARIO ONLINE</small>
                     </p>
                   </li>
-                  
+
                   <!-- Menu Footer-->
                   <li class="user-footer">
-                  	<div class="pull-left">
-                  		<a href="{{route('perfil')}}" class="btn btn-flat btn-default"><i class="fa fa-user-circle" aria-hidden="true"></i> Perfil</a>
-                  	</div>
-                    
-                   	<div class="pull-right">
+                    <div class="pull-left">
+                      <a href="{{route('perfil')}}" class="btn btn-flat btn-default"><i class="fa fa-user-circle" aria-hidden="true"></i> Perfil</a>
+                    </div>
+
+                    <div class="pull-right">
                       <form id="logout-form" action="{{ route('logout') }}" method="POST">
                         {{ csrf_field() }}
                         <button class="btn btn-flat btn-default" type="submit"><i class="fa fa-sign-out" aria-hidden="true"></i> Salir</button>
@@ -219,7 +219,7 @@
                 </li>
               </ul>
             </li>
-          
+
            <li class="treeview">
               <a href="#"><i class="fa fa-print"></i> Ordenes
                   <i class="fa fa-angle-left pull-right"></i>
@@ -289,7 +289,7 @@
                 <span>FAQ</span>
               </a>
             </li>
-                  
+
           </ul>
         </section>
         <!-- /.sidebar -->
@@ -308,7 +308,7 @@
         </section>
         <!-- Main content -->
         <section class="content">
-        	@yield('content')
+          @yield('content')
         </section>
       </div><!-- /.content-wrapper -->
       <!--Fin-Contenido-->
@@ -337,9 +337,10 @@
      <script type='text/javascript' src="https://github.com/niklasvh/html2canvas/releases/download/0.4.1/html2canvas.js"></script>
      <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="{{asset('js/fileinput.js')}}"></script>
+     <script type="text/javascript" src="{{asset('js/signature_pad.js')}}"></script>
 
-     
-    <script type="text/javascript">  
+
+    <script type="text/javascript">
 
       $(document).ready(function(){
 
@@ -350,16 +351,16 @@
         $(".tlf").inputmask({
             mask: "[9-9999-9999]",
           });
-      	//Eliminar alertas que no contengan la clase alert-important luego de 7seg
-      	$('div.alert').not('.alert-important').delay(7000).slideUp(300);
+        //Eliminar alertas que no contengan la clase alert-important luego de 7seg
+        $('div.alert').not('.alert-important').delay(7000).slideUp(300);
 
-        
 
-      	//activar Datatable
+
+        //activar Datatable
         $('.data-table').DataTable({
           responsive: true,
           language: {
-          	url:'{{asset("plugins/datatables/spanish.json")}}'
+            url:'{{asset("plugins/datatables/spanish.json")}}'
           }
         });
       })

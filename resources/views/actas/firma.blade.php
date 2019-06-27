@@ -2,11 +2,11 @@
 @section('title','Acta - '.config('app.name'))
 @section('header','Acta')
 @section('breadcrumb')
-	<ol class="breadcrumb">
-	  <li><a href="{{route('dashboard')}}"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
-	  <li> Acta {{$acta->codigo}} </li>
-	  <li class="active">Ver </li>
-	</ol>
+  <ol class="breadcrumb">
+    <li><a href="{{route('dashboard')}}"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
+    <li> Acta {{$acta->codigo}} </li>
+    <li class="active">Ver </li>
+  </ol>
 @endsection
 @section('content')
 
@@ -50,39 +50,39 @@
 
 </style>
 
-	<section class="perfil">
-		<div class="row">
-    	<div class="col-md-12">
-    		<h2 class="page-header" style="margin-top:0!important">
+  <section class="perfil">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="page-header" style="margin-top:0!important">
           <i class="fa fa-user" aria-hidden="true"></i>
           {{ 'Acta '.$acta->codigo }}
           <small class="pull-right">Registrado: {{ $acta->created_at }}</small>
           <span class="clearfix"></span>
         </h2>
-    	</div>
-			<div class="col-md-5">
-				<h4>Detalles de la empresa</h4>
-				<p><b>Usuario: </b> {{$acta->user->nombre}} </p>
+      </div>
+      <div class="col-md-5">
+        <h4>Detalles de la empresa</h4>
+        <p><b>Usuario: </b> {{$acta->user->nombre}} </p>
         <p><b>Empresa: </b> {{strtoupper($acta->empresa->r_social)}}</p>
         <p><b>Ciudad: </b> {{strtoupper($acta->empresa->ciudad)}}</p>
         <p><b>RUT: </b> {{strtoupper($acta->empresa->rut)}}</p>
         <p><b>Contacto: </b> {{strtoupper($acta->empresa->contacto)}}</p>
         <p><b>Telefono: </b> {{strtoupper($acta->empresa->telefono)}}</p>
         <p><b>Direccion: </b> {{strtoupper($acta->empresa->direccion)}}</p>
-        
-			</div>
 
-      <div class="col-md-4"> 
+      </div>
+
+      <div class="col-md-4">
         <p>&nbsp;</p>
         <p><b>Observaciones: </b> {{$acta->observaciones?$acta->observaciones:'N/T'}} </p>
       </div>
 
-      <div class="col-md-2"> 
+      <div class="col-md-2">
         <p>&nbsp;</p>
         <p><b>Logo</b></p>
         <img src="{{asset('img/empresas/'.$acta->empresa->logo)}}" class="img-responsive">
       </div>
-		</div>
+    </div>
 
     <div class="row">
       <div class="col-md-12">
@@ -93,7 +93,7 @@
         </h2>
       </div>
       <div class="col-md-12">
-     
+
           @if($participante->firma)
             <div class="col-md-6 col-md-offset-3">
               <img src="{{asset('img/actas').'/'.$participante->firma}}">
@@ -108,7 +108,7 @@
            </div>
          </div>
          @endif
-          
+
       <br>
       <img src="">
       </div>
@@ -140,7 +140,7 @@
        </table>
       </div>
     </div>
-	</section>
+  </section>
 
 
 
@@ -171,7 +171,7 @@
               </div>
               <div class="row">
               <div class="form-group text-center">
-               
+
               </div>
             </div>
             @endif
@@ -192,7 +192,7 @@
 @section('script')
 
 <script type="text/javascript">
- 
+
   $(document).ready(function(){
 
     $("#clear").click(function(e){
@@ -201,7 +201,7 @@
 
       //firma
       $('#signArea').signaturePad({drawOnly:true, drawBezierCurves:true, lineTop:90});
-      
+
       $("#form_pad").submit(function(e){
         e.preventDefault();
         html2canvas([document.getElementById('sign-pad')], {
@@ -213,7 +213,7 @@
 
             if ( $("p.error").is(':visible') ) {
               $("p.error").text("Falta la firma del documento.");
-              
+
             }else{
                 $.ajax({
                   headers: {
@@ -230,8 +230,8 @@
                   }
                 });
             }
-            
-          
+
+
           }
         });// fin html2canvas
       }); //fin firma
