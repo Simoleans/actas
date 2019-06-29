@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Proveedor;
 use App\Empresas;
 use App\Participantes;
+use App\Clientes;
 use App\Acciones;
 use App\Mail\ActasMail;
 use App\Actas;
@@ -25,7 +26,6 @@ class ActasController extends Controller
     public function index()
     {
         $actas = Actas::where('id_user',Auth::user()->id)->get();
-        //dd($actas);
 
         return view('actas.index',['actas' => $actas]);
     }
@@ -39,6 +39,7 @@ class ActasController extends Controller
     {
         $empresa = Auth::user()->empresa;
         $clientes = $empresa->clientes;
+
         return view('actas.create2',['empresa' => $empresa,'clientes' => $clientes]);
     }
 
@@ -54,6 +55,8 @@ class ActasController extends Controller
 
         //$codigo=rand(11111, 99999);
 
+        //dd($request->all());
+
         $lastId = Actas::latest()->first();
 
         //dd($lastId);
@@ -67,9 +70,6 @@ class ActasController extends Controller
         //dd($codigo);
 
        
-
-        
-
         $acta = new Actas;
         $acta->codigo = 'AC'.$codigo;
         $acta->id_user = Auth::user()->id;
@@ -113,13 +113,13 @@ class ActasController extends Controller
             for ($i=0; $i < count($request->nombre); $i++)
              { 
            
-                $participante = new Participantes;
-                $participante->codigo_acta = 'AC'.$codigo;
-                $participante->nombre = $request->nombre[$i];
-                $participante->apellido = $request->apellido[$i];
-                $participante->cargo = $request->cargo[$i];
-                $participante->email = $request->email[$i];
-                $participante->save();
+                $cliente = new Participantes;
+                //$cliente->codigo_acta = 'AC'.$codigo;
+                $cliente->id_acta = $acta->id;
+                $cliente->id_cliente = $request->id[$i];
+                $cliente->save();
+
+
              }//fin for
 
              for ($i=0; $i < count($request->observaciones); $i++)
@@ -156,6 +156,7 @@ class ActasController extends Controller
     {
         $acta = Actas::findOrfail($id);
 
+        //dd($acta->participantes);
         return view('actas.view',['acta' => $acta]);
     }
 
@@ -212,9 +213,9 @@ class ActasController extends Controller
     {
         //$acta = Actas::findOrfail($id);
 
-        $participante = Participantes::findOrfail($id);
+        $participante = Participantes::where('id_cliente',$id)->first();
 
-        $acta = Actas::where('codigo',$participante->codigo_acta)->first();
+        $acta = Actas::where('id',$participante->id_acta)->first();
 
         return view('actas.firma',['acta' => $acta,'participante' => $participante]);
     }

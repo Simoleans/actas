@@ -31,7 +31,13 @@ class Empresas extends Model
     public function clientes()
     {
        //return $this->belongsTo('App\User','id_user');
-       return $this->hasMany('App\Clientes','id_empresa');
+       return $this->hasMany('App\Clientes','id_empresa')->where('status',0);
+    }
+
+     public function clientesInactivos()
+    {
+       //return $this->belongsTo('App\User','id_user');
+       return $this->hasMany('App\Clientes','id_empresa')->where('status',1);
     }
 
      public static function empresa($id)

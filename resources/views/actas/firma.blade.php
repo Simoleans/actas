@@ -102,9 +102,9 @@
            @else
          <div class="row">
            <div class="col-md-5 col-md-offset-5">
-             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+             <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
               ¡Firma Aquí!
-            </button>
+            </a>
            </div>
          </div>
          @endif

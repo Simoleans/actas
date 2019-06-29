@@ -52,7 +52,7 @@
 									<td>{{$d->codigo}}</td>
 									<td>{{$d->user->nombre}}</td>
 									<td>{{strtoupper($d->empresa->r_social)}}</td>
-									<td>{{$d->total($d->codigo)}}</td>
+									<td>{{$d->total($d->id)}}</td>
 									<td>{{$d->created_at->format('Y-m-d')}}</td>
 									<td>
 										<a class="btn btn-primary btn-flat btn-sm" href="{{ route('actas.show',[$d->id])}}"><i class="fa fa-search"></i></a>

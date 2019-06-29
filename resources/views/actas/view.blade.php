@@ -64,28 +64,30 @@
            <tr>
             <th class="text-center">Nombre</th>
             <th class="text-center">Apellido</th>
-            <th class="text-center">Cargo</th>
+            <th class="text-center">RUT</th>
+            <th class="text-center">Email</th>
             <th class="text-center">Invitar</th>
             <th class="text-center">URL</th>
             <th class="text-center hidden-lg">Compartir</th>
           </tr>
          </thead>
          <tbody>
-          @foreach($acta->participantes($acta->codigo) as $p)
+          @foreach($acta->participantes($acta->id) as $p)
            <tr>
-             <td class="text-center">{{$p->nombre}}</td>
-             <td class="text-center">{{$p->apellido}}</td>
-             <td class="text-center">{{$p->cargo}}</td>
+             <td class="text-center">{{$p->clientes->nombre}}</td>
+             <td class="text-center">{{$p->clientes->apellido}}</td>
+             <td class="text-center">{{$p->clientes->rut}}</td>
+             <td class="text-center">{{$p->clientes->email}}</td>
              <td class="text-center">
                 @if($p->firma == NULL)
-                 <a  data-id="{{$p->id}}" class="btn btn-flat btn-success btn_invitar">Invitar</a>
+                 <a  data-id="{{$p->clientes->id}}" class="btn btn-flat btn-success btn_invitar">Invitar</a>
                 @else
                  <h3 class="text-center">Autorizado</h3>
                 @endif
              </td>
              <td>
                @if($p->firma == NULL)
-                 <center><a  href="{{route('actas.firma',['id' => $p->id])}}" class="btn btn-flat btn-success btn-sm">Firmar</a></center>
+                 <center><a  href="{{route('actas.firma',['id' => $p->clientes->id])}}" class="btn btn-flat btn-success btn-sm">Firmar</a></center>
                 @else
                  <h3 class="text-center">¡Ya Firmo!</h3>
                 @endif
@@ -121,6 +123,34 @@
            <tr>
              <td>{{$loop->index+1}}</td>
              <td class="text-center">{{$a->accion}}</td>
+           </tr>
+          @endforeach
+         </tbody>
+       </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="page-header" style="margin-top:0!important">
+          <i class="fa fa-eye" aria-hidden="true"></i>
+          Observaciones
+          <span class="clearfix"></span>
+        </h2>
+      </div>
+      <div class="col-md-12">
+       <table class="table table-condensed table-hover table-bordered">
+         <thead>
+           <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">Accion</th>
+          </tr>
+         </thead>
+         <tbody>
+          @foreach($acta->observaciones($acta->codigo) as $a)
+           <tr>
+             <td>{{$loop->index+1}}</td>
+             <td class="text-center">{{$a->observacion}}</td>
            </tr>
           @endforeach
          </tbody>

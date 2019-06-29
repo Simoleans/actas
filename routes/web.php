@@ -39,27 +39,6 @@ Route::post('auth', 'LoginController@login')->name('auth');
 Route::post('/logout', 'LoginController@logout')->name('logout');
 
 
-/* Recibo PAgos */
-Route::resource('/recibogastos','ReciboGastosController',['except' => ['store']]);
-Route::get('reciboG/firma/{id}','ReciboGastosController@firma')->name('recibogastos.firma');
-Route::post('/reciboG/signature','ReciboGastosController@firmaSend')->name('recibogastos.send');
-
-/* Guia De Entrega */
-Route::resource('/guiaentrega','GuiaEntregaController',['except' => ['store']]);
-Route::get('guiaE/firma/{id}','GuiaEntregaController@firma')->name('guiaentrega.firma');
-Route::post('/guiaE/signature','GuiaEntregaController@firmaSend')->name('guiaentrega.send');
-
-/* Guia De Despacho */
-Route::resource('/guiadespacho','GuiaDespachoController',['except' => ['store']]);
-Route::get('guiaD/firma/{id}','GuiaDespachoController@firma')->name('guiadespacho.firma');
-Route::post('/guiaD/signature','GuiaDespachoController@firmaSend')->name('guiadespacho.send');
-
-/* Orden trabajo */
-Route::resource('/ordentrabajo','OrdenTrabajoController',['except' => ['store']]);
-Route::get('/ordent/firma/{id}','OrdenTrabajoController@firma')->name('ordentrabajo.firma');
-Route::post('/ordent/signature','OrdenTrabajoController@firmaSend')->name('ordentrabajo.send');
-Route::get('/ordent/sendmail/{id_orden}/{id}','OrdenTrabajoController@sendEmail')->name('ordentrabajo.sendmail');
-
 /* Actas */
 Route::resource('/actas','ActasController',['except' => ['store']]);
 Route::get('actas/pdf/{id}','ActasController@pdf')->name('actas.pdf');
@@ -89,17 +68,11 @@ Route::group(['middleware' => 'auth'], function() { //middleware auth
 
 	/* Proveedores */
 	Route::resource('/clientes','ClientesController');
+	Route::post('/updatecliente','ClientesController@update_status')->name('update.cliente');
 
-	/* Orden De Compra */
-	Route::resource('/ordencompra','OrdenCompraController');
-	Route::get('/orden/pdf/{id}','OrdenCompraController@pdf')->name('ordencompra.pdf');
-
-	/* Orden Trabajo */
-	Route::resource('/ordentrabajo','OrdenTrabajoController');
-	Route::get('/ordent/pdf/{id}','OrdenTrabajoController@pdf')->name('ordentrabajo.pdf');
-	Route::post('/mail/ordent','OrdenTrabajoController@sendEmail')->name('ordentrabajo.mail');
 	/* actas*/
 	Route::resource('/actas','ActasController');
+
 
 	/* Guia Despacho */
 	Route::resource('/guiadespacho','GuiaDespachoController');

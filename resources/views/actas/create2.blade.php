@@ -9,13 +9,6 @@
 	</ol>
 @endsection
 @section('content')
-		<!-- Formulario -->
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-
-			</div>
-		</div>
-
 		<div class="row">
 	  	<div class="col-md-12">
 	    	<div class="box box-success">
@@ -25,163 +18,95 @@
 		       </div>
       			<div class="box-body">
 					<form   method="POST" enctype="multipart/form-data" id="form_pad">
-					{{ method_field( 'POST' ) }}
-					{{ csrf_field() }}
-					<input type="hidden" name="id_user" value="{{Auth::user()->id}}">
-					<h4>Datos de la empresa</h4>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group {{ $errors->has('empresa')?'has-error':'' }}">
-								<label class="control-label" for="empresa">Empresa: *</label>
-									<input type="text" name="id_empresa" value="{{ strtoupper(Auth::user()->empresa->id)}}" placeholder="{{ strtoupper(Auth::user()->empresa->r_social)}}" readonly="" class="form-control">
-							</div>
-						</div>
-					</div>
-					<hr>
-						<h2 class="text-center">Clientes</h2>
-					<hr>
-						<div class="field_wrapper row">
-							{{-- <div class="col-md-3">
-								<div class="form-group {{ $errors->has('razon_social')?'has-error':'' }}">
-									<label class="control-label" for="razon_social">Nombre: *</label>
-										<input id="razon_social" class="form-control" type="text" name="nombre[]" onkeyup="mayus(this);" placeholder="Nombre" required >
-								</div>
-							</div>
-
-							<div class="col-md-3">
-								<div class="form-group {{ $errors->has('razon_social')?'has-error':'' }}">
-									<label class="control-label" for="razon_social">Apellido: *</label>
-										<input id="razon_social" class="form-control" type="text" name="apellido[]" onkeyup="mayus(this);"  placeholder="Apellido" required >
-								</div>
-							</div>
-
-							<div class="col-md-3">
-								<div class="form-group {{ $errors->has('razon_social')?'has-error':'' }}">
-									<label class="control-label" for="razon_social">Email: *</label>
-										<input id="razon_social" class="form-control" type="text" name="email[]"   placeholder="Email" required >
-								</div>
-							</div>
-
-							<div class="col-md-3">
-								<div class="form-group {{ $errors->has('razon_social')?'has-error':'' }}">
-									<label class="control-label" for="razon_social">Cargo: *</label>
-									<input id="razon_social" class="form-control" type="text" name="cargo[]"   placeholder="Cargo" required >
-								</div>
-							</div> --}}
-						</div>
+						{{ method_field( 'POST' ) }}
+						{{ csrf_field() }}
+						<input type="hidden" name="id_user" value="{{Auth::user()->id}}">
+						<input type="hidden" name="id_empresa" value="{{ strtoupper(Auth::user()->empresa->id)}}">
+						<h4>Datos de la empresa</h4>
 						<div class="row">
-						  	<div class="col-md-12">
-						    	
-							      <div class="box-header with-border">
-							        {{-- <h3 class="box-title"><i class="fa fa-users"></i> Actas</h3> --}}
-							        <span class="pull-right">
-										{{-- a href="{{ route('actas.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nueva Acta</a> --}}
-										<small><a href="#">Registrar Nuevo</a></small>
-									</span>
-							      </div>
-					      			<div class="box-body">
-										<table class="table data-table table-bordered table-hover table-condensed nowrap" style="width:100%">
-											<thead>
-												<tr>
-													<th class="text-center">Nombre</th>
-													<th class="text-center">Apellido</th>
-													<th class="text-center">RUT</th>
-													<th class="text-center">Email</th>
-													<th class="text-center">Fecha</th>
-													<th class="text-center">Accion</th>
-												</tr>
-											</thead>
-											<tbody class="text-center">
-												@foreach($clientes as $d)
-													<tr>
-														<td>{{$d->nombre}}</td>
-														<td>{{$d->apellido}}</td>
-														<td>{{$d->rut}}</td>
-														<td>{{$d->email}}</td>
-														<td>{{$d->created_at->format('Y-m-d')}}</td>
-														<td>
-															<a href="#" class="btn btn-flat btn-success btn-sm add-row" title="Add"><i class="fa fa-plus"></i></a>
-															{{-- <a href="{{route('ordencompra.edit',[$d->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>  --}}
-														</td>
-													</tr>
-												@endforeach
-											</tbody>
-										</table>
-										<a href="#" class="btn btn-flat btn-lg btn-warning delete-row">Delete</a>
+							<div class="col-md-12">
+								<div class="form-group {{ $errors->has('empresa')?'has-error':'' }}">
+									<label class="control-label" for="empresa">Empresa: *</label>
+										<input type="text" name="empresa" value="{{ strtoupper(Auth::user()->empresa->r_social)}}" placeholder="{{ strtoupper(Auth::user()->empresa->r_social)}}" readonly="" class="form-control">
+								</div>
+							</div>
+						</div>
+						<hr>
+							<h2 class="text-center">Clientes</h2>
+						<hr>
+							<div class="field_wrapper row">
+								{{-- Aqui se pinta el formulario --}}
+							</div>
+							<div class="row">
+					           <div class="col-md-5 col-md-offset-5">
+					             <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+					              ¡Agregar Clientes! <i class="fa fa-plus"></i>
+					            </a>
+					           </div>
+					         </div>
+
+					         
+
+							<hr>
+							 <h2 class="text-center">Acciones Realizadas</h2>
+						    <hr>
+							<div class="field_wrapper_acciones row">
+								<div class="col-md-12">
+									<div class="form-group {{ $errors->has('razon_social')?'has-error':'' }}">
+										<label class="control-label" for="razon_social">Accion: *</label>
+											<input id="razon_social" class="form-control" type="text" name="accion[]" onkeyup="mayus(this);" placeholder="Acción" required >
 									</div>
-								
+								</div>
 							</div>
-						</div>
-						
 
-						<div class="row">
-							<div class="col-md-1 col-md-offset-6">
-						        <a href="javascript:void(0);" class=" btn btn-sm btn-success add_button" title="Add field"><i class="fa fa-plus"></i></a>
-						    </div>
-						</div>
 
-						<hr>
-						 <h2 class="text-center">Acciones Realizadas</h2>
-					    <hr>
-						<div class="field_wrapper_acciones row">
-							<div class="col-md-12">
-								<div class="form-group {{ $errors->has('razon_social')?'has-error':'' }}">
-									<label class="control-label" for="razon_social">Accion: *</label>
-										<input id="razon_social" class="form-control" type="text" name="accion[]" onkeyup="mayus(this);" placeholder="Acción" required >
+							<div class="row">
+								<div class="col-md-1 col-md-offset-6">
+							        <a href="javascript:void(0);" class=" btn btn-sm btn-success add_button_acciones" title="Add field"><i class="fa fa-plus"></i></a>
+							    </div>
+							</div>
+
+							<hr>
+							 <h2 class="text-center">Observaciones</h2>
+						    <hr>
+							<div class="field_wrapper_observaciones row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="control-label" for="razon_social">Observación: *</label>
+											<textarea class="form-control obs" name="observaciones[]" placeholder="Observación"></textarea>
+
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-1 col-md-offset-6">
+							        <a href="javascript:void(0);" class=" btn btn-sm btn-success add_button_observaciones" title="Add field"><i class="fa fa-plus"></i></a>
+							    </div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<label class="control-label" for="razon_social">Fotos: *</label>
+									<input id="multimedia" name="foto[]" type="file" class="file" multiple
+		    						data-show-upload="false" data-show-caption="false"  required="">
 								</div>
 							</div>
 						</div>
 
-
-						<div class="row">
-							<div class="col-md-1 col-md-offset-6">
-						        <a href="javascript:void(0);" class=" btn btn-sm btn-success add_button_acciones" title="Add field"><i class="fa fa-plus"></i></a>
-						    </div>
+						<div class="form-group text-right">
+							<a class="btn btn-flat btn-default" href="{{route('users.index')}}"><i class="fa fa-reply"></i> Atras</a>
+							<button class="btn btn-flat btn-primary" type="submit"><i class="fa fa-send"></i> Guardar</button>
 						</div>
-
-						<hr>
-						 <h2 class="text-center">Observaciones</h2>
-					    <hr>
-						<div class="field_wrapper_observaciones row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label class="control-label" for="razon_social">Observación: *</label>
-										<textarea class="form-control obs" name="observaciones[]" placeholder="Observación"></textarea>
-
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-1 col-md-offset-6">
-						        <a href="javascript:void(0);" class=" btn btn-sm btn-success add_button_observaciones" title="Add field"><i class="fa fa-plus"></i></a>
-						    </div>
-						</div>
-
-						<div class="row">
-						<div class="col-md-12">
-							<label class="control-label" for="razon_social">Fotos: *</label>
-							<input id="multimedia" name="foto[]" type="file" class="file" multiple
-    						data-show-upload="false" data-show-caption="false"  required="">
-						</div>
-					</div>
-
-
-
-
-					</div>
-
-					<div class="form-group text-right">
-						<a class="btn btn-flat btn-default" href="{{route('users.index')}}"><i class="fa fa-reply"></i> Atras</a>
-						<button class="btn btn-flat btn-primary" type="submit"><i class="fa fa-send"></i> Guardar</button>
-					</div>
-					<br>
-				</form>
+						<br>
+				    </form>
 				</div>
 			</div>
 		</div>
 	</div>
 
+	@include('partials.modal')
 
+	@include('partials.modalCliente')
 
 
 
@@ -210,6 +135,44 @@
 @section('script')
 
 <script type="text/javascript">
+
+	 $("#form-cliente").submit(function(event) {
+	    event.preventDefault();
+
+	    $.ajax({
+	      url: '{{ route('clientes.store') }}',
+	      type: 'POST',
+	      dataType: 'json',
+	      data: $(this).serialize(),
+	    })
+	    .done(function(data) {
+	      if (data.status) {
+	        var table = "<tr class='data-cliente'>"+
+	        	  "<td style='display:none' class='cliente-id'>"+data.id+"</td>"+
+	              "<td class='cliente-nombre'>"+$("#nombre").val()+"</td>"+
+	              "<td class='cliente-apellido'>"+$("#apellido").val()+"</td>"+
+	              "<td class='cliente-email'>"+$("#email").val()+"</td>"+
+	              "<td class='cliente-rut'>"+$("#rut").val()+"</td>"+
+	              "<td>"+
+	                "<a class='btn btn-flat btn-success btn-sm add-row' title='Add'><i class='fa fa-plus'></i></a>"+
+	              "</td>"+
+	            "</tr>";
+	            $("table tbody").append(table);
+
+	        swal(data.msg);
+	        $('#modal-cliente').modal('hide');
+	      }else{
+	        swal(data.msg);
+	      }
+	    })
+	    .fail(function() {
+	      console.log("error");
+	    })
+	    .always(function() {
+	      console.log("complete");
+	    });
+	    
+	  });
 	
 	$("#multimedia").fileinput({
             browseClass: "btn btn-primary btn-block",
@@ -244,8 +207,7 @@
 			        cache: false,
 			        processData:false,
 					success: function (response) {
-						//alert(response.msg);
-						$("#text_response").text(response.msg);
+						swal(response.msg);
 						$('#exampleModal').modal('hide');
 					   window.location.replace(response.url);
 					},
@@ -254,79 +216,78 @@
 
 /// aqui es para agregar personas
     var maxField = 10; //Input fields increment limitation
-    var addButton = $('.add_button'); //Add button selector
     var wrapper = $('.field_wrapper'); //Input field wrapper
-    // var fieldHTML = '<div class="remove">'+
-    // 						'<div class="col-md-3">'+
-				// 				'<div class="form-group">'+
-				// 					'<label class="control-label" for="razon_social">Nombre: *</label>'+
-				// 						'<input id="razon_social" class="form-control" type="text" name="nombre[]" onkeyup="mayus(this);" placeholder="Nombre" required>'+
-				// 				'</div>'+
-				// 			  '</div>'+
-				// 				'<div class="col-md-3">'+
-				// 				'<div class="form-group">'+
-				// 					'<label class="control-label" for="razon_social">Apellido: *</label>'+
-				// 						'<input id="razon_social" class="form-control" type="text" name="apellido[]" onkeyup="mayus(this);"  placeholder="Producto" required>'+
-				// 				'</div>'+
-				// 			'</div>'+
-				// 			'<div class="col-md-3">'+
-				// 				'<div class="form-group">'+
-				// 				 '<label class="control-label" for="razon_social">Email: *</label>'+
-				// 				 '<input id="razon_social" class="form-control" type="text" name="email[]"  placeholder="Email" required>'+
-				// 				'</div>'+
-				// 			'</div>'+
-				// 			'<div class="col-md-2">'+
-				// 				'<div class="form-group">'+
-				// 					'<label class="control-label" for="razon_social">Cargo: *</label>'+
-				// 					'<input id="razon_social" class="form-control" type="text" name="cargo[]"  placeholder="Cargo" required>'+
-				// 				'</div>'+
-				// 			'</div>'+
-				// 			'<div class="col-md-1"><div class="form-group"><label class="control-label" for="razon_social">Eliminar: *</label><br><a href="javascript:void(0);" class="btn btn-sm btn-danger remove_button" title="Remove field">X</a></div></div>'+
-				// 		 '</div>';
-
     var x = 0; //Initial field counter is 1
-    $(".add-row").click(function(){ //Once add button is clicked
+    $("#tbody-clientes").on('click', '.add-row', function(){ //Once add button is clicked
         if(x < maxField){ //Check maximum number of input fields
-				console.log($(this).parents("tr").children('td')[2]['outerText']);
-		            
+        	let btn = $(this),
+        		tr = btn.closest('.data-cliente'),
+        		nombre = tr.find('.cliente-nombre').text(),
+        		apellido = tr.find('.cliente-apellido').text(),
+        		email = tr.find('.cliente-email').text(),
+        		rut = tr.find('.cliente-rut').text(),
+        		id = tr.find('.cliente-id').text();
+        		 
             x++; //Increment field counter
             $(wrapper).append('<div class="remove">'+
-	    						'<div class="col-md-3" data-nombre="'+$(this).parents("tr").children('td')[0]['outerText']+'">'+
-									'<div class="form-group">'+
-										'<label class="control-label" for="razon_social">Nomlbre: *</label>'+
-											'<input id="razon_social" class="form-control" type="text"  "name="nombre[]" onkeyup="mayus(this);" placeholder="Nombre" readonly required value="'+$(this).parents("tr").children('td')[0]['outerText']+'">'+
+            						'<input class="id" type="hidden" value="'+id+'" name="id[]">'+
+		    						'<div class="col-md-3">'+
+										'<div class="form-group">'+
+											'<label class="control-label" for="razon_social">Nombre: *</label>'+
+												'<input  class="form-control nombre" type="text"  name="nombre[]" onkeyup="mayus(this);" placeholder="Nombre" readonly required value="'+nombre+'">'+
+										'</div>'+
+									  '</div>'+
+										'<div class="col-md-3">'+
+										'<div class="form-group">'+
+											'<label class="control-label" for="razon_social">Apellido: *</label>'+
+												'<input  class="form-control apellido" type="text" name="apellido[]" onkeyup="mayus(this);"  readonly value="'+apellido+'" placeholder="Producto" required>'+
+										'</div>'+
 									'</div>'+
-								  '</div>'+
-									'<div class="col-md-3" data-id="'+$(this).parents("tr").children('td')[1]['outerText']+'">'+
-									'<div class="form-group">'+
-										'<label class="control-label" for="razon_social">Apellido: *</label>'+
-											'<input id="razon_social" class="form-control" type="text" name="apellido[]" onkeyup="mayus(this);"  readonly value="'+$(this).parents("tr").children('td')[1]['outerText']+'" placeholder="Producto" required>'+
+									'<div class="col-md-3">'+
+										'<div class="form-group">'+
+										 '<label class="control-label" for="razon_social">Email: *</label>'+
+										 '<input  class="form-control email" type="text" name="email[]" readonly value="'+email+'" placeholder="Email" required>'+
+										'</div>'+
 									'</div>'+
-								'</div>'+
-								'<div class="col-md-3" data-id="'+$(this).parents("tr").children('td')[3]['outerText']+'">'+
-									'<div class="form-group">'+
-									 '<label class="control-label" for="razon_social">Email: *</label>'+
-									 '<input id="razon_social" class="form-control" type="text" name="email[]" readonly value="'+$(this).parents("tr").children('td')[3]['outerText']+'" placeholder="Email" required>'+
+									'<div class="col-md-2">'+
+										'<div class="form-group">'+
+											'<label class="control-label" for="razon_social">RUT: *</label>'+
+											'<input class="form-control rut" type="text" name="rut[]" readonly value="'+rut+'" placeholder="Cargo" required>'+
+										'</div>'+
 									'</div>'+
-								'</div>'+
-								'<div class="col-md-2">'+
-									'<div class="form-group">'+
-										'<label class="control-label" for="razon_social">RUT: *</label>'+
-										'<input id="razon_social" class="form-control" type="text" name="cargo[]" readonly value="'+$(this).parents("tr").children('td')[2]['outerText']+'" placeholder="Cargo" required>'+
-									'</div>'+
-								'</div>'+
-								'<div class="col-md-1"><div class="form-group"><label class="control-label" for="razon_social">Eliminar: *</label><br><a href="javascript:void(0);" class="btn btn-sm btn-danger remove_button" title="Remove field">X</a></div></div>'+
+									'<div class="col-md-1"><div class="form-group"><label class="control-label">Eliminar: *</label><br><a href="javascript:void(0);" class="btn btn-sm btn-danger remove_button" title="Remove field">X</a></div></div>'+
 							 '</div>'); // Add field html
-            $(this).parents("tr").remove();
+
+			   	$(this).parents("tr").remove();
+             
         }
     });
     $(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
         e.preventDefault();
-        //alert($(this).parent('div'));
-        //console.log($(this).parent('div'));
-        var nombre = $(this).parents('div').find('input[name=nombre[]]');
-        console.log(nombre)
-        $(this).parent('div').parent('div').parent('div').remove(); //Remove field html
+
+        let btn = $(this),
+        	parent = btn.closest('.remove'),
+        	nombre = parent.find('.nombre').val(),
+        	id = parent.find('.id').val(),
+        	apellido = parent.find('.apellido').val(),
+        	email = parent.find('.email').val(),
+        	rut = parent.find('.rut').val();
+       
+
+        var table = "<tr>"+
+        					"<td style='display:none'>"+id+"</td>"+
+							"<td>"+nombre+"</td>"+
+							"<td>"+apellido+"</td>"+
+							"<td>"+rut+"</td>"+
+							"<td>"+email+"</td>"+
+							"<td>"+
+								"<a class='btn btn-flat btn-success btn-sm add-row' title='Add'><i class='fa fa-plus'></i></a>"+
+							"</td>"+
+						"</tr>";
+            $("table tbody").append(table);
+        parent.remove()
+
+        // $(this).parent('div').parent('div').parent('div').remove(); //Remove field html
         x--; //Decrement field counter
     });
     //fin agregar personas

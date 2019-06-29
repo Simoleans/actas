@@ -36,12 +36,31 @@ class ClientesController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->ajax()) {
+          $rut = Clientes::where('rut',$request->rut)->exists();
+
+          if ($rut) {
+              return response()->json(['msg' => 'Ya existe esta persona','status' => false]);
+          }
+
+          $clientes = new Clientes;
+          $clientes->fill($request->all());
+
+              if($clientes->save()){
+                return response()->json(['msg' => '¡Registrado Correctamente!','status' => true,'id' => $clientes->id]);
+              }else{
+               return response()->json(['msg' => '¡Error!','status' => false]);
+              }
+
+      }
         $this->validate($request, [
             'rut' => 'required|unique:clientes',
           ]);
 
       $clientes = new Clientes;
       $clientes->fill($request->all());
+
+      
 
 
       if($clientes->save()){
@@ -101,5 +120,19 @@ class ClientesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function update_status(Request $request)
+    {
+        $cliente = Clientes::where('rut',$request->rut)->first();
+
+        $cliente->status = 1;
+
+        if ($cliente->save()) {
+
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => true]);
+        }
     }
 }

@@ -12,9 +12,9 @@ class Actas extends Model
 
      protected $fillable = ['codigo','id_empresa','id_user','observaciones'];
 
-     public function total($codigo)
+     public function total($id)
      {
-     	return Participantes::where('codigo_acta',$codigo)->count();
+     	return Participantes::where('id_acta',$id)->count();
      }
 
      public function empresa()
@@ -27,13 +27,19 @@ class Actas extends Model
      	 return $this->belongsTo("App\User", "id_user");
      }
 
-     public function participantes($codigo)
+     public function participantes($id)
      {
-     	return Participantes::where('codigo_acta',$codigo)->get();
+     	return Participantes::where('id_acta',$id)->get();
      }
+
 
       public function acciones($codigo)
      {
      	return Acciones::where('codigo_acta',$codigo)->get();
+     }
+
+     public function observaciones($codigo)
+     {
+          return Observacion::where('codigo_acta',$codigo)->get();
      }
 }
