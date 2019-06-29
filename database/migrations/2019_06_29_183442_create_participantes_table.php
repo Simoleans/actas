@@ -16,17 +16,12 @@ class CreateParticipantesTable extends Migration
         Schema::create('participantes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('codigo_acta'); //acta id
-            $table->integer('id_empresa')->unsigned(); //De uno a uno,  una empresa
-            $table->foreign('id_empresa')->references('id')->on('empresas')->onDelete('cascade');
-            $table->string('nombre');
-            $table->string('apellido');
-            $table->string('rut');
-            $table->string('cargo');
-            $table->string('email');
-            $table->string('telefono');
-            $table->string('direccion');
+            $table->integer('id_acta')->unsigned(); //De uno a uno,  una empresa
+            $table->foreign('id_acta')->references('id')->on('actas')->onDelete('cascade');
+            $table->integer('id_cliente')->unsigned(); //De uno a uno,  una empresa
+            $table->foreign('id_cliente')->references('id')->on('clientes')->onDelete('cascade');
             $table->string('firma')->nullable();
-            $table->integer('status');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

@@ -38,7 +38,8 @@ class ActasController extends Controller
     public function create()
     {
         $empresa = Auth::user()->empresa;
-        return view('actas.create',['empresa' => $empresa]);
+        $clientes = $empresa->clientes;
+        return view('actas.create2',['empresa' => $empresa,'clientes' => $clientes]);
     }
 
     /**

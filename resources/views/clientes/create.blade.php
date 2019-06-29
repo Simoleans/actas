@@ -27,12 +27,13 @@
 					<form class="" action="{{ route('clientes.store') }}" method="POST" enctype="multipart/form-data">
 					{{ method_field( 'POST' ) }}
 					{{ csrf_field() }}
+					<input type="hidden" name="id_empresa" value="{{ strtoupper(Auth::user()->empresa->id)}}">
 					<h4>Agregar Cliente</h4>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group {{ $errors->has('id_empresa')?'has-error':'' }}">
 								<label class="control-label" for="id_empresa">Empresa: *</label>
-								<input id="id_empresa" class="form-control" type="text" name="id_empresa" value="{{ Auth::user()->empresa->r_social}}" placeholder="Razon Social" required readonly="">
+								<input id="id_empresa" class="form-control" type="text" name="empresa" value="{{ strtoupper(Auth::user()->empresa->r_social)}}"  required readonly="">
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -70,7 +71,7 @@
 						<div class="col-md-6">
 							<div class="form-group {{ $errors->has('id_plan')?'has-error':'' }}">
 								<label class="control-label" for="id_plan">Plan: *</label>
-								<input id="id_plan" class="form-control" type="text" name="id_plan" value="{{ old('id_plan')?old('id_plan'):'' }}" placeholder="Direccion" required>
+								<input id="id_plan" class="form-control" type="text" name="id_plan" value="1" placeholder="Plan" required>
 							</div>
 						</div>
 						<div class="col-md-6">

@@ -17,7 +17,6 @@ class Clientes extends Migration
 
         Schema::create('clientes', function (Blueprint $table) {
            $table->increments('id');
-            $table->string('codigo_acta'); //acta id
             $table->integer('id_empresa')->unsigned(); //De uno a uno,  una empresa
             $table->foreign('id_empresa')->references('id')->on('empresas')->onDelete('cascade');
             $table->integer('id_plan')->unsigned(); //De uno a uno,  un plan
@@ -28,8 +27,6 @@ class Clientes extends Migration
             $table->string('email');
             $table->string('telefono');
             $table->string('direccion');
-            $table->string('firma')->nullable();
-            $table->integer('status');
             $table->timestamps();
         });
     }

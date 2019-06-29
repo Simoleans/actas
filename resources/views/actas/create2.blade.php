@@ -41,7 +41,7 @@
 						<h2 class="text-center">Clientes</h2>
 					<hr>
 						<div class="field_wrapper row">
-							<div class="col-md-3">
+							{{-- <div class="col-md-3">
 								<div class="form-group {{ $errors->has('razon_social')?'has-error':'' }}">
 									<label class="control-label" for="razon_social">Nombre: *</label>
 										<input id="razon_social" class="form-control" type="text" name="nombre[]" onkeyup="mayus(this);" placeholder="Nombre" required >
@@ -67,9 +67,52 @@
 									<label class="control-label" for="razon_social">Cargo: *</label>
 									<input id="razon_social" class="form-control" type="text" name="cargo[]"   placeholder="Cargo" required >
 								</div>
+							</div> --}}
+						</div>
+						<div class="row">
+						  	<div class="col-md-12">
+						    	
+							      <div class="box-header with-border">
+							        {{-- <h3 class="box-title"><i class="fa fa-users"></i> Actas</h3> --}}
+							        <span class="pull-right">
+										{{-- a href="{{ route('actas.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nueva Acta</a> --}}
+										<small><a href="#">Registrar Nuevo</a></small>
+									</span>
+							      </div>
+					      			<div class="box-body">
+										<table class="table data-table table-bordered table-hover table-condensed nowrap" style="width:100%">
+											<thead>
+												<tr>
+													<th class="text-center">Nombre</th>
+													<th class="text-center">Apellido</th>
+													<th class="text-center">RUT</th>
+													<th class="text-center">Email</th>
+													<th class="text-center">Fecha</th>
+													<th class="text-center">Accion</th>
+												</tr>
+											</thead>
+											<tbody class="text-center">
+												@foreach($clientes as $d)
+													<tr>
+														<td>{{$d->nombre}}</td>
+														<td>{{$d->apellido}}</td>
+														<td>{{$d->rut}}</td>
+														<td>{{$d->email}}</td>
+														<td>{{$d->created_at->format('Y-m-d')}}</td>
+														<td>
+															<a href="#" class="btn btn-flat btn-success btn-sm add-row" title="Add"><i class="fa fa-plus"></i></a>
+															{{-- <a href="{{route('ordencompra.edit',[$d->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>  --}}
+														</td>
+													</tr>
+												@endforeach
+											</tbody>
+										</table>
+										<a href="#" class="btn btn-flat btn-lg btn-warning delete-row">Delete</a>
+									</div>
+								
 							</div>
 						</div>
-						<small><a href="#">Registrar Nuevo</a></small>
+						
 
 						<div class="row">
 							<div class="col-md-1 col-md-offset-6">
@@ -167,6 +210,7 @@
 @section('script')
 
 <script type="text/javascript">
+	
 	$("#multimedia").fileinput({
             browseClass: "btn btn-primary btn-block",
             showCaption: false,
@@ -212,45 +256,76 @@
     var maxField = 10; //Input fields increment limitation
     var addButton = $('.add_button'); //Add button selector
     var wrapper = $('.field_wrapper'); //Input field wrapper
-    var fieldHTML = '<div class="remove">'+
-    						'<div class="col-md-3">'+
-								'<div class="form-group">'+
-									'<label class="control-label" for="razon_social">Nombre: *</label>'+
-										'<input id="razon_social" class="form-control" type="text" name="nombre[]" onkeyup="mayus(this);" placeholder="Nombre" required>'+
-								'</div>'+
-							  '</div>'+
-								'<div class="col-md-3">'+
-								'<div class="form-group">'+
-									'<label class="control-label" for="razon_social">Apellido: *</label>'+
-										'<input id="razon_social" class="form-control" type="text" name="apellido[]" onkeyup="mayus(this);"  placeholder="Producto" required>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-3">'+
-								'<div class="form-group">'+
-								 '<label class="control-label" for="razon_social">Email: *</label>'+
-								 '<input id="razon_social" class="form-control" type="text" name="email[]"  placeholder="Email" required>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-2">'+
-								'<div class="form-group">'+
-									'<label class="control-label" for="razon_social">Cargo: *</label>'+
-									'<input id="razon_social" class="form-control" type="text" name="cargo[]"  placeholder="Cargo" required>'+
-								'</div>'+
-							'</div>'+
-							'<div class="col-md-1"><div class="form-group"><label class="control-label" for="razon_social">Eliminar: *</label><br><a href="javascript:void(0);" class="btn btn-sm btn-danger remove_button" title="Remove field">X</a></div></div>'+
-						 '</div>';
+    // var fieldHTML = '<div class="remove">'+
+    // 						'<div class="col-md-3">'+
+				// 				'<div class="form-group">'+
+				// 					'<label class="control-label" for="razon_social">Nombre: *</label>'+
+				// 						'<input id="razon_social" class="form-control" type="text" name="nombre[]" onkeyup="mayus(this);" placeholder="Nombre" required>'+
+				// 				'</div>'+
+				// 			  '</div>'+
+				// 				'<div class="col-md-3">'+
+				// 				'<div class="form-group">'+
+				// 					'<label class="control-label" for="razon_social">Apellido: *</label>'+
+				// 						'<input id="razon_social" class="form-control" type="text" name="apellido[]" onkeyup="mayus(this);"  placeholder="Producto" required>'+
+				// 				'</div>'+
+				// 			'</div>'+
+				// 			'<div class="col-md-3">'+
+				// 				'<div class="form-group">'+
+				// 				 '<label class="control-label" for="razon_social">Email: *</label>'+
+				// 				 '<input id="razon_social" class="form-control" type="text" name="email[]"  placeholder="Email" required>'+
+				// 				'</div>'+
+				// 			'</div>'+
+				// 			'<div class="col-md-2">'+
+				// 				'<div class="form-group">'+
+				// 					'<label class="control-label" for="razon_social">Cargo: *</label>'+
+				// 					'<input id="razon_social" class="form-control" type="text" name="cargo[]"  placeholder="Cargo" required>'+
+				// 				'</div>'+
+				// 			'</div>'+
+				// 			'<div class="col-md-1"><div class="form-group"><label class="control-label" for="razon_social">Eliminar: *</label><br><a href="javascript:void(0);" class="btn btn-sm btn-danger remove_button" title="Remove field">X</a></div></div>'+
+				// 		 '</div>';
 
-    var x = 1; //Initial field counter is 1
-    $(addButton).click(function(){ //Once add button is clicked
+    var x = 0; //Initial field counter is 1
+    $(".add-row").click(function(){ //Once add button is clicked
         if(x < maxField){ //Check maximum number of input fields
+				console.log($(this).parents("tr").children('td')[2]['outerText']);
+		            
             x++; //Increment field counter
-            $(wrapper).append(fieldHTML); // Add field html
+            $(wrapper).append('<div class="remove">'+
+	    						'<div class="col-md-3" data-nombre="'+$(this).parents("tr").children('td')[0]['outerText']+'">'+
+									'<div class="form-group">'+
+										'<label class="control-label" for="razon_social">Nomlbre: *</label>'+
+											'<input id="razon_social" class="form-control" type="text"  "name="nombre[]" onkeyup="mayus(this);" placeholder="Nombre" readonly required value="'+$(this).parents("tr").children('td')[0]['outerText']+'">'+
+									'</div>'+
+								  '</div>'+
+									'<div class="col-md-3" data-id="'+$(this).parents("tr").children('td')[1]['outerText']+'">'+
+									'<div class="form-group">'+
+										'<label class="control-label" for="razon_social">Apellido: *</label>'+
+											'<input id="razon_social" class="form-control" type="text" name="apellido[]" onkeyup="mayus(this);"  readonly value="'+$(this).parents("tr").children('td')[1]['outerText']+'" placeholder="Producto" required>'+
+									'</div>'+
+								'</div>'+
+								'<div class="col-md-3" data-id="'+$(this).parents("tr").children('td')[3]['outerText']+'">'+
+									'<div class="form-group">'+
+									 '<label class="control-label" for="razon_social">Email: *</label>'+
+									 '<input id="razon_social" class="form-control" type="text" name="email[]" readonly value="'+$(this).parents("tr").children('td')[3]['outerText']+'" placeholder="Email" required>'+
+									'</div>'+
+								'</div>'+
+								'<div class="col-md-2">'+
+									'<div class="form-group">'+
+										'<label class="control-label" for="razon_social">RUT: *</label>'+
+										'<input id="razon_social" class="form-control" type="text" name="cargo[]" readonly value="'+$(this).parents("tr").children('td')[2]['outerText']+'" placeholder="Cargo" required>'+
+									'</div>'+
+								'</div>'+
+								'<div class="col-md-1"><div class="form-group"><label class="control-label" for="razon_social">Eliminar: *</label><br><a href="javascript:void(0);" class="btn btn-sm btn-danger remove_button" title="Remove field">X</a></div></div>'+
+							 '</div>'); // Add field html
+            $(this).parents("tr").remove();
         }
     });
     $(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
         e.preventDefault();
         //alert($(this).parent('div'));
-        console.log($(this).parent('div'));
+        //console.log($(this).parent('div'));
+        var nombre = $(this).parents('div').find('input[name=nombre[]]');
+        console.log(nombre)
         $(this).parent('div').parent('div').parent('div').remove(); //Remove field html
         x--; //Decrement field counter
     });

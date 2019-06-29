@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\clientes;
+use App\Clientes;
 
 class ClientesController extends Controller
 {
@@ -35,7 +36,26 @@ class ClientesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'rut' => 'required|unique:clientes',
+          ]);
+
+      $clientes = new Clientes;
+      $clientes->fill($request->all());
+
+
+      if($clientes->save()){
+        return redirect("clientes")->with([
+          'flash_message' => 'Proveedor agregado correctamente.',
+          'flash_class' => 'alert-success'
+          ]);
+      }else{
+        return redirect("clientes")->with([
+          'flash_message' => 'Ha ocurrido un error.',
+          'flash_class' => 'alert-danger',
+          'flash_important' => true
+          ]);
+      }
     }
 
     /**

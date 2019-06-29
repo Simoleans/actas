@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
           'direccion_user'   => 'Santiago De chile',
           'password'  => bcrypt('admin123456')
         ]);
+
     }
 }
