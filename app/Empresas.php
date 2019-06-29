@@ -22,7 +22,7 @@ class Empresas extends Model
           'logo',
     ];
 
-    public function personas()
+    public function user()
     {
        //return $this->belongsTo('App\User','id_user');
        return $this->belongsTo('App\User','id_user');

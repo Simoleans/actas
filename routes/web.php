@@ -88,7 +88,7 @@ Route::group(['middleware' => 'auth'], function() { //middleware auth
 	Route::post('empresas/sendmail','UserController@sendEmail')->name('empresas.mail');
 
 	/* Proveedores */
-	Route::resource('/proveedor','ProveedoresController');
+	Route::resource('/clientes','ClientesController');
 
 	/* Orden De Compra */
 	Route::resource('/ordencompra','OrdenCompraController');

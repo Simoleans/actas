@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmpresaDespachosTable extends Migration
+class Planes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateEmpresaDespachosTable extends Migration
      */
     public function up()
     {
-        Schema::create('empresa_despachos', function (Blueprint $table) {
+        Schema::create('planes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('r_social');
-            $table->string('ciudad');
-            $table->string('contacto');
-            $table->string('rut');
-            $table->string('direccion');
-            $table->string('telefono');
+            $table->integer('id_empresa')->unsigned(); //De uno a uno,  una empresa
+            $table->foreign('id_empresa')->references('id')->on('empresas')->onDelete('cascade');
+            $table->string('nombre');
+            $table->string('fecha_inicio');
+            $table->string('fecha_fin');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateEmpresaDespachosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('empresa_despachos');
+        Schema::dropIfExists('planes');
     }
 }

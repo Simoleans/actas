@@ -33,12 +33,7 @@
 						<div class="col-md-12">
 							<div class="form-group {{ $errors->has('empresa')?'has-error':'' }}">
 								<label class="control-label" for="empresa">Empresa: *</label>
-									<select class="form-control" name="id_empresa">
-										<option value="">Seleccione...</option>
-										@foreach($empresa as $e)
-											<option value="{{$e->id}}">{{$e->r_social}}</option>
-										@endforeach
-									</select>
+									<input type="text" name="id_empresa" value="{{ strtoupper(Auth::user()->empresa->r_social)}}" readonly="" class="form-control">
 							</div>
 						</div>
 					</div>
@@ -51,7 +46,6 @@
 									<label class="control-label" for="razon_social">Nombre: *</label>
 										<input id="razon_social" class="form-control" type="text" name="nombre[]" onkeyup="mayus(this);" placeholder="Nombre" required >
 								</div>
-								<small><a href="#">Registrar Cliente</a></small>
 							</div>
 
 							<div class="col-md-3">

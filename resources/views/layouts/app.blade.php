@@ -185,76 +185,12 @@
              <li class="treeview">
               <a href="#">
                 <i class="fa fa-users"></i>
-                <span>Proveedores</span>
+                <span>Clientes</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{route('proveedor.create')}}"><i class="fa fa-circle-o"></i> Registrar Proveedor</a></li>
-                <li><a href="{{route('proveedor.index')}}"><i class="fa fa-circle-o"></i> Mis Proveedores</a></li>
-              </ul>
-            </li>
-
-            <li class="treeview">
-              <a href="#"><i class="fa fa-arrows-alt"></i> Guias
-                  <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu" style="display: none;">
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Guia De Despacho
-                      <i class="fa fa-angle-left pull-right"></i>
-                  </a>
-                  <ul class="treeview-menu" style="display: none;">
-                    <li><a href="{{route('guiadespacho.create')}}"><i class="fa fa-circle-o"></i> Registrar Guia De Despacho</a></li>
-                    <li><a href="{{route('guiadespacho.index')}}"><i class="fa fa-circle-o"></i> Ver Guias De Despacho</a></li>
-                  </ul>
-                </li>
-                 <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Guia De Entrega
-                      <i class="fa fa-angle-left pull-right"></i>
-                  </a>
-                  <ul class="treeview-menu" style="display: none;">
-                    <li><a href="{{route('guiaentrega.create')}}"><i class="fa fa-circle-o"></i> Registrar Guia De Entrega</a></li>
-                    <li><a href="{{route('guiaentrega.index')}}"><i class="fa fa-circle-o"></i> Ver Guias De Entrega</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-
-           <li class="treeview">
-              <a href="#"><i class="fa fa-print"></i> Ordenes
-                  <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu" style="display: none;">
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Orden De Compra
-                      <i class="fa fa-angle-left pull-right"></i>
-                  </a>
-                  <ul class="treeview-menu" style="display: none;">
-                    <li><a href="{{route('ordencompra.create')}}"><i class="fa fa-circle-o"></i> Registrar Orden De Compra</a></li>
-                    <li><a href="{{route('ordencompra.index')}}"><i class="fa fa-circle-o"></i> Ver Ordenes De Compra</a></li>
-                  </ul>
-                </li>
-                 <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Orden De Trabajo
-                      <i class="fa fa-angle-left pull-right"></i>
-                  </a>
-                  <ul class="treeview-menu" style="display: none;">
-                    <li><a href="{{route('ordentrabajo.create')}}"><i class="fa fa-circle-o"></i> Registrar Orden De Trabajo</a></li>
-                    <li><a href="{{route('ordentrabajo.index')}}"><i class="fa fa-circle-o"></i> Ver Ordenes De Trabajo</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-file-o"></i>
-                <span>Recibo De Gastos</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="{{route('recibogastos.create')}}"><i class="fa fa-circle-o"></i>Crear Recibo</a></li>
-                <li><a href="{{route('recibogastos.index')}}"><i class="fa fa-circle-o"></i>Ver Recibos</a></li>
+                <li><a href="{{route('clientes.create')}}"><i class="fa fa-circle-o"></i> Registrar Clientes</a></li>
+                <li><a href="{{route('clientes.index')}}"><i class="fa fa-circle-o"></i> Mis Clientes</a></li>
               </ul>
             </li>
 
