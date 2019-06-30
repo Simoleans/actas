@@ -38,7 +38,6 @@
         <div class="col-md-12">
           <p><b>Responsable:</b> {{$orden->user->nombre}}</p>
           <p><b>Fecha:</b> {{$orden->created_at->format('Y-m-d')}}</p>
-          <p><b>Observciones: </b>{{$orden->observaciones}}</p>
         </div>
         <div class="col-md-12">
           <h4 class="text-left">Acciones</h4>
@@ -51,6 +50,23 @@
                <tr>
                 <td class="text-center" height="2" width="100">{{$loop->index+1}}</td>
                 <td class="text-center" height="2" width="100" >{{strtoupper($p->accion)}}</td>
+              </tr>
+            @endforeach
+            
+          </table>
+        </div>
+
+        <div class="col-md-12">
+          <h4 class="text-left">Observaciones</h4>
+          <table class="table table-bordered table-condensed" border="1">
+            <tr>
+              <td class="text-center" height="2" width="100" style="background-color: #A4A4A4; color:#000000">#</td>
+              <td class="text-center" height="2" width="100"  style="background-color: #A4A4A4; color:#000000">Observación</td>
+            </tr>
+            @foreach($orden->observaciones($orden->codigo) as $p)
+               <tr>
+                <td class="text-center" height="2" width="100">{{$loop->index+1}}</td>
+                <td class="text-center" height="2" width="100" >{{strtoupper($p->observacion)}}</td>
               </tr>
             @endforeach
             
@@ -70,9 +86,9 @@
             @foreach($participantes as $p)
                <tr>
                 <td class="text-center" height="2" width="100">{{$loop->index+1}}</td>
-                <td class="text-center" height="2" width="100" >{{strtoupper($p->nombre)}}</td>
-                <td class="text-center" height="2" width="100" >{{strtoupper($p->apellido)}}</td>
-                <td class="text-center" height="2" width="100" >{{strtoupper($p->cargo)}}</td>
+                <td class="text-center" height="2" width="100" >{{strtoupper($p->clientes->nombre)}}</td>
+                <td class="text-center" height="2" width="100" >{{strtoupper($p->clientes->apellido)}}</td>
+                <td class="text-center" height="2" width="100" >{{strtoupper($p->clientes->rut)}}</td>
                 <td class="text-center" height="60" width="100" >
                   @if(!$p->firma)
                     <h4>Sin Autorización</h4>

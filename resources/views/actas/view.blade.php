@@ -39,13 +39,17 @@
 			</div>
 
       <div class="col-md-4"> 
-        <p>&nbsp;</p>
-        <p><b>Observaciones: </b> {{$acta->observaciones?$acta->observaciones:'N/T'}} </p>
+        <h4>Fotos</h4>
+        <div class="row">
+          @foreach($acta->fotos($acta->codigo) as $f)
+            <div class="col-md-5"><img src="{{asset('img/actas/fotos/'.$f->foto)}}" class="img-responsive"></div>
+          @endforeach
+        </div>
       </div>
 
       <div class="col-md-2"> 
         <p>&nbsp;</p>
-        <p><b>Logo</b></p>
+        <p><b>Logo De la empresa</b></p>
         <img src="{{asset('img/empresas/'.$acta->empresa->logo)}}" class="img-responsive">
       </div>
 		</div>

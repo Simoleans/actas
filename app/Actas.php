@@ -42,4 +42,9 @@ class Actas extends Model
      {
           return Observacion::where('codigo_acta',$codigo)->get();
      }
+
+     public function fotos($codigo)
+     {
+          return Fotos::where('codigo_acta',$codigo)->get();
+     }
 }

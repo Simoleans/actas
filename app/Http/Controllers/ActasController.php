@@ -84,9 +84,9 @@ class ActasController extends Controller
              $file = Input::file('foto');
 
                  foreach ( $file as $gImg ) {
-                        $filename = $gImg->getClientOriginalName();
+                        $filename = date("YmdHi").$gImg->getClientOriginalName();
                         $patch = public_path()."/img/actas/fotos/";
-                        $gImg->move($patch,date("YmdHi").$filename);
+                        $gImg->move($patch,$filename);
                         // \Image::make($gImg)->save($patch. $filename );
                         // \Image::make($gImg)->resize(300, null, function ($constraint) {
                         //                     $constraint->aspectRatio();
@@ -196,17 +196,17 @@ class ActasController extends Controller
 
     public function pdf($id)
     {
-        $orden = Actas::findOrfail($id);
+        $acta = Actas::findOrfail($id);
 
-        $detalles = Acciones::where('codigo_acta',$orden->codigo)->get();
+        $detalles = Acciones::where('codigo_acta',$acta->codigo)->get();
 
-        $participantes = Participantes::where('codigo_acta',$orden->codigo)->get();
+        $participantes = Participantes::where('id_acta',$acta->id)->get();
 
         //dd($participantes);
 
-        $pdf = PDF::loadView('pdf.pdfActa',['orden'=>$orden,'detalles'=>$detalles,'participantes' => $participantes]);
+        $pdf = PDF::loadView('pdf.pdfActa',['orden'=>$acta,'detalles'=>$detalles,'participantes' => $participantes]);
             
-            return $pdf->stream($orden->codigo.'.pdf');
+            return $pdf->stream($acta->codigo.'.pdf');
     }
 
     public function firma($id)
