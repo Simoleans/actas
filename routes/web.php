@@ -72,6 +72,7 @@ Route::group(['middleware' => 'auth'], function() { //middleware auth
 
 	/* actas*/
 	Route::resource('/actas','ActasController');
+	Route::get('actas/sign/{id}','ActasController@signature')->name('actas.sign');
 
 	/* Planes */
 	Route::resource('/planes','PlanesController');

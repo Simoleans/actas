@@ -217,7 +217,18 @@ class ActasController extends Controller
 
         $acta = Actas::where('id',$participante->id_acta)->first();
 
+        //dd($participante);
+
         return view('actas.firma',['acta' => $acta,'participante' => $participante]);
+    }
+
+    public function signature($id)
+    {
+        $participante = Participantes::where('id_cliente',$id)->first();
+
+        $acta = Actas::where('id',$participante->id_acta)->first();
+
+        return view('actas.signature',['acta' => $acta,'participante' => $participante]);
     }
 
     public function firmaSend(Request $request)
@@ -233,7 +244,7 @@ class ActasController extends Controller
         if ($participante->save()) {
              file_put_contents($nombre,base64_decode($request->firma));
 
-             return response()->json(['msg' => 'Se ha registrado correctamente']);
+             return response()->json(['msg' => 'Se ha registrado correctamente','url' => route('actas.firma',['id' => $participante->id_acta])]);
         }
     }
 

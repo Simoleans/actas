@@ -28,7 +28,11 @@ class ClientesController extends Controller
      */
     public function create()
     {
-         return view('clientes.create');
+
+        $empresa_id = Auth::user()->empresa->id;
+
+        $planes = Planes::where('id_empresa',$empresa_id)->get();
+         return view('clientes.create',['planes' => $planes]);
     }
 
     /**

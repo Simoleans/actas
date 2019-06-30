@@ -70,8 +70,13 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group {{ $errors->has('id_plan')?'has-error':'' }}">
-								<label class="control-label" for="id_plan">Plan: *</label>
-								<input id="id_plan" class="form-control" type="text" name="id_plan" value="1" placeholder="Plan" required>
+								<label class="control-label" for="id_plan">Planes: *</label>
+								<select class="form-control" name="id_plan" required="">
+									<option value="">Seleccione...</option>
+									@foreach($planes as $p)
+										<option value="{{$p->id}}">{{$p->nombre}}</option>
+									@endforeach
+								</select>
 							</div>
 						</div>
 						<div class="col-md-6">

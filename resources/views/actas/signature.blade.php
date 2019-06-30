@@ -1,28 +1,56 @@
-@extends('layouts.app')
-@section('title','Acta - '.config('app.name'))
-@section('header','Acta')
-@section('breadcrumb')
-  <ol class="breadcrumb">
-    <li><a href="{{route('dashboard')}}"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
-    <li> Acta {{$acta->codigo}} </li>
-    <li class="active">Ver </li>
-  </ol>
-@endsection
-@section('content')
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Firmar</title>
+	   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Icon 16x16 -->
+    <link rel="icon" type="image/png" sizes="240x240" href="{{asset('img/logo.png')}}">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/font-awesome.css')}}">
+    <!-- Theme style -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/AdminLTE.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/glyphicons.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
+     <link rel="stylesheet" type="text/css" href="{{ asset('plugins/datatables/extensions/Responsive/css/dataTables.responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput-rtl.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('js/sign_src/css/jquery.signaturepad.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datepicker3.min.css')}}">
 
-<style type="text/css">
-  .modal-dialog {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/css/inputmask.min.css" rel="stylesheet"/>
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{{asset('css/_all-skins.min.css')}}">
+
+</head>
+<body>
+	<style type="text/css">
+
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
   width: 100%;
-  height: 100%;
-  padding: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  margin: 0;
+  padding: 32px 16px;
+  */font-family: Helvetica, Sans-Serif;
+  background-color: #ecf0f5;
 }
-
-.modal-content {
-  min-height: 80vh;
-  border-radius: 0;
-}
-
-
 .signature-pad {
   position: relative;
   display: -webkit-box;
@@ -103,73 +131,11 @@ canvas {
           justify-content: space-between;
   margin-top: 8px;
 }
-
-
-}
-
-</style>
-
-  <section class="perfil">
-    <div class="row">
+	</style>
+ @if(!$participante->firma)
+ <div class="row">
       <div class="col-md-12">
-        <h2 class="page-header" style="margin-top:0!important">
-          <i class="fa fa-user" aria-hidden="true"></i>
-          {{ 'Acta '.$acta->codigo }}
-          <small class="pull-right">Registrado: {{ $acta->created_at }}</small>
-          <span class="clearfix"></span>
-        </h2>
-      </div>
-      <div class="col-md-5">
-        <h4>Detalles de la empresa</h4>
-        <p><b>Usuario: </b> {{$acta->user->nombre}} </p>
-        <p><b>Empresa: </b> {{strtoupper($acta->empresa->r_social)}}</p>
-        <p><b>Ciudad: </b> {{strtoupper($acta->empresa->ciudad)}}</p>
-        <p><b>RUT: </b> {{strtoupper($acta->empresa->rut)}}</p>
-        <p><b>Contacto: </b> {{strtoupper($acta->empresa->contacto)}}</p>
-        <p><b>Telefono: </b> {{strtoupper($acta->empresa->telefono)}}</p>
-        <p><b>Direccion: </b> {{strtoupper($acta->empresa->direccion)}}</p>
-
-      </div>
-
-      <div class="col-md-4"> 
-        <h4>Fotos</h4>
-        <div class="row">
-          @foreach($acta->fotos($acta->codigo) as $f)
-            <div class="col-md-5"><img src="{{asset('img/actas/fotos/'.$f->foto)}}" class="img-responsive"></div>
-          @endforeach
-        </div>
-      </div>
-
-      <div class="col-md-2">
-        <p>&nbsp;</p>
-        <p><b>Logo</b></p>
-        <img src="{{asset('img/empresas/'.$acta->empresa->logo)}}" class="img-responsive">
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <h2 class="page-header" style="margin-top:0!important">
-          <i class="fa fa-users" aria-hidden="true"></i>
-          Firma Aquí
-          <span class="clearfix"></span>
-        </h2>
-      </div>
-      <div class="col-md-12">
-          @if($participante->firma)
-            <div class="col-md-6 col-md-offset-3">
-              <img src="{{asset('img/actas').'/'.$participante->firma}}" class="img-responsive">
-              <h3 class="tag-ingo text-center">{{strtoupper($participante->clientes->nombre.' '.$participante->clientes->apellido)}}</h3>
-            </div>
-           @else
-         <div class="row">
-           <div class="col-md-5 col-md-offset-5">
-             <a class="btn btn-primary btn-lg" href="{{route('actas.sign',['id' => $participante->id])}}">
-              ¡Firma Aquí!
-            </a>
-           </div>
-         </div>
-        {{-- <form method="POST" enctype="multipart/form-data" id="form_pad">
+        <form method="POST" enctype="multipart/form-data" id="form_pad">
            <meta name="csrf-token" content="{{ csrf_token() }}" />
             <input type="hidden" name="id_participante" value="{{$participante->id}}">
             <input type="hidden" name="firma" id="firma" required>
@@ -182,91 +148,54 @@ canvas {
 
                       <div class="signature-pad--actions">
                         <div>
-                          <button type="button" class="button clear btn-lg btn-warning" data-action="clear">Limpiar</button>
-                          <button type="button" class="button" style="display: none;" data-action="change-color">Cambiar Color</button>
-                          <button type="button" class="button" style="display: none;" data-action="undo">corregir</button>
+                          <button type="button" class="button clear btn btn-sm btn-default btn-flat" data-action="clear">Limpiar</button>
+                          <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="change-color">Cambiar Color</button>
+                          <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="undo">corregir</button>
 
                         </div>
                         <div>
-                          <button type="button" class="button save bt btn-lg btn-success"  data-action="save-png">Guardar</button>
-                          <button type="button" class="button save" style="display: none;" data-action="save-jpg">Guardar en JPG</button>
-                          <button type="button" class="button save" style="display: none;" data-action="save-svg">Guardar en SVG</button>
+                          <button type="button" class="button save btn btn-sm btn-success btn-flat"  data-action="save-png">Guardar</button>
+                          <button type="button" class="button save btn btn-sm btn-danger btn-flat"  data-action="save-jpg">Guardar en JPG</button>
+                          <button type="button" class="button save btn btn-sm btn-danger btn-flat"  data-action="save-svg">Guardar en SVG</button>
                         </div>
                       </div>
                     </div>
                   </div>
-          </form> --}}
-         @endif
-
-      <br>
-      <img src="">
+          </form>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <h2 class="page-header" style="margin-top:0!important">
-          <i class="fa fa-list" aria-hidden="true"></i>
-          Acciones
-          <span class="clearfix"></span>
-        </h2>
-      </div>
-      <div class="col-md-12">
-       <table class="table table-condensed table-hover table-bordered">
-         <thead>
-           <tr>
-            <th class="text-center">#</th>
-            <th class="text-center">Accion</th>
-          </tr>
-         </thead>
-         <tbody>
-          @foreach($acta->acciones($acta->codigo) as $a)
-           <tr>
-             <td>{{$loop->index+1}}</td>
-             <td class="text-center">{{$a->accion}}</td>
-           </tr>
-          @endforeach
-         </tbody>
-       </table>
-      </div>
-    </div>
+    @else
+    <h2>¡Ya usted Ha Firmado!</h2>
+    @endif
 
-    <div class="row">
-      <div class="col-md-12">
-        <h2 class="page-header" style="margin-top:0!important">
-          <i class="fa fa-eye" aria-hidden="true"></i>
-          Observaciones
-          <span class="clearfix"></span>
-        </h2>
-      </div>
-      <div class="col-md-12">
-       <table class="table table-condensed table-hover table-bordered">
-         <thead>
-           <tr>
-            <th class="text-center">#</th>
-            <th class="text-center">Accion</th>
-          </tr>
-         </thead>
-         <tbody>
-          @foreach($acta->observaciones($acta->codigo) as $a)
-           <tr>
-             <td>{{$loop->index+1}}</td>
-             <td class="text-center">{{$a->observacion}}</td>
-           </tr>
-          @endforeach
-         </tbody>
-       </table>
-      </div>
-    </div>
-  </section>
+          <!-- jQuery 2.1.4 -->
+    <script type="text/javascript" src="{{asset('js/jQuery-2.1.4.min.js')}}"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
+    <!-- AdminLTE App -->
+    <script type="text/javascript" src="{{asset('js/app.min.js')}}"></script>
+    <!-- Data table -->
+    <script type="text/javascript" src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('plugins/datatables/dataTables.bootstrap.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script type="text/javascript" src="{{asset('js/fileinput.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/inputmask/inputmask.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type="text/javascript"></script>
+    <script type="text/javascript" src="{{asset('js/sign_src/js/bezier.js')}}"></script>
+     {{-- <script type="text/javascript" src="{{asset('js/sign_src/js/jquery.signaturepad.js')}}"></script> --}}
+     <script type="text/javascript" src="{{asset('js/sign_src/js/json2.min.js')}}"></script>
+     <script type="text/javascript" src="{{asset('js/sign_src/js/numeric-1.2.6.min.js')}}"></script>
+     <script type='text/javascript' src="https://github.com/niklasvh/html2canvas/releases/download/0.4.1/html2canvas.js"></script>
+     <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="{{asset('js/fileinput.js')}}"></script>
+    {{--  <script type="text/javascript" src="{{asset('js/signature_pad.js')}}"></script> --}}
+     <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <script type="text/javascript" src="{{asset('js/signature_pad.umd.js')}}"></script>
+     <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.min.js')}}"></script>
+     <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.es.min.js')}}"></script>
 
-
-
-
-@endsection
-
-@section('script')
-
-<script type="text/javascript">
+     <script type="text/javascript">
 
   $(document).ready(function(){
 
@@ -363,14 +292,29 @@ undoButton.addEventListener("click", function (event) {
 
 var toogle=true;
 
+changeColorButton.addEventListener("click", function (event) {
+
+  toogle = !toogle;
+
+  if(toogle){var color = "rgb(0,0,0)";}
+  if(!toogle){var color = "rgb(0,0,255)";}
+  
+  //var r = Math.round(Math.random() * 255);
+  //var g = Math.round(Math.random() * 255);
+  //var b = Math.round(Math.random() * 255);
+  //var color = "rgb(" + r + "," + g + "," + b +")";
+
+  signaturePad.penColor = color;
+});
+
 
 
 savePNGButton.addEventListener("click", function (event) {
   if (signaturePad.isEmpty()) {
     swal("Debe poner una firma.");
   } else {
-    // var dataURL = signaturePad.toDataURL();
-    // download(dataURL, "signature.png");
+    var dataURL = signaturePad.toDataURL();
+    download(dataURL, "signature.png");
 
     html2canvas([document.getElementById('signatura-pad-image')], {
           onrendered: function (canvas) {
@@ -378,7 +322,7 @@ savePNGButton.addEventListener("click", function (event) {
             var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
 
             $("#firma").val(img_data);
-
+            	console.log("llegue")
                 $.ajax({
                   headers: {
                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -389,8 +333,7 @@ savePNGButton.addEventListener("click", function (event) {
                   dataType: 'json',
                   success: function (response) {
                     swal(response.msg);
-                    $('#myModal').modal('hide');
-                     window.location.reload();
+                    window.location.replace(response.url);
                   }
                 });
             
@@ -401,12 +344,30 @@ savePNGButton.addEventListener("click", function (event) {
   }
 });
 
+saveJPGButton.addEventListener("click", function (event) {
+  if (signaturePad.isEmpty()) {
+    alert("Please provide a signature first.");
+  } else {
+    var dataURL = signaturePad.toDataURL("image/jpeg");
+    download(dataURL, "signature.jpg");
+  }
+});
 
+saveSVGButton.addEventListener("click", function (event) {
+  if (signaturePad.isEmpty()) {
+    alert("Please provide a signature first.");
+  } else {
+    var dataURL = signaturePad.toDataURL('image/svg+xml');
+    download(dataURL, "signature.svg");
+  }
+});
 
 
 
 
 });
 </script>
+</body>
 
-@endsection
+
+</html>
