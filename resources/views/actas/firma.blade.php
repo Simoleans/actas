@@ -34,7 +34,7 @@
           flex-direction: column;
   font-size: 10px;
   width: 100%;
-  min-height: 80vh;
+  min-height: 80%;
   /*max-width: 700px;*/
   max-height: 460px;
   border: 1px solid #e8e8e8;
@@ -81,9 +81,8 @@ canvas {
 /*  position: absolute;*/
   left: 0;
   top: 0;
-  width: 200px;
-  height: 150px;
-  max-height: 250px;
+  width: 100%;
+  height: 100%;
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.02) inset;
 }
@@ -132,9 +131,13 @@ canvas {
 
       </div>
 
-      <div class="col-md-4">
-        <p>&nbsp;</p>
-        <p><b>Observaciones: </b> {{$acta->observaciones?$acta->observaciones:'N/T'}} </p>
+      <div class="col-md-4"> 
+        <h4>Fotos</h4>
+        <div class="row">
+          @foreach($acta->fotos($acta->codigo) as $f)
+            <div class="col-md-5"><img src="{{asset('img/actas/fotos/'.$f->foto)}}" class="img-responsive"></div>
+          @endforeach
+        </div>
       </div>
 
       <div class="col-md-2">
@@ -156,45 +159,44 @@ canvas {
 
           @if($participante->firma)
             <div class="col-md-6 col-md-offset-3">
-              <img src="{{asset('img/actas').'/'.$participante->firma}}">
+              <img src="{{asset('img/actas').'/'.$participante->firma}}" class="img-responsive">
               <h3 class="tag-ingo text-center">{{$participante->nombre.' '.$participante->apellido}}</h3>
             </div>
            @else
-         <div class="row">
+         {{-- <div class="row">
            <div class="col-md-5 col-md-offset-5">
              <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
               ¡Firma Aquí!
             </a>
            </div>
-         </div>
+         </div> --}}
         <form method="POST" enctype="multipart/form-data" id="form_pad">
-                   <meta name="csrf-token" content="{{ csrf_token() }}" />
-                    <input type="hidden" name="id_participante" value="{{$participante->id}}">
-                    <input type="hidden" name="firma" id="firma" required>
-                    <div id="signature-pad" class="signature-pad">
-                            <div class="signature-pad--body" id="signatura-pad-image">
-                              <canvas></canvas>
-                            </div>
-                            <div class="signature-pad--footer">
-                              <div class="description">VeanX Technology<br>{{$participante->clientes->nombre.' '.$participante->clientes->apellido}}</div>
+           <meta name="csrf-token" content="{{ csrf_token() }}" />
+            <input type="hidden" name="id_participante" value="{{$participante->id}}">
+            <input type="hidden" name="firma" id="firma" required>
+            <div id="signature-pad" class="signature-pad">
+                    <div class="signature-pad--body" id="signatura-pad-image">
+                      <canvas></canvas>
+                    </div>
+                    <div class="signature-pad--footer">
+                      <div class="description">VeanX Technology<br>{{$participante->clientes->nombre.' '.$participante->clientes->apellido}}</div>
 
-                              <div class="signature-pad--actions">
-                                <div>
-                                  <button type="button" class="button clear btn-lg btn-warning" data-action="clear">Limpiar</button>
-                                  <button type="button" class="button" style="display: none;" data-action="change-color">Cambiar Color</button>
-                                  <button type="button" class="button" style="display: none;" data-action="undo">corregir</button>
+                      <div class="signature-pad--actions">
+                        <div>
+                          <button type="button" class="button clear btn-lg btn-warning" data-action="clear">Limpiar</button>
+                          <button type="button" class="button" style="display: none;" data-action="change-color">Cambiar Color</button>
+                          <button type="button" class="button" style="display: none;" data-action="undo">corregir</button>
 
-                                </div>
-                                <div>
-                                  <button type="button" class="button save bt btn-lg btn-success"  data-action="save-png">Guardar</button>
-                                  <button type="button" class="button save" style="display: none;" data-action="save-jpg">Guardar en JPG</button>
-                                  <button type="button" class="button save" style="display: none;" data-action="save-svg">Guardar en SVG</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                  </form>
-        
+                        </div>
+                        <div>
+                          <button type="button" class="button save bt btn-lg btn-success"  data-action="save-png">Guardar</button>
+                          <button type="button" class="button save" style="display: none;" data-action="save-jpg">Guardar en JPG</button>
+                          <button type="button" class="button save" style="display: none;" data-action="save-svg">Guardar en SVG</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+          </form>
          @endif
 
       <br>
@@ -228,68 +230,38 @@ canvas {
        </table>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="page-header" style="margin-top:0!important">
+          <i class="fa fa-eye" aria-hidden="true"></i>
+          Observaciones
+          <span class="clearfix"></span>
+        </h2>
+      </div>
+      <div class="col-md-12">
+       <table class="table table-condensed table-hover table-bordered">
+         <thead>
+           <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">Accion</th>
+          </tr>
+         </thead>
+         <tbody>
+          @foreach($acta->observaciones($acta->codigo) as $a)
+           <tr>
+             <td>{{$loop->index+1}}</td>
+             <td class="text-center">{{$a->observacion}}</td>
+           </tr>
+          @endforeach
+         </tbody>
+       </table>
+      </div>
+    </div>
   </section>
 
 
 
-  <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">{{$participante->nombre.' '.$participante->apellido}}</h4>
-      </div>
-      <div class="modal-body">
-         <form method="POST" enctype="multipart/form-data" id="form_pad">
-         <meta name="csrf-token" content="{{ csrf_token() }}" />
-          <input type="hidden" name="id_participante" value="{{$participante->id}}">
-          <input type="hidden" name="firma" id="firma" required>
-          <div class="row">
-             @if(!$participante->firma)
-               <div class="col-md-12">
-                  {{-- <label class="control-label" for="Firma">Firma: *</label> --}}
-                  {{-- <form method="POST" enctype="multipart/form-data" id="form_pad">
-                   <meta name="csrf-token" content="{{ csrf_token() }}" />
-                    <input type="hidden" name="id_participante" value="{{$participante->id}}">
-                    <input type="hidden" name="firma" id="firma" required>
-                    <div id="signature-pad" class="signature-pad">
-                            <div class="signature-pad--body" id="signatura-pad-image">
-                              <canvas></canvas>
-                            </div>
-                            <div class="signature-pad--footer">
-                              <div class="description">VeanX Technology<br>{{$participante->clientes->nombre.' '.$participante->clientes->apellido}}</div>
-
-                              <div class="signature-pad--actions">
-                                <div>
-                                  <button type="button" class="button clear btn-lg btn-warning" data-action="clear">Limpiar</button>
-                                  <button type="button" class="button" style="display: none;" data-action="change-color">Cambiar Color</button>
-                                  <button type="button" class="button" style="display: none;" data-action="undo">corregir</button>
-
-                                </div>
-                                <div>
-                                  <button type="button" class="button save bt btn-lg btn-success"  data-action="save-png">Guardar</button>
-                                  <button type="button" class="button save" style="display: none;" data-action="save-jpg">Guardar en JPG</button>
-                                  <button type="button" class="button save" style="display: none;" data-action="save-svg">Guardar en SVG</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                  </form> --}}
-              </div>
-            </div>
-            @endif
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="clear" class="btn btn-warning" align="center">Limpiar firma</button>
-        <button class="btn btn-flat btn-primary" type="submit"><i class="fa fa-send"></i> Guardar</button>
-      </div>
-    </form>
-    </div>
-  </div>
-</div>
-<!-- fin modal -->
 
 @endsection
 

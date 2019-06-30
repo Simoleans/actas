@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Clientes;
+use App\Planes;
 
 class ClientesController extends Controller
 {
@@ -15,7 +16,9 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        //
+      $clientes= Auth::user()->empresa->clientes;
+      //dd($clientes);
+        return view('clientes.index',['clientes' => $clientes]);
     }
 
     /**
@@ -96,7 +99,13 @@ class ClientesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cliente = Clientes::findOrfail($id);
+
+        $empresa_id = Auth::user()->empresa->id;
+
+        $planes = Planes::where('id_empresa',$empresa_id)->get();
+
+        return view('clientes.edit',['planes' => $planes,'cliente' => $cliente]);
     }
 
     /**
@@ -108,7 +117,22 @@ class ClientesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cliente = Clientes::findOrFail($id);
+
+        $cliente->fill($request->all());
+
+        if($cliente->save()){
+          return redirect("clientes")->with([
+            'flash_message' => 'Cliente agregado correctamente.',
+            'flash_class' => 'alert-success'
+            ]);
+        }else{
+          return redirect("clientes")->with([
+            'flash_message' => 'Ha ocurrido un error.',
+            'flash_class' => 'alert-danger',
+            'flash_important' => true
+            ]);
+        }
     }
 
     /**

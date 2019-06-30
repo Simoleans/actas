@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title','Clientes - '.config('app.name'))
-@section('header','Clientes')
+@section('title','Planes - '.config('app.name'))
+@section('header','Planes')
 @section('breadcrumb')
 	<ol class="breadcrumb">
 	  <li><a href="{{route('dashboard')}}"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
-	  <li class="active"> Clientes </li>
+	  <li class="active"> Planes </li>
 	</ol>
 @endsection
 @section('content')
@@ -16,8 +16,8 @@
         <span class="info-box-icon bg-red"><i class="fa fa-user"></i></span>
         
         <div class="info-box-content">
-          <span class="info-box-text">Clientes</span>
-          <span class="info-box-number">{{ count($clientes) }}</span>
+          <span class="info-box-text">Planes</span>
+          <span class="info-box-number">{{ count($planes) }}</span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -29,7 +29,7 @@
 	  	<div class="col-md-12">
 	    	<div class="box box-danger">
 		      <div class="box-header with-border">
-		        <h3 class="box-title"><i class="fa fa-users"></i> Mis Clientes</h3>
+		        <h3 class="box-title"><i class="fa fa-users"></i> Mis Planes</h3>
 		        <span class="pull-right">
 							<a href="{{ route('clientes.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo Proveedor</a>
 						</span>
@@ -39,30 +39,22 @@
 						<thead>
 							<tr>
 								<th class="text-center">#</th>
-								<th class="text-center">Nombre</th>
-								<th class="text-center">Apellido</th>
-								<th class="text-center">RUT</th>
-								<th class="text-center">Email</th>
-								<th class="text-center">Telefono</th>
-								<th class="text-center">Dirección</th>
 								<th class="text-center">Plan</th>
+								<th class="text-center">Fecha In.</th>
+								<th class="text-center">Fecha Fin.</th>
 								<th class="text-center">Accion</th>
 							</tr>
 						</thead>
 						<tbody class="text-center">
-							@foreach($clientes as $d)
+							@foreach($planes as $d)
 								<tr>
 									<td>{{$loop->index+1}}</td>
 									<td>{{strtoupper($d->nombre)}}</td>
-									<td>{{strtoupper($d->apellido)}}</td>
-									<td>{{strtoupper($d->rut)}}</td>
-									<td>{{strtoupper($d->email)}}</td>
-									<td>{{$d->telefono}}</td>
-									<td>{{strtoupper($d->direccion)}}</td>
-									<td>{{$d->plan->nombre}}</td>
+									<td>{{strtoupper($d->fecha_inicio)}}</td>
+									<td>{{strtoupper($d->fecha_fin)}}</td>
 									<td>
-{{-- 										<a class="btn btn-primary btn-flat btn-sm" href="{{ route('clientes.show',[$d->id])}}"><i class="fa fa-search"></i></a> --}}
-										<a href="{{route('clientes.edit',[$d->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
+{{-- 		<a class="btn btn-primary btn-flat btn-sm" href="{{ route('clientes.show',[$d->id])}}"><i class="fa fa-search"></i></a> --}}
+										<a href="{{route('planes.edit',[$d->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
 									</td>
 								</tr>
 							@endforeach

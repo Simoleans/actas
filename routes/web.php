@@ -73,6 +73,9 @@ Route::group(['middleware' => 'auth'], function() { //middleware auth
 	/* actas*/
 	Route::resource('/actas','ActasController');
 
+	/* Planes */
+	Route::resource('/planes','PlanesController');
+
 
 	/* Guia Despacho */
 	Route::resource('/guiadespacho','GuiaDespachoController');

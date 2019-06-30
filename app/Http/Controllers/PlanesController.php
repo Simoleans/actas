@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Planes;
 
 class PlanesController extends Controller
 {
@@ -13,7 +15,13 @@ class PlanesController extends Controller
      */
     public function index()
     {
-        //
+        $empresa_id = Auth::user()->empresa->id;
+
+        $planes = Planes::where('id_empresa',$empresa_id)->get();
+
+        return view('planes.index',['planes' => $planes]);
+
+
     }
 
     /**
@@ -23,7 +31,7 @@ class PlanesController extends Controller
      */
     public function create()
     {
-        //
+        return view('planes.create');
     }
 
     /**
@@ -34,7 +42,23 @@ class PlanesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+
+      $plan = new Planes;
+      $plan->fill($request->all());
+
+      if($plan->save()){
+        return redirect("planes")->with([
+          'flash_message' => 'Plan agregado correctamente.',
+          'flash_class' => 'alert-success'
+          ]);
+      }else{
+        return redirect("planes")->with([
+          'flash_message' => 'Ha ocurrido un error.',
+          'flash_class' => 'alert-danger',
+          'flash_important' => true
+          ]);
+      }
     }
 
     /**

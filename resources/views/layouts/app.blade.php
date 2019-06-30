@@ -21,10 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('js/sign_src/css/jquery.signaturepad.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput.css')}}">
-
-
-
-
+    <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datepicker3.min.css')}}">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/css/inputmask.min.css" rel="stylesheet"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -195,6 +192,19 @@
               </ul>
             </li>
 
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-list"></i>
+                <span>Planes</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{route('planes.create')}}"><i class="fa fa-circle-o"></i>Crear Plan</a></li>
+                <li><a href="{{route('planes.index')}}"><i class="fa fa-circle-o"></i>Ver Planes</a></li>
+              </ul>
+            </li>
+
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-file-o"></i>
@@ -277,11 +287,17 @@
     {{--  <script type="text/javascript" src="{{asset('js/signature_pad.js')}}"></script> --}}
      <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
      <script type="text/javascript" src="{{asset('js/signature_pad.umd.js')}}"></script>
+     <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.min.js')}}"></script>
+     <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.es.min.js')}}"></script>
 
 
     <script type="text/javascript">
 
       $(document).ready(function(){
+
+        $('.date').datepicker({
+            language: "es"
+        });
 
         $(".rut").inputmask({
             mask: "9[9.999.999]-[9|K|k]",
