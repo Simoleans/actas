@@ -25,6 +25,7 @@
 
 
 
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/css/inputmask.min.css" rel="stylesheet"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
@@ -267,14 +268,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/sign_src/js/bezier.js')}}"></script>
-     <script type="text/javascript" src="{{asset('js/sign_src/js/jquery.signaturepad.js')}}"></script>
+     {{-- <script type="text/javascript" src="{{asset('js/sign_src/js/jquery.signaturepad.js')}}"></script> --}}
      <script type="text/javascript" src="{{asset('js/sign_src/js/json2.min.js')}}"></script>
      <script type="text/javascript" src="{{asset('js/sign_src/js/numeric-1.2.6.min.js')}}"></script>
      <script type='text/javascript' src="https://github.com/niklasvh/html2canvas/releases/download/0.4.1/html2canvas.js"></script>
      <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="{{asset('js/fileinput.js')}}"></script>
-     <script type="text/javascript" src="{{asset('js/signature_pad.js')}}"></script>
+    {{--  <script type="text/javascript" src="{{asset('js/signature_pad.js')}}"></script> --}}
      <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <script type="text/javascript" src="{{asset('js/signature_pad.umd.js')}}"></script>
 
 
     <script type="text/javascript">
