@@ -18,7 +18,7 @@
 }
 
 .modal-content {
-  height: 100%;
+  min-height: 80vh;
   border-radius: 0;
 }
 
@@ -34,7 +34,7 @@
           flex-direction: column;
   font-size: 10px;
   width: 100%;
-  height: 100%;
+  min-height: 80vh;
   /*max-width: 700px;*/
   max-height: 460px;
   border: 1px solid #e8e8e8;
@@ -81,8 +81,9 @@ canvas {
 /*  position: absolute;*/
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
+  width: 200px;
+  height: 150px;
+  max-height: 250px;
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.02) inset;
 }
@@ -166,33 +167,33 @@ canvas {
             </a>
            </div>
          </div>
-         <form method="POST" enctype="multipart/form-data" id="form_pad">
-         <meta name="csrf-token" content="{{ csrf_token() }}" />
-          <input type="hidden" name="id_participante" value="{{$participante->id}}">
-          <input type="hidden" name="firma" id="firma" required>
-          <div id="signature-pad" class="signature-pad">
-                  <div class="signature-pad--body" id="signatura-pad-image">
-                    <canvas></canvas>
-                  </div>
-                  <div class="signature-pad--footer">
-                    <div class="description">VeanX Technology<br>{{$participante->clientes->nombre.' '.$participante->clientes->apellido}}</div>
+        <form method="POST" enctype="multipart/form-data" id="form_pad">
+                   <meta name="csrf-token" content="{{ csrf_token() }}" />
+                    <input type="hidden" name="id_participante" value="{{$participante->id}}">
+                    <input type="hidden" name="firma" id="firma" required>
+                    <div id="signature-pad" class="signature-pad">
+                            <div class="signature-pad--body" id="signatura-pad-image">
+                              <canvas></canvas>
+                            </div>
+                            <div class="signature-pad--footer">
+                              <div class="description">VeanX Technology<br>{{$participante->clientes->nombre.' '.$participante->clientes->apellido}}</div>
 
-                    <div class="signature-pad--actions">
-                      <div>
-                        <button type="button" class="button clear btn-lg btn-warning" data-action="clear">Limpiar</button>
-                        <button type="button" class="button" style="display: none;" data-action="change-color">Cambiar Color</button>
-                        <button type="button" class="button" style="display: none;" data-action="undo">corregir</button>
+                              <div class="signature-pad--actions">
+                                <div>
+                                  <button type="button" class="button clear btn-lg btn-warning" data-action="clear">Limpiar</button>
+                                  <button type="button" class="button" style="display: none;" data-action="change-color">Cambiar Color</button>
+                                  <button type="button" class="button" style="display: none;" data-action="undo">corregir</button>
 
-                      </div>
-                      <div>
-                        <button type="button" class="button save bt btn-lg btn-success"  data-action="save-png">Guardar</button>
-                        <button type="button" class="button save" style="display: none;" data-action="save-jpg">Guardar en JPG</button>
-                        <button type="button" class="button save" style="display: none;" data-action="save-svg">Guardar en SVG</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-        </form>
+                                </div>
+                                <div>
+                                  <button type="button" class="button save bt btn-lg btn-success"  data-action="save-png">Guardar</button>
+                                  <button type="button" class="button save" style="display: none;" data-action="save-jpg">Guardar en JPG</button>
+                                  <button type="button" class="button save" style="display: none;" data-action="save-svg">Guardar en SVG</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                  </form>
         
          @endif
 
@@ -248,11 +249,33 @@ canvas {
              @if(!$participante->firma)
                <div class="col-md-12">
                   {{-- <label class="control-label" for="Firma">Firma: *</label> --}}
-                 
-              </div>
-              <div class="row">
-              <div class="form-group text-center">
+                  {{-- <form method="POST" enctype="multipart/form-data" id="form_pad">
+                   <meta name="csrf-token" content="{{ csrf_token() }}" />
+                    <input type="hidden" name="id_participante" value="{{$participante->id}}">
+                    <input type="hidden" name="firma" id="firma" required>
+                    <div id="signature-pad" class="signature-pad">
+                            <div class="signature-pad--body" id="signatura-pad-image">
+                              <canvas></canvas>
+                            </div>
+                            <div class="signature-pad--footer">
+                              <div class="description">VeanX Technology<br>{{$participante->clientes->nombre.' '.$participante->clientes->apellido}}</div>
 
+                              <div class="signature-pad--actions">
+                                <div>
+                                  <button type="button" class="button clear btn-lg btn-warning" data-action="clear">Limpiar</button>
+                                  <button type="button" class="button" style="display: none;" data-action="change-color">Cambiar Color</button>
+                                  <button type="button" class="button" style="display: none;" data-action="undo">corregir</button>
+
+                                </div>
+                                <div>
+                                  <button type="button" class="button save bt btn-lg btn-success"  data-action="save-png">Guardar</button>
+                                  <button type="button" class="button save" style="display: none;" data-action="save-jpg">Guardar en JPG</button>
+                                  <button type="button" class="button save" style="display: none;" data-action="save-svg">Guardar en SVG</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                  </form> --}}
               </div>
             </div>
             @endif
@@ -276,48 +299,6 @@ canvas {
 
   $(document).ready(function(){
 
-    // console.log("inciio")
-
-    // $("#clear").click(function(e){
-    //    $('#signArea').signaturePad().clearCanvas();
-    // });
-
-    //   //firma
-    //   $('#signArea').signaturePad({drawOnly:true, drawBezierCurves:true, lineTop:90});
-
-    //   $("#form_pad").submit(function(e){
-    //     e.preventDefault();
-    //     html2canvas([document.getElementById('sign-pad')], {
-    //       onrendered: function (canvas) {
-    //         var canvas_img_data = canvas.toDataURL('image/png');
-    //         var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
-
-    //         $("#firma").val(img_data);
-
-    //         if ( $("p.error").is(':visible') ) {
-    //           $("p.error").text("Falta la firma del documento.");
-
-    //         }else{
-    //             $.ajax({
-    //               headers: {
-    //                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //               },
-    //               url: '{{route('actas.send')}}',
-    //               data: $("#form_pad").serialize(),
-    //               type: 'post',
-    //               dataType: 'json',
-    //               success: function (response) {
-    //                 alert(response.msg);
-    //                 $('#myModal').modal('hide');
-    //                  window.location.reload();
-    //               }
-    //             });
-    //         }
-
-
-    //       }
-    //     });// fin html2canvas
-    //   }); //fin firma
  var wrapper = document.getElementById("signature-pad");
 var clearButton = wrapper.querySelector("[data-action=clear]");
 var changeColorButton = wrapper.querySelector("[data-action=change-color]");
@@ -332,7 +313,6 @@ var signaturePad = new SignaturePad(canvas, {
   backgroundColor: 'rgb(255, 255, 255)'
 });
 
-console.log(wrapper)
 
 // Adjust canvas coordinate space taking into account pixel ratio,
 // to make it look crisp on mobile devices.
