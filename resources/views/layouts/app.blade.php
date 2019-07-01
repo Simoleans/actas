@@ -121,8 +121,8 @@
                   <!-- User image -->
                   <li class="user-header">
                     <p>
-                      DESCRIPCCION
-                      <small>LEYENDA DEL USUARIO ONLINE</small>
+                      {{Auth::user()->rut_user}}
+                      <small>{{Auth::user()->direccion_user}}</small>
                     </p>
                   </li>
 
@@ -217,7 +217,7 @@
               </ul>
             </li>
         @endif {{-- Fin de validacion si tiene empresa registrada --}}
-
+        @if(Auth::user()->rol == 1)
           <li class="treeview">
               <a href="#">
                 <i class="fa fa-question"></i>
@@ -229,6 +229,7 @@
                 <li><a href="{{route('ayudas.index')}}"><i class="fa fa-circle-o"></i>Ver Ayudas</a></li>
               </ul>
             </li>
+          @endif
 
            <li class="treeview">
               <a href="{{route('ayudas.viwers')}}">

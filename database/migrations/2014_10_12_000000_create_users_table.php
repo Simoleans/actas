@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
@@ -18,12 +18,13 @@ class CreateUsersTable extends Migration
             $table->integer('id_user')->unsigned()->nullable(); //De uno a muchos,  una empresa,  muchos usuarios
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->string('nombre');
-            $table->string('email',190)->unique();
+            $table->string('email', 190)->unique();
             $table->string('rut_user');
             $table->string('ciudad_user');
             $table->string('telefono_user');
             $table->string('direccion_user');
             $table->string('password');
+            $table->string('rol')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
