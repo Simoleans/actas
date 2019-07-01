@@ -131,7 +131,7 @@ canvas {
 
       </div>
 
-      <div class="col-md-4"> 
+      <div class="col-md-4">
         <h4>Fotos</h4>
         <div class="row">
           @foreach($acta->fotos($acta->codigo) as $f)
@@ -156,7 +156,7 @@ canvas {
         </h2>
       </div>
       <div class="col-md-12">
-          @if($participante->firma)
+          @if(!$firma)
             <div class="col-md-6 col-md-offset-3">
               <img src="{{asset('img/actas').'/'.$participante->firma}}" class="img-responsive">
               <h3 class="tag-ingo text-center">{{strtoupper($participante->clientes->nombre.' '.$participante->clientes->apellido)}}</h3>
@@ -164,7 +164,7 @@ canvas {
            @else
          <div class="row">
            <div class="col-md-5 col-md-offset-5">
-             <a class="btn btn-primary btn-lg" href="{{route('actas.sign',['id' => $participante->id])}}">
+             <a class="btn btn-primary btn-lg" href="{{route('actas.sign',['id' => $participante->id,'acta_id'=>$acta->id])}}">
               ¡Firma Aquí!
             </a>
            </div>
@@ -393,7 +393,7 @@ savePNGButton.addEventListener("click", function (event) {
                      window.location.reload();
                   }
                 });
-            
+
 
 
           }

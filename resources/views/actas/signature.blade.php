@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Firmar</title>
-	   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title>Firmar</title>
+     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Icon 16x16 -->
     <link rel="icon" type="image/png" sizes="240x240" href="{{asset('img/logo.png')}}">
     <!-- Bootstrap 3.3.5 -->
@@ -27,7 +27,7 @@
 
 </head>
 <body>
-	<style type="text/css">
+  <style type="text/css">
 
 
 body {
@@ -131,14 +131,15 @@ canvas {
           justify-content: space-between;
   margin-top: 8px;
 }
-	</style>
- @if(!$participante->firma)
+  </style>
+  @if($firma)
  <div class="row">
       <div class="col-md-12">
         <form method="POST" enctype="multipart/form-data" id="form_pad">
            <meta name="csrf-token" content="{{ csrf_token() }}" />
             <input type="hidden" name="id_participante" value="{{$participante->id}}">
             <input type="hidden" name="firma" id="firma" required>
+            <input type="hidden" name="id_acta" value="{{$acta->id}}">
             <div id="signature-pad" class="signature-pad">
                     <div class="signature-pad--body" id="signatura-pad-image">
                       <canvas></canvas>
@@ -298,7 +299,7 @@ changeColorButton.addEventListener("click", function (event) {
 
   if(toogle){var color = "rgb(0,0,0)";}
   if(!toogle){var color = "rgb(0,0,255)";}
-  
+
   //var r = Math.round(Math.random() * 255);
   //var g = Math.round(Math.random() * 255);
   //var b = Math.round(Math.random() * 255);
@@ -322,7 +323,7 @@ savePNGButton.addEventListener("click", function (event) {
             var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
 
             $("#firma").val(img_data);
-            	console.log("llegue")
+              console.log("llegue")
                 $.ajax({
                   headers: {
                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -336,7 +337,7 @@ savePNGButton.addEventListener("click", function (event) {
                     window.location.replace(response.url);
                   }
                 });
-            
+
 
 
           }

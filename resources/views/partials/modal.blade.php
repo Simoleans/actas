@@ -13,7 +13,7 @@
                       {{-- <h3 class="box-title"><i class="fa fa-users"></i> Actas</h3> --}}
                       <span class="pull-right">
                     {{-- a href="{{ route('actas.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nueva Acta</a> --}}
-                    <small><a href="#"  id="myModalCliente" data-toggle="modal" data-target="#modal-cliente">Registrar Nuevo</a></small>
+                    <small><a href="#"  id="myModalCliente" data-toggle="modal" data-target="#modal-cliente" class="btn btn-flat btn-sm btn-success">Registrar Nuevo</a></small>
                   </span>
                     </div>
                       <div class="box-body">

@@ -2,57 +2,59 @@
 @section('title','Acta - '.config('app.name'))
 @section('header','Acta')
 @section('breadcrumb')
-	<ol class="breadcrumb">
-	  <li><a href="{{route('dashboard')}}"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
-	  <li> Acta {{$acta->codigo}} </li>
-	  <li class="active">Ver </li>
-	</ol>
+  <ol class="breadcrumb">
+    <li><a href="{{route('dashboard')}}"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
+    <li> Acta {{$acta->codigo}} </li>
+    <li class="active">Ver </li>
+  </ol>
 @endsection
 @section('content')
-	<section>
+  <section>
     <a class="btn btn-flat btn-default" href="{{ route('actas.index') }}"><i class="fa fa-reply" aria-hidden="true"></i> Volver</a>
     <a class="btn btn-danger btn-flat" href="{{ route('actas.pdf',[$acta->id])}}"><i class="fa fa-print"></i></a>
     {{-- <a class="btn btn-flat btn-success" href="{{ route('actas.edit',[$acta->id]) }}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</a> --}}
     <!-- <button class="btn btn-flat btn-danger" data-toggle="modal" data-target="#delModal"><i class="fa fa-times" aria-hidden="true"></i> Eliminar</button> -->
-	</section>
+  </section>
 
-	<section class="perfil">
-		<div class="row">
-    	<div class="col-md-12">
-    		<h2 class="page-header" style="margin-top:0!important">
+  <section class="perfil">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="page-header" style="margin-top:0!important">
           <i class="fa fa-user" aria-hidden="true"></i>
           {{ 'Acta '.$acta->codigo }}
           <small class="pull-right">Registrado: {{ $acta->created_at }}</small>
           <span class="clearfix"></span>
         </h2>
-    	</div>
-			<div class="col-md-5">
-				<h4>Detalles de la empresa</h4>
-				<p><b>Usuario: </b> {{$acta->user->nombre}} </p>
+      </div>
+      <div class="col-md-5">
+        <h4>Detalles de la empresa</h4>
+        <p><b>Usuario: </b> {{$acta->user->nombre}} </p>
         <p><b>Empresa: </b> {{strtoupper($acta->empresa->r_social)}}</p>
         <p><b>Ciudad: </b> {{strtoupper($acta->empresa->ciudad)}}</p>
         <p><b>RUT: </b> {{strtoupper($acta->empresa->rut)}}</p>
         <p><b>Contacto: </b> {{strtoupper($acta->empresa->contacto)}}</p>
         <p><b>Telefono: </b> {{strtoupper($acta->empresa->telefono)}}</p>
         <p><b>Direccion: </b> {{strtoupper($acta->empresa->direccion)}}</p>
-        
-			</div>
 
-      <div class="col-md-4"> 
+      </div>
+
+      <div class="col-md-4">
         <h4>Fotos</h4>
         <div class="row">
-          @foreach($acta->fotos($acta->codigo) as $f)
+          @forelse($acta->fotos($acta->codigo) as $f)
             <div class="col-md-5"><img src="{{asset('img/actas/fotos/'.$f->foto)}}" class="img-responsive"></div>
-          @endforeach
+          @empty
+          <h3>Sin foto</h3>
+          @endforelse
         </div>
       </div>
 
-      <div class="col-md-2"> 
+      <div class="col-md-2">
         <p>&nbsp;</p>
         <p><b>Logo De la empresa</b></p>
         <img src="{{asset('img/empresas/'.$acta->empresa->logo)}}" class="img-responsive">
       </div>
-		</div>
+    </div>
 
     <div class="row">
       <div class="col-md-12">
@@ -91,11 +93,11 @@
              </td>
              <td>
                @if($p->firma == NULL)
-                 <center><a  href="{{route('actas.firma',['id' => $p->clientes->id])}}" class="btn btn-flat btn-success btn-sm">Firmar</a></center>
+                 <center><a  href="{{route('actas.firma',['id' => $p->clientes->id,'acta_id'=>$acta->id])}}" class="btn btn-flat btn-success btn-sm">Firmar</a></center>
                 @else
                  <h3 class="text-center">¡Ya Firmo!</h3>
                 @endif
-               
+
              </td>
              <td class="hidden-lg">
                <button type="button"  class="btn btn-sm btn-warning shareButton"><i class="fa fa-share-alt-square" aria-hidden="true"></i></button>
@@ -161,9 +163,9 @@
        </table>
       </div>
     </div>
-	</section>
+  </section>
 
-	<div id="delModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="delModalLabel">
+  <div id="delModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="delModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -193,8 +195,8 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    
-    $(".data-table").on('click','.shareButton', function () { 
+
+    $(".data-table").on('click','.shareButton', function () {
 
       /* Mostramos la opcion nativa de compartir si se navega desde Android */
       if (navigator.userAgent.match(/Android/i)) {
@@ -207,7 +209,7 @@
      /* Recuperamos el boton */
     shareButton = document.getElementById("shareButton");
     /* Capturamos el evento CLICK */
-    
+
     $(".btn_invitar").click(function(event) {
       event.preventDefault();
 
@@ -235,10 +237,10 @@
       .always(function() {
         console.log("complete");
       });
-      
+
     });
 
-   
+
 
 
   });

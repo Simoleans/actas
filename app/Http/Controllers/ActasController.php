@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Acciones;
+use App\Actas;
+use App\Clientes;
+use App\Fotos;
+use App\Mail\ActasMail;
+use App\Observacion;
+use App\Participantes;
+use App\Planes;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Http\Request;
-use App\Proveedor;
-use App\Empresas;
-use App\Participantes;
-use App\Clientes;
-use App\Acciones;
-use App\Mail\ActasMail;
-use App\Actas;
-use App\Fotos;
-use App\Observacion;
-use App\Planes;
 use PDF;
 
 class ActasController extends Controller
@@ -26,9 +24,9 @@ class ActasController extends Controller
      */
     public function index()
     {
-        $actas = Actas::where('id_user',Auth::user()->id)->get();
+        $actas = Actas::where('id_user', Auth::user()->id)->get();
 
-        return view('actas.index',['actas' => $actas]);
+        return view('actas.index', ['actas' => $actas]);
     }
 
     /**
@@ -38,12 +36,12 @@ class ActasController extends Controller
      */
     public function create()
     {
-        $empresa = Auth::user()->empresa;
+        $empresa  = Auth::user()->empresa;
         $clientes = $empresa->clientes;
 
-        $planes = Planes::where('id_empresa',Auth::user()->empresa->id)->get();
+        $planes = Planes::where('id_empresa', Auth::user()->empresa->id)->get();
 
-        return view('actas.create2',['empresa' => $empresa,'clientes' => $clientes,'planes' => $planes]);
+        return view('actas.create2', ['empresa' => $empresa, 'clientes' => $clientes, 'planes' => $planes]);
     }
 
     /**
@@ -54,7 +52,7 @@ class ActasController extends Controller
      */
     public function store(Request $request)
     {
-      //dd(Input::file('foto'));
+        //dd(Input::file('foto'));
 
         //$codigo=rand(11111, 99999);
 
@@ -65,87 +63,79 @@ class ActasController extends Controller
         //dd($lastId);
 
         if (!$lastId) {
-            $codigo = (str_pad((int)1, 4, '0', STR_PAD_LEFT));
-        }else{
-            $codigo = (str_pad((int)$lastId->id + 1, 4, '0', STR_PAD_LEFT));
+            $codigo = (str_pad((int) 1, 4, '0', STR_PAD_LEFT));
+        } else {
+            $codigo = (str_pad((int) $lastId->id + 1, 4, '0', STR_PAD_LEFT));
         }
 
         //dd($codigo);
 
-       
-        $acta = new Actas;
-        $acta->codigo = 'AC'.$codigo;
-        $acta->id_user = Auth::user()->id;
+        $acta             = new Actas;
+        $acta->codigo     = 'AC' . $codigo;
+        $acta->id_user    = Auth::user()->id;
         $acta->id_empresa = $request->id_empresa;
         //$acta->observaciones = $request->observaciones;
         $acta->status = 1;
-        
-        
+
         if ($acta->save()) {
-        if(input::hasFile('foto'))
-        {
-             $file = Input::file('foto');
+            if (input::hasFile('foto')) {
+                $file = Input::file('foto');
 
-                 foreach ( $file as $gImg ) {
-                        $filename = date("YmdHi").$gImg->getClientOriginalName();
-                        $patch = public_path()."/img/actas/fotos/";
-                        $gImg->move($patch,$filename);
-                        // \Image::make($gImg)->save($patch. $filename );
-                        // \Image::make($gImg)->resize(300, null, function ($constraint) {
-                        //                     $constraint->aspectRatio();
-                        //                 })->save($patch.'thumb_'.$filename );
-                        $name[] = $filename;   
-                    }
-                   // return response()->json($name);
-                    //$ultimo_id = Scort::orderBy('id', 'DESC')->first();//agarra el ultimo id
-                   // return response()->json($ultimo_id->id);
-                 //$scort->fotos = implode(',', $name);
+                foreach ($file as $gImg) {
+                    $filename = date("YmdHi") . $gImg->getClientOriginalName();
+                    $patch    = public_path() . "/img/actas/fotos/";
+                    $gImg->move($patch, $filename);
+                    // \Image::make($gImg)->save($patch. $filename );
+                    // \Image::make($gImg)->resize(300, null, function ($constraint) {
+                    //                     $constraint->aspectRatio();
+                    //                 })->save($patch.'thumb_'.$filename );
+                    $name[] = $filename;
+                }
+                // return response()->json($name);
+                //$ultimo_id = Scort::orderBy('id', 'DESC')->first();//agarra el ultimo id
+                // return response()->json($ultimo_id->id);
+                //$scort->fotos = implode(',', $name);
 
-                    for ($i=0; $i < count($name) ; $i++) { // for para guardar todas las fotos
-                        //echo $name[$i];
-                        $foto = new Fotos;
-                        $foto->codigo_acta = 'AC'.$codigo;
-                        $foto->foto = $name[$i];
-                        $foto->save();
-                            //return response()->json(['status' => true , 'msg'=>'Se ha registrado esta scort con exito']);
-                        
-                    }
-        }
+                for ($i = 0; $i < count($name); $i++) {
+                    // for para guardar todas las fotos
+                    //echo $name[$i];
+                    $foto              = new Fotos;
+                    $foto->codigo_acta = 'AC' . $codigo;
+                    $foto->foto        = $name[$i];
+                    $foto->save();
+                    //return response()->json(['status' => true , 'msg'=>'Se ha registrado esta scort con exito']);
 
-            
-            for ($i=0; $i < count($request->nombre); $i++)
-             { 
-           
+                }
+            }
+
+            for ($i = 0; $i < count($request->nombre); $i++) {
+
                 $cliente = new Participantes;
                 //$cliente->codigo_acta = 'AC'.$codigo;
-                $cliente->id_acta = $acta->id;
+                $cliente->id_acta    = $acta->id;
                 $cliente->id_cliente = $request->id[$i];
                 $cliente->save();
 
+            } //fin for
 
-             }//fin for
+            for ($i = 0; $i < count($request->observaciones); $i++) {
 
-             for ($i=0; $i < count($request->observaciones); $i++)
-             { 
-           
-                $observaciones = new Observacion;
-                $observaciones->codigo_acta = 'AC'.$codigo;
+                $observaciones              = new Observacion;
+                $observaciones->codigo_acta = 'AC' . $codigo;
                 $observaciones->observacion = $request->observaciones[$i];
                 $observaciones->save();
-             }//fin for
+            } //fin for
 
-             //for acciones
-             for ($i=0; $i < count($request->accion); $i++)
-             { 
-           
-                $acciones = new Acciones;
-                $acciones->codigo_acta = 'AC'.$codigo;
-                $acciones->accion = $request->accion[$i];
+            //for acciones
+            for ($i = 0; $i < count($request->accion); $i++) {
+
+                $acciones              = new Acciones;
+                $acciones->codigo_acta = 'AC' . $codigo;
+                $acciones->accion      = $request->accion[$i];
                 $acciones->save();
-             }//fin for
+            } //fin for
 
-
-             return response()->json(['msg'=>'Se registro correctamente','url' => route('actas.show',['acta' => $acta->id])]);
+            return response()->json(['msg' => 'Se registro correctamente', 'url' => route('actas.show', ['acta' => $acta->id])]);
         }
     }
 
@@ -160,7 +150,7 @@ class ActasController extends Controller
         $acta = Actas::findOrfail($id);
 
         //dd($acta->participantes);
-        return view('actas.view',['acta' => $acta]);
+        return view('actas.view', ['acta' => $acta]);
     }
 
     /**
@@ -201,53 +191,59 @@ class ActasController extends Controller
     {
         $acta = Actas::findOrfail($id);
 
-        $detalles = Acciones::where('codigo_acta',$acta->codigo)->get();
+        $detalles = Acciones::where('codigo_acta', $acta->codigo)->get();
 
-        $participantes = Participantes::where('id_acta',$acta->id)->get();
+        $participantes = Participantes::where('id_acta', $acta->id)->get();
 
         //dd($participantes);
 
-        $pdf = PDF::loadView('pdf.pdfActa',['orden'=>$acta,'detalles'=>$detalles,'participantes' => $participantes]);
-            
-            return $pdf->stream($acta->codigo.'.pdf');
+        $pdf = PDF::loadView('pdf.pdfActa', ['orden' => $acta, 'detalles' => $detalles, 'participantes' => $participantes]);
+
+        return $pdf->stream($acta->codigo . '.pdf');
     }
 
-    public function firma($id)
+    public function firma($id, $acta_id)
     {
         //$acta = Actas::findOrfail($id);
 
-        $participante = Participantes::where('id_cliente',$id)->first();
+        $participante = Participantes::where('id_cliente', $id)->first();
 
-        $acta = Actas::where('id',$participante->id_acta)->first();
+        $acta = Actas::where('id', $acta_id)->first();
 
-        //dd($participante);
+        $acta_firma = Participantes::where('id_cliente', $id)->where('id_acta', $acta->id)->whereNull('firma')->exists();
 
-        return view('actas.firma',['acta' => $acta,'participante' => $participante]);
+        //dd($acta_firma);
+
+        return view('actas.firma', ['acta' => $acta, 'participante' => $participante, 'firma' => $acta_firma]);
     }
 
-    public function signature($id)
+    public function signature($id, $acta_id)
     {
-        $participante = Participantes::where('id_cliente',$id)->first();
+        $participante = Participantes::where('id_cliente', $id)->first();
 
-        $acta = Actas::where('id',$participante->id_acta)->first();
+        $acta = Actas::where('id', $acta_id)->first();
 
-        return view('actas.signature',['acta' => $acta,'participante' => $participante]);
+        $acta_firma = Participantes::where('id_cliente', $id)->where('id_acta', $acta->id)->whereNull('firma')->exists();
+
+        //dd($participante->id_acta, $acta->id, $acta_firma);
+
+        return view('actas.signature', ['acta' => $acta, 'participante' => $participante, 'firma' => $acta_firma]);
     }
 
     public function firmaSend(Request $request)
     {
 
-         $name = 'ac'.md5(date("dmYhisA")).'.png';
-         $nombre = public_path().'/img/actas/'.$name;
+        $name   = 'ac' . md5(date("dmYhisA")) . '.png';
+        $nombre = public_path() . '/img/actas/' . $name;
 
-         $participante = Participantes::findOrfail($request->id_participante);
+        $participante = Participantes::where('id_cliente', $request->id_participante)->where('id_acta', $request->id_acta)->first();
 
-         $participante->firma = $name;
+        $participante->firma = $name;
 
         if ($participante->save()) {
-             file_put_contents($nombre,base64_decode($request->firma));
+            file_put_contents($nombre, base64_decode($request->firma));
 
-             return response()->json(['msg' => 'Se ha registrado correctamente','url' => route('actas.firma',['id' => $participante->id_acta])]);
+            return response()->json(['msg' => 'Se ha registrado correctamente', 'url' => route('actas.firma', ['id' => $participante->id_acta, 'acta_id' => $participante->id_acta])]);
         }
     }
 
@@ -257,15 +253,13 @@ class ActasController extends Controller
 
         $participantes = Participantes::findOrfail($request->id);
 
-       \Mail::to($participantes->email)
-                 ->send(new ActasMail($request->id,$request->acta));
-
-                
+        \Mail::to($participantes->email)
+            ->send(new ActasMail($request->id, $request->acta));
 
         if (\Mail::failures()) {
-             return response()->json(['msg' => 'No se ha enviado el correo :(', 'status' => false], 422);
+            return response()->json(['msg' => 'No se ha enviado el correo :(', 'status' => false], 422);
         }
 
-          return response()->json(['msg' => 'Se envio el correo correctamente', 'status' => true], 200);
+        return response()->json(['msg' => 'Se envio el correo correctamente', 'status' => true], 200);
     }
 }

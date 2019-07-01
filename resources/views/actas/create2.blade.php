@@ -45,7 +45,7 @@
 					           </div>
 					         </div>
 
-					         
+
 
 							<hr>
 							 <h2 class="text-center">Acciones Realizadas</h2>
@@ -54,7 +54,7 @@
 								<div class="col-md-12">
 									<div class="form-group {{ $errors->has('razon_social')?'has-error':'' }}">
 										<label class="control-label" for="razon_social">Accion: *</label>
-											<input id="razon_social" class="form-control" type="text" name="accion[]" onkeyup="mayus(this);" placeholder="Acción" required >
+											<textarea rows="5" cols="80" id="razon_social" class="form-control" type="text" name="accion[]" onkeyup="mayus(this);" placeholder="Acción" required ></textarea>
 									</div>
 								</div>
 							</div>
@@ -88,7 +88,7 @@
 								<div class="col-md-12">
 									<label class="control-label" for="razon_social">Fotos: *</label>
 									<input id="multimedia" name="foto[]" type="file" class="file" multiple
-		    						data-show-upload="false" data-show-caption="false"  required="">
+		    						data-show-upload="false" data-show-caption="false" >
 								</div>
 							</div>
 						</div>
@@ -171,9 +171,9 @@
 	    .always(function() {
 	      console.log("complete");
 	    });
-	    
+
 	  });
-	
+
 	$("#multimedia").fileinput({
             browseClass: "btn btn-primary btn-block",
             showCaption: false,
@@ -227,7 +227,7 @@
         		email = tr.find('.cliente-email').text(),
         		rut = tr.find('.cliente-rut').text(),
         		id = tr.find('.cliente-id').text();
-        		 
+
             x++; //Increment field counter
             $(wrapper).append('<div class="remove">'+
             						'<input class="id" type="hidden" value="'+id+'" name="id[]">'+
@@ -259,7 +259,7 @@
 							 '</div>'); // Add field html
 
 			   	$(this).parents("tr").remove();
-             
+
         }
     });
     $(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
@@ -272,7 +272,7 @@
         	apellido = parent.find('.apellido').val(),
         	email = parent.find('.email').val(),
         	rut = parent.find('.rut').val();
-       
+
 
         var table = "<tr>"+
         					"<td style='display:none'>"+id+"</td>"+
@@ -300,7 +300,7 @@
     					    '<div class="col-md-11">'+
 								'<div class="form-group">'+
 									'<label class="control-label" for="razon_social">Accion: *</label>'+
-										'<input id="razon_social" class="form-control" type="text" name="accion[]" onkeyup="mayus(this);" placeholder="Acción" required >'+
+										'<textarea rows="5" cols="80"  class="form-control" type="text" name="accion[]" onkeyup="mayus(this);" placeholder="Acción" required ></textarea>'+
 								'</div>'+
 							'</div>'+
 

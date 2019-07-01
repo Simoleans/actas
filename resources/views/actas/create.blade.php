@@ -78,14 +78,14 @@
 						</div>
 
 						<hr>
-						 <h2 class="text-center">Acciones Realizadas</h2>
+						 <h2 class="text-center">Acciones a realizar</h2>
 					    <hr>
 						<div class="field_wrapper_acciones row">
 							<div class="col-md-12">
 								<div class="form-group {{ $errors->has('razon_social')?'has-error':'' }}">
 									<label class="control-label" for="razon_social">Accion: *</label>
-										<input id="razon_social" class="form-control" type="text" name="accion[]" onkeyup="mayus(this);" placeholder="Acción" required >
-								</div>
+										<textarea  class="form-control"  name="accion[]"  placeholder="Acción" required ></textarea>
+
 							</div>
 						</div>
 
