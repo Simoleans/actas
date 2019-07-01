@@ -150,7 +150,7 @@ canvas {
                         <div>
                           <button type="button" class="button clear btn btn-sm btn-default btn-flat" data-action="clear">Limpiar</button>
                           <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="change-color">Cambiar Color</button>
-                          <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="undo">corregir</button>
+                          <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="undo">Corregir</button>
 
                         </div>
                         <div>

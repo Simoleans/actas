@@ -14,6 +14,7 @@ use App\Mail\ActasMail;
 use App\Actas;
 use App\Fotos;
 use App\Observacion;
+use App\Planes;
 use PDF;
 
 class ActasController extends Controller
@@ -40,7 +41,9 @@ class ActasController extends Controller
         $empresa = Auth::user()->empresa;
         $clientes = $empresa->clientes;
 
-        return view('actas.create2',['empresa' => $empresa,'clientes' => $clientes]);
+        $planes = Planes::where('id_empresa',Auth::user()->empresa->id)->get();
+
+        return view('actas.create2',['empresa' => $empresa,'clientes' => $clientes,'planes' => $planes]);
     }
 
     /**
