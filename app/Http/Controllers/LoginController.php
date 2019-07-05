@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\User;
 use App\Actas;
 
 class LoginController extends Controller
@@ -12,6 +13,14 @@ class LoginController extends Controller
     {
 
     	 $actas = Actas::where('id_user',Auth::user()->id)->get();
+
+       $user = User::findOrfail(Auth::user()->id);
+
+       //dd($user->users_belong->empresa); // empresa de un usuario registrado por el admind e la empresa 2do nivel
+
+       //dd($user->belong_sucursal->users_belong->empresa); // empresa de una sucursal, el que registra el usuario que registro el admin, el tercer nivel
+
+
 
  			return view('dashboard',['actas' => $actas]);
 	}

@@ -155,7 +155,7 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MENÚ</li>
-
+          @if(Auth::user()->rol != 3) {{-- si el usuarioe s rol 3 --}}
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-user"></i>
@@ -167,7 +167,7 @@
                 <li><a href="{{ route('users.create') }}"><i class="fa fa-circle-o"></i>Agregar usuario</a></li>
               </ul>
             </li>
-
+            @endif
              <li class="treeview">
               <a href="#">
                 <i class="fa fa-industry"></i>
@@ -175,11 +175,14 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{route('empresas.create')}}"><i class="fa fa-circle-o"></i> Registrar Empresa</a></li>
+                @if(Auth::user()->rol == 1)
+                  <li><a href="{{route('empresas.create')}}"><i class="fa fa-circle-o"></i> Registrar Empresa</a></li>
+                @endif
                 <li><a href="{{route('empresas.index')}}"><i class="fa fa-circle-o"></i> Mis Empresa</a></li>
               </ul>
             </li>
-        @if($empresa > 0) {{-- Si tiene empresa registrada --}}
+        @if(Auth::user()->empresaExist(Auth::user()->id)) {{-- Si tiene empresa registrada --}}
+          @if(Auth::user()->rol != 3) {{-- si el usuarioe s rol 3 --}}
              <li class="treeview">
               <a href="#">
                 <i class="fa fa-users"></i>
@@ -204,7 +207,7 @@
                 <li><a href="{{route('planes.index')}}"><i class="fa fa-circle-o"></i>Ver Planes</a></li>
               </ul>
             </li>
-
+           @endif {{-- {{ si el usuario es rol 3}} --}}
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-file-o"></i>
@@ -216,6 +219,7 @@
                 <li><a href="{{route('actas.index')}}"><i class="fa fa-circle-o"></i>Ver Actas</a></li>
               </ul>
             </li>
+
         @endif {{-- Fin de validacion si tiene empresa registrada --}}
         @if(Auth::user()->rol == 1)
           <li class="treeview">

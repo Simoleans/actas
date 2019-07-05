@@ -28,6 +28,9 @@
 					{{ method_field( 'POST' ) }}
 					{{ csrf_field() }}
 					<input type="hidden" name="id_user" value="{{Auth::user()->id}}">
+					@if(Auth::user()->id_user)
+						<input type="hidden" name="id_user_sucursal" value="{{Auth::user()->id}}">
+					@endif
 					<h4>Agregar Usuario</h4>
 					<div class="row">
 						<div class="col-md-6">
@@ -66,6 +69,23 @@
 								<input id="direccion_user" class="form-control" type="text" name="direccion_user" value="{{ old('direccion_user')?old('direccion_user'):'' }}" placeholder="Direccion" required>
 							</div>
 						</div>
+					@if(Auth::user()->rol == 1)
+						<div class="col-md-6">
+							<div class="form-group {{ $errors->has('rol')?'has-error':'' }}">
+								<label class="control-label" for="rol">Rol: *</label>
+								<select  name="rol" class="form-control" required="">
+									<option value="">Seleccione...</option>
+									<option value="1">Administrador</option>
+									<option value="2">Usuario</option>
+								</select>
+							</div>
+						</div>
+					@else
+
+					<input type="hidden" name="rol" value="3">
+
+					@endif
+
 						<div class="col-md-6">
 							<div class="form-group {{ $errors->has('password')?'has-error':'' }}">
 								<label class="control-label" for="password">Contraseña: *</label>

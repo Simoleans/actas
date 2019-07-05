@@ -30,9 +30,11 @@
 	    	<div class="box box-danger">
 		      <div class="box-header with-border">
 		        <h3 class="box-title"><i class="fa fa-users"></i> Empresas</h3>
-		        <span class="pull-right">
-							<a href="{{ route('empresas.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nueva Empresa</a>
-						</span>
+		        @if(Auth::user()->rol == 1)
+			        <span class="pull-right">
+						<a href="{{ route('empresas.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nueva Empresa</a>
+					</span>
+				@endif
 		      </div>
       			<div class="box-body">
 					<table class="table data-table table-bordered table-hover table-condensed">

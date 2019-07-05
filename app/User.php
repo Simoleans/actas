@@ -16,12 +16,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
           'id_user',
+          'id_user_sucursal',
           'nombre',
           'email',
           'rut_user',
           'ciudad_user',
           'telefono_user',
           'direccion_user',
+          'rol',
     ];
 
     /**
@@ -48,10 +50,44 @@ class User extends Authenticatable
        return $this->hasMany('App\User','id_user');
     }
 
+    public function users_belong()
+    {
+      return $this->belongsTo('App\User','id_user');
+    }
+
+    public function sucursal()
+    {
+      return $this->hasMany('App\User','id_user_sucursal');
+    }
+
+    public function belong_sucursal()
+    {
+      return $this->belongsTo('App\User','id_user_sucursal');
+    }
+
     public function ordenes()
     {
         return $this->hasMany('App\OrdenC');
 
         //return $this->hasMany('App\OrdenC','id_user');
+    }
+
+    public function empresaExist($id)
+    {
+      //dd($user->users_belong->empresa); // empresa de un usuario registrado por el admind e la empresa 2do nivel
+
+       //dd($user->belong_sucursal->users_belong->empresa); // empresa de una sucursal, el que registra el usuario que registro el admin, el tercer nivel
+      $user = User::findOrfail($id);
+
+      if (!$user->id_user_sucursal && !$user->id_user) {
+          $empresa = true;
+      }elseif (!$user->id_user_sucursal && $user->id_user) {
+          $empresa = $user->users_belong->empresa;
+      }elseif ($user->id_user_sucursal && !$user->id_user) {
+        $empresa = $user->belong_sucursal->users_belong->empresa;
+      }
+
+      return $empresa;
+
     }
 }
