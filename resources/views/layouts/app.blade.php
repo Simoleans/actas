@@ -181,45 +181,46 @@
                 <li><a href="{{route('empresas.index')}}"><i class="fa fa-circle-o"></i> Mis Empresa</a></li>
               </ul>
             </li>
-        @if(Auth::user()->empresaExist(Auth::user()->id)) {{-- Si tiene empresa registrada --}}
-          @if(Auth::user()->rol != 3) {{-- si el usuarioe s rol 3 --}}
-             <li class="treeview">
-              <a href="#">
-                <i class="fa fa-users"></i>
-                <span>Clientes</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="{{route('clientes.create')}}"><i class="fa fa-circle-o"></i> Registrar Clientes</a></li>
-                <li><a href="{{route('clientes.index')}}"><i class="fa fa-circle-o"></i> Mis Clientes</a></li>
-              </ul>
-            </li>
+        @if(Auth::user()->empresaExist(Auth::user()->id) || Auth::user()->rol == 1 ) {{-- Si tiene empresa registrada --}}
+          {{-- @if(Auth::user()->exitsEmp(Auth::user()->id)) --}}
+            @if(Auth::user()->rol != 3) {{-- si el usuarioe s rol 3 --}}
+               <li class="treeview">
+                <a href="#">
+                  <i class="fa fa-users"></i>
+                  <span>Clientes</span>
+                  <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="{{route('clientes.create')}}"><i class="fa fa-circle-o"></i> Registrar Clientes</a></li>
+                  <li><a href="{{route('clientes.index')}}"><i class="fa fa-circle-o"></i> Mis Clientes</a></li>
+                </ul>
+              </li>
 
 
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-list"></i>
-                <span>Planes</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="{{route('planes.create')}}"><i class="fa fa-circle-o"></i>Crear Plan</a></li>
-                <li><a href="{{route('planes.index')}}"><i class="fa fa-circle-o"></i>Ver Planes</a></li>
-              </ul>
-            </li>
-           @endif {{-- {{ si el usuario es rol 3}} --}}
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-file-o"></i>
-                <span>Acta De Asistencia</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="{{route('actas.create')}}"><i class="fa fa-circle-o"></i>Crear Acta</a></li>
-                <li><a href="{{route('actas.index')}}"><i class="fa fa-circle-o"></i>Ver Actas</a></li>
-              </ul>
-            </li>
-
+              <li class="treeview">
+                <a href="#">
+                  <i class="fa fa-list"></i>
+                  <span>Planes</span>
+                  <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="{{route('planes.create')}}"><i class="fa fa-circle-o"></i>Crear Plan</a></li>
+                  <li><a href="{{route('planes.index')}}"><i class="fa fa-circle-o"></i>Ver Planes</a></li>
+                </ul>
+              </li>
+             @endif {{-- {{ si el usuario es rol 3}} --}}
+              <li class="treeview">
+                <a href="#">
+                  <i class="fa fa-file-o"></i>
+                  <span>Acta De Asistencia</span>
+                  <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="{{route('actas.create')}}"><i class="fa fa-circle-o"></i>Crear Acta</a></li>
+                  <li><a href="{{route('actas.index')}}"><i class="fa fa-circle-o"></i>Ver Actas</a></li>
+                </ul>
+              </li>
+          {{-- @endif --}}
         @endif {{-- Fin de validacion si tiene empresa registrada --}}
         @if(Auth::user()->rol == 1)
           <li class="treeview">

@@ -24,7 +24,8 @@ class ActasController extends Controller
      */
     public function index()
     {
-        $actas = Actas::where('id_user', Auth::user()->id)->get();
+         $empresa  = Auth::user()->empresaExist(Auth::user()->id);
+         $actas = Actas::where('id_empresa', $empresa->id)->get();
 
         return view('actas.index', ['actas' => $actas]);
     }
@@ -36,10 +37,12 @@ class ActasController extends Controller
      */
     public function create()
     {
-        $empresa  = Auth::user()->empresa;
-        $clientes = $empresa->clientes;
+        $empresa  = Auth::user()->empresaExist(Auth::user()->id);
 
-        $planes = Planes::where('id_empresa', Auth::user()->empresa->id)->get();
+        //dd($empresa);
+        $clientes = Clientes::where('id_empresa',$empresa->id);
+
+        $planes = Planes::where('id_empresa', $empresa->id)->get();
 
         return view('actas.create2', ['empresa' => $empresa, 'clientes' => $clientes, 'planes' => $planes]);
     }

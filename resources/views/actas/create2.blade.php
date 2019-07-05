@@ -21,13 +21,13 @@
 						{{ method_field( 'POST' ) }}
 						{{ csrf_field() }}
 						<input type="hidden" name="id_user" value="{{Auth::user()->id}}">
-						<input type="hidden" name="id_empresa" value="{{ strtoupper(Auth::user()->empresa->id)}}">
+						<input type="hidden" name="id_empresa" value="{{ $empresa->id}}">
 						<h4>Datos de la empresa</h4>
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group {{ $errors->has('empresa')?'has-error':'' }}">
 									<label class="control-label" for="empresa">Empresa: *</label>
-										<input type="text" name="empresa" value="{{ strtoupper(Auth::user()->empresa->r_social)}}" placeholder="{{ strtoupper(Auth::user()->empresa->r_social)}}" readonly="" class="form-control">
+										<input type="text" name="empresa" value="{{ strtoupper($empresa->r_social)}}" placeholder="{{ strtoupper($empresa->r_social)}}" readonly="" class="form-control">
 								</div>
 							</div>
 						</div>

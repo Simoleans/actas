@@ -15,9 +15,10 @@ class PlanesController extends Controller
      */
     public function index()
     {
-        $empresa_id = Auth::user()->empresa->id;
+       
+        $empresa  = Auth::user()->empresaExist(Auth::user()->id);
 
-        $planes = Planes::where('id_empresa',$empresa_id)->get();
+        $planes = Planes::where('id_empresa',$empresa->id)->get();
 
         return view('planes.index',['planes' => $planes]);
 
@@ -31,7 +32,8 @@ class PlanesController extends Controller
      */
     public function create()
     {
-        return view('planes.create');
+        $empresa  = Auth::user()->empresaExist(Auth::user()->id);
+        return view('planes.create',['empresa' => $empresa]);
     }
 
     /**

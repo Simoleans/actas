@@ -6,15 +6,30 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\User;
 use App\Actas;
+use App\Empresas;
 
 class LoginController extends Controller
 {
     public function index()
     {
+         $user = User::findOrfail(Auth::user()->id);
+         
+        
+         $empresaExists  = Auth::user()->exitsEmp(Auth::user()->id);
 
-    	 $actas = Actas::where('id_user',Auth::user()->id)->get();
+         //dd($empresaExists);
+         
+         if ($empresaExists) {
+                $empresa = Empresas::where('id_user',Auth::user()->id)->first();
+                $actas = Actas::where('id_empresa', $empresa->id)->get();
+            } else{
+              $actas= false;
+            }       
 
-       $user = User::findOrfail(Auth::user()->id);
+         //dd($empresa);
+         
+
+         
 
        //dd($user->users_belong->empresa); // empresa de un usuario registrado por el admind e la empresa 2do nivel
 

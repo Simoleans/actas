@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Empresas as Empresas;
 
 class User extends Authenticatable
 {
@@ -79,15 +80,27 @@ class User extends Authenticatable
        //dd($user->belong_sucursal->users_belong->empresa); // empresa de una sucursal, el que registra el usuario que registro el admin, el tercer nivel
       $user = User::findOrfail($id);
 
+      
       if (!$user->id_user_sucursal && !$user->id_user) {
-          $empresa = true;
+          $empresa = false;
       }elseif (!$user->id_user_sucursal && $user->id_user) {
           $empresa = $user->users_belong->empresa;
       }elseif ($user->id_user_sucursal && !$user->id_user) {
         $empresa = $user->belong_sucursal->users_belong->empresa;
       }
 
+      //dd($empresa->id);
+
       return $empresa;
 
+    }
+
+    public function exitsEmp($id)
+    {
+        $empresa = Empresas::where('id_user',$id)->exists();
+
+        //dd($empresa);
+
+        return $empresa;
     }
 }

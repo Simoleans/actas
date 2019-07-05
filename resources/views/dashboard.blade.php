@@ -8,7 +8,8 @@
 @endsection
 
 @section('content')
-@if(Auth::user()->empresaExist(Auth::user()->id))
+@if(Auth::user()->empresaExist(Auth::user()->id) || Auth::user()->rol == 1)
+	 {{-- @if(Auth::user()->exitsEmp(Auth::user()->id)) --}}
 		<div class="row">
 		  	<div class="col-md-6">
 		    	<div class="box box-danger">
@@ -78,5 +79,6 @@
 				</div>
 			</div>
 		</div>
+	{{-- @endif --}}
 @endif
 @endsection
