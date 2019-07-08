@@ -89,7 +89,7 @@ class User extends Authenticatable
         $empresa = $user->belong_sucursal->users_belong->empresa;
       }
 
-      //dd($empresa->id);
+     //dd($user);
 
       return $empresa;
 

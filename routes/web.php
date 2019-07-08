@@ -63,6 +63,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/empresas', 'EmpresasController');
     Route::post('empresas/sendmail', 'UserController@sendEmail')->name('empresas.mail');
 
+    /* Empresas Clientes */
+    Route::resource('/clientese','ClientesEmpresasController');
+
     /* Proveedores */
     Route::resource('/clientes', 'ClientesController');
     Route::post('/updatecliente', 'ClientesController@update_status')->name('update.cliente');

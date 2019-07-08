@@ -23,10 +23,10 @@ class LoginController extends Controller
                 $empresa = Empresas::where('id_user',Auth::user()->id)->first();
                 $actas = Actas::where('id_empresa', $empresa->id)->get();
             } else{
-              $actas= false;
+              $actas= [];
             }       
 
-         //dd($empresa);
+         //dd($actas);
          
 
          

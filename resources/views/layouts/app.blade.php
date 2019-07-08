@@ -181,7 +181,8 @@
                 <li><a href="{{route('empresas.index')}}"><i class="fa fa-circle-o"></i> Mis Empresa</a></li>
               </ul>
             </li>
-        @if(Auth::user()->empresaExist(Auth::user()->id) || Auth::user()->rol == 1 ) {{-- Si tiene empresa registrada --}}
+
+        @if(Auth::user()->empresaExist(Auth::user()->id) || Auth::user()->exitsEmp(Auth::user()->id)) {{-- Si tiene empresa registrada --}}
           {{-- @if(Auth::user()->exitsEmp(Auth::user()->id)) --}}
             @if(Auth::user()->rol != 3) {{-- si el usuarioe s rol 3 --}}
                <li class="treeview">
@@ -193,6 +194,8 @@
                 <ul class="treeview-menu">
                   <li><a href="{{route('clientes.create')}}"><i class="fa fa-circle-o"></i> Registrar Clientes</a></li>
                   <li><a href="{{route('clientes.index')}}"><i class="fa fa-circle-o"></i> Mis Clientes</a></li>
+                  <li><a href="{{route('clientese.create')}}"><i class="fa fa-circle-o"></i> Registrar Empresa - Cliente</a></li>
+                  <li><a href="{{route('clientese.index')}}"><i class="fa fa-circle-o"></i> Ver Empresas - Clientes</a></li>
                 </ul>
               </li>
 
@@ -220,7 +223,6 @@
                   <li><a href="{{route('actas.index')}}"><i class="fa fa-circle-o"></i>Ver Actas</a></li>
                 </ul>
               </li>
-          {{-- @endif --}}
         @endif {{-- Fin de validacion si tiene empresa registrada --}}
         @if(Auth::user()->rol == 1)
           <li class="treeview">

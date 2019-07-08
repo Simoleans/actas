@@ -63,7 +63,7 @@ body {
   font-size: 10px;
   width: 100%;
   min-height: 80%;
-  /*max-width: 700px;*/
+  max-width: 700px;
   max-height: 460px;
   border: 1px solid #e8e8e8;
   background-color: #fff;
@@ -132,7 +132,7 @@ canvas {
   margin-top: 8px;
 }
   </style>
-  @if($firma)
+  @if(!$firma)
  <div class="row">
       <div class="col-md-12">
         <form method="POST" enctype="multipart/form-data" id="form_pad">
@@ -141,27 +141,27 @@ canvas {
             <input type="hidden" name="firma" id="firma" required>
             <input type="hidden" name="id_acta" value="{{$acta->id}}">
             <div id="signature-pad" class="signature-pad">
-                    <div class="signature-pad--body" id="signatura-pad-image">
-                      <canvas></canvas>
-                    </div>
-                    <div class="signature-pad--footer">
-                      <div class="description">VeanX Technology<br>{{$participante->clientes->nombre.' '.$participante->clientes->apellido}}</div>
+              <div class="signature-pad--body" id="signatura-pad-image">
+                <canvas></canvas>
+              </div>
+              <div class="signature-pad--footer">
+                <div class="description">VeanX Technology<br>{{$participante->clientes->nombre.' '.$participante->clientes->apellido}}</div>
 
-                      <div class="signature-pad--actions">
-                        <div>
-                          <button type="button" class="button clear btn btn-sm btn-default btn-flat" data-action="clear">Limpiar</button>
-                          <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="change-color">Cambiar Color</button>
-                          <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="undo">Corregir</button>
+                <div class="signature-pad--actions">
+                  <div>
+                    <button type="button" class="button clear btn btn-sm btn-default btn-flat" data-action="clear">Limpiar</button>
+                    <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="change-color">Cambiar Color</button>
+                    <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="undo">Corregir</button>
 
-                        </div>
-                        <div>
-                          <button type="button" class="button save btn btn-sm btn-success btn-flat"  data-action="save-png">Guardar</button>
-                          <button type="button" class="button save btn btn-sm btn-danger btn-flat"  data-action="save-jpg">Guardar en JPG</button>
-                          <button type="button" class="button save btn btn-sm btn-danger btn-flat"  data-action="save-svg">Guardar en SVG</button>
-                        </div>
-                      </div>
-                    </div>
                   </div>
+                  <div>
+                    <button type="button" class="button save btn btn-sm btn-success btn-flat"  data-action="save-png">Guardar</button>
+                    <button type="button" class="button save btn btn-sm btn-danger btn-flat"  data-action="save-jpg">Guardar en JPG</button>
+                    <button type="button" class="button save btn btn-sm btn-danger btn-flat"  data-action="save-svg">Guardar en SVG</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </form>
       </div>
     </div>

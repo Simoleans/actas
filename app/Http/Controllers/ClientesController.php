@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Clientes;
+use App\Empresas;
 use App\Planes;
 
 class ClientesController extends Controller
@@ -16,7 +17,18 @@ class ClientesController extends Controller
      */
     public function index()
     {
-      $clientes= Auth::user()->empresa->clientes;
+    
+      $empresaExists  = Auth::user()->exitsEmp(Auth::user()->id);
+
+         //dd($empresaExists);
+         
+         if ($empresaExists) {
+                $empresa = Empresas::where('id_user',Auth::user()->id)->first();
+                //$actas = Actas::where('id_empresa', $empresa->id)->get();
+            } else{
+              $empresa  = Auth::user()->empresaExist(Auth::user()->id);
+            } 
+            $clientes = Clientes::where('id_empresa',$empresa->id)->get();
       //dd($clientes);
         return view('clientes.index',['clientes' => $clientes]);
     }
@@ -29,10 +41,21 @@ class ClientesController extends Controller
     public function create()
     {
 
-        $empresa_id = Auth::user()->empresa->id;
+        //$empresa_id = Auth::user()->empresa->id;
 
-        $planes = Planes::where('id_empresa',$empresa_id)->get();
-         return view('clientes.create',['planes' => $planes]);
+        $empresaExists  = Auth::user()->exitsEmp(Auth::user()->id);
+
+         //dd($empresaExists);
+         
+         if ($empresaExists) {
+                $empresa = Empresas::where('id_user',Auth::user()->id)->first();
+                //$actas = Actas::where('id_empresa', $empresa->id)->get();
+            } else{
+              $empresa  = Auth::user()->empresaExist(Auth::user()->id);
+            } 
+
+        $planes = Planes::where('id_empresa',$empresa->id)->get();
+         return view('clientes.create',['planes' => $planes,'empresa' => $empresa]);
     }
 
     /**
@@ -105,11 +128,19 @@ class ClientesController extends Controller
     {
         $cliente = Clientes::findOrfail($id);
 
-        $empresa_id = Auth::user()->empresa->id;
+        $empresaExists  = Auth::user()->exitsEmp(Auth::user()->id);
 
-        $planes = Planes::where('id_empresa',$empresa_id)->get();
+         
+         if ($empresaExists) {
+                $empresa = Empresas::where('id_user',Auth::user()->id)->first();
+                //$actas = Actas::where('id_empresa', $empresa->id)->get();
+            } else{
+              $empresa  = Auth::user()->empresaExist(Auth::user()->id);
+            } 
 
-        return view('clientes.edit',['planes' => $planes,'cliente' => $cliente]);
+        $planes = Planes::where('id_empresa',$empresa->id)->get();
+
+        return view('clientes.edit',['planes' => $planes,'cliente' => $cliente,'empresa' => $empresa]);
     }
 
     /**

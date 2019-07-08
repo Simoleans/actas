@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Planes;
+use App\Empresas;
 
 class PlanesController extends Controller
 {
@@ -15,9 +16,12 @@ class PlanesController extends Controller
      */
     public function index()
     {
-       
         $empresa  = Auth::user()->empresaExist(Auth::user()->id);
-
+        
+        if (!$empresa) {
+            $empresa = Empresas::where('id_user',Auth::user()->id)->first();
+        }
+       
         $planes = Planes::where('id_empresa',$empresa->id)->get();
 
         return view('planes.index',['planes' => $planes]);
@@ -32,7 +36,18 @@ class PlanesController extends Controller
      */
     public function create()
     {
-        $empresa  = Auth::user()->empresaExist(Auth::user()->id);
+         $empresaExists  = Auth::user()->exitsEmp(Auth::user()->id);
+
+         //dd($empresaExists);
+         
+         if ($empresaExists) {
+                $empresa = Empresas::where('id_user',Auth::user()->id)->first();
+                //$actas = Actas::where('id_empresa', $empresa->id)->get();
+            } else{
+              $empresa  = Auth::user()->empresaExist(Auth::user()->id);
+            }       
+        
+        //dd($empresa);
         return view('planes.create',['empresa' => $empresa]);
     }
 

@@ -10,6 +10,7 @@ use App\Mail\ActasMail;
 use App\Observacion;
 use App\Participantes;
 use App\Planes;
+use App\Empresas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -37,12 +38,17 @@ class ActasController extends Controller
      */
     public function create()
     {
+        
         $empresa  = Auth::user()->empresaExist(Auth::user()->id);
+        
+        if (!$empresa) {
+            $empresa = Empresas::where('id_user',Auth::user()->id)->first();
+        }
 
-        //dd($empresa);
         $clientes = Clientes::where('id_empresa',$empresa->id);
 
         $planes = Planes::where('id_empresa', $empresa->id)->get();
+        
 
         return view('actas.create2', ['empresa' => $empresa, 'clientes' => $clientes, 'planes' => $planes]);
     }
@@ -209,11 +215,11 @@ class ActasController extends Controller
     {
         //$acta = Actas::findOrfail($id);
 
-        $participante = Participantes::where('id_cliente', $id)->first();
+        $participante = Participantes::findOrfail($id);
 
         $acta = Actas::where('id', $acta_id)->first();
 
-        $acta_firma = Participantes::where('id_cliente', $id)->where('id_acta', $acta->id)->whereNull('firma')->exists();
+        $acta_firma = Participantes::where('id', $id)->where('id_acta', $acta->id)->whereNull('firma')->exists();
 
         //dd($acta_firma);
 
@@ -222,13 +228,13 @@ class ActasController extends Controller
 
     public function signature($id, $acta_id)
     {
-        $participante = Participantes::where('id_cliente', $id)->first();
+        $participante = Participantes::findOrfail($id);
 
         $acta = Actas::where('id', $acta_id)->first();
 
-        $acta_firma = Participantes::where('id_cliente', $id)->where('id_acta', $acta->id)->whereNull('firma')->exists();
+        $acta_firma = Participantes::where('id_cliente', $id)->where('id_acta',$acta_id)->whereNull('firma')->exists();
 
-        //dd($participante->id_acta, $acta->id, $acta_firma);
+        //dd($acta_firma);
 
         return view('actas.signature', ['acta' => $acta, 'participante' => $participante, 'firma' => $acta_firma]);
     }
@@ -238,9 +244,10 @@ class ActasController extends Controller
 
         $name   = 'ac' . md5(date("dmYhisA")) . '.png';
         $nombre = public_path() . '/img/actas/' . $name;
+        //dd($request->all());
 
-        $participante = Participantes::where('id_cliente', $request->id_participante)->where('id_acta', $request->id_acta)->first();
-
+        $participante = Participantes::where('id', $request->id_participante)->where('id_acta', $request->id_acta)->first();
+       // dd($participante);
         $participante->firma = $name;
 
         if ($participante->save()) {

@@ -27,13 +27,13 @@
 					<form class="" action="{{ route('clientes.update',['id' => $cliente->id]) }}" method="POST" enctype="multipart/form-data">
 					{{ method_field( 'PUT' ) }}
 					{{ csrf_field() }}
-					<input type="hidden" name="id_empresa" value="{{ strtoupper(Auth::user()->empresa->id)}}">
+					<input type="hidden" name="id_empresa" value="{{ strtoupper($empresa->id)}}">
 					<h4>Editar Cliente</h4>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group {{ $errors->has('id_empresa')?'has-error':'' }}">
 								<label class="control-label" for="id_empresa">Empresa: *</label>
-								<input id="id_empresa" class="form-control" type="text" name="empresa" value="{{ strtoupper(Auth::user()->empresa->r_social)}}"  required readonly="">
+								<input id="id_empresa" class="form-control" type="text" name="empresa" value="{{ strtoupper($empresa->r_social)}}"  required readonly="">
 							</div>
 						</div>
 						<div class="col-md-6">
