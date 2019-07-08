@@ -7,9 +7,7 @@
     <link rel="icon" type="image/png" sizes="240x240" href="{{asset('img/logo.png')}}">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
-    <!-- Font Awesome -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/font-awesome.css')}}">
-    <!-- Theme style -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/AdminLTE.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/glyphicons.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
@@ -17,18 +15,20 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput-rtl.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('js/sign_src/css/jquery.signaturepad.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput.css')}}">
+<!--     <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datepicker3.min.css')}}">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/css/inputmask.min.css" rel="stylesheet"/>
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{asset('css/_all-skins.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/_all-skins.min.css')}}"> -->
 
 </head>
 <body>
   <style type="text/css">
-
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 body {
   display: -webkit-box;
@@ -106,7 +106,7 @@ body {
 
 .signature-pad--body
 canvas {
-/*  position: absolute;*/
+ /* position: absolute;*/
   left: 0;
   top: 0;
   width: 100%;
@@ -198,7 +198,7 @@ canvas {
 
      <script type="text/javascript">
 
-  $(document).ready(function(){
+
 
  var wrapper = document.getElementById("signature-pad");
 var clearButton = wrapper.querySelector("[data-action=clear]");
@@ -224,10 +224,13 @@ function resizeCanvas() {
   // and only part of the canvas is cleared then.
   var ratio =  Math.max(window.devicePixelRatio || 1, 1);
 
+
   // This part causes the canvas to be cleared
   canvas.width = canvas.offsetWidth * ratio;
-  canvas.height = canvas.offsetHeight * ratio;
+  canvas.height = canvas.offsetHeight * ratio + 95;
+  //console.log(canvas.width,canvas.height);
   canvas.getContext("2d").scale(ratio, ratio);
+
 
   // This library does not listen for canvas changes, so after the canvas is automatically
   // cleared by the browser, SignaturePad#isEmpty might still return false, even though the
@@ -239,8 +242,8 @@ function resizeCanvas() {
 
 // On mobile devices it might make more sense to listen to orientation change,
 // rather than window resize events.
-window.onresize = resizeCanvas;
-resizeCanvas();
+//window.onresize = resizeCanvas;
+resizeCanvas()
 
 function download(dataURL, filename) {
   if (navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") === -1) {
@@ -364,9 +367,6 @@ saveSVGButton.addEventListener("click", function (event) {
 });
 
 
-
-
-});
 </script>
 </body>
 

@@ -14,7 +14,7 @@
   	<div class="col-md-3 col-sm-6 col-xs-12">
       <div class="info-box">
         <span class="info-box-icon bg-red"><i class="fa fa-user"></i></span>
-        
+
         <div class="info-box-content">
           <span class="info-box-text">Usuarios</span>
           <span class="info-box-number">{{ count($users) }}</span>
@@ -56,7 +56,9 @@
 									<td>{{$d->telefono_user}}</td>
 									<td>
 										<a class="btn btn-primary btn-flat btn-sm" href="{{ route('users.show',[$d->id])}}"><i class="fa fa-search"></i></a>
-										<a href="{{route('users.edit',[$d->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
+										@if(Auth::user()->rol == 1)
+											<a href="{{route('users.edit',[$d->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
+										@endif
 									</td>
 								</tr>
 							@endforeach

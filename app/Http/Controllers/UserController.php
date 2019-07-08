@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Empresas;
 use App\Http\Controllers\Controller;
 use App\Mail\Users;
 use App\User;
-use App\Empresas;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -18,8 +18,12 @@ class UserController extends Controller
      */
     public function index()
     {
-    	$users = User::where('id_user',Auth::user()->id)->get();
-    	return view('users.index',['users'=>$users]);
+
+        $online = User::findOrfail(Auth::user()->id);
+
+        $users = User::where('id_user', $online->user_id)->orWhere('id_user_sucursal', $online->id_user_sucursal)->get();
+
+        return view('users.index', ['users' => $users]);
     }
 
     /**
@@ -29,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-      return view("users.create");
+        return view("users.create");
     }
 
     /**
@@ -40,70 +44,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
-        'rut_user' => 'required|unique:users',
-        'email' =>'required|email|unique:users',
-        'password' => 'required|min:6|confirmed'
-      ]);
-
-      $user = new User;
-      $user->fill($request->all());
-      $user->password = bcrypt($request->input('password'));
-
-      if($user->save()){
-        return redirect("users")->with([
-          'flash_message' => 'Usuario agregado correctamente.',
-          'flash_class' => 'alert-success'
-          ]);
-      }else{
-        return redirect("users")->with([
-          'flash_message' => 'Ha ocurrido un error.',
-          'flash_class' => 'alert-danger',
-          'flash_important' => true
-          ]);
-      }
-    }
-
-    public function register(Request $request)
-    {
-      {
         $this->validate($request, [
-          'rut_user' => 'required|unique:users',
-          'email' =>'required|email|unique:users',
-          'password' => 'required|min:6|confirmed'
-        ]);
-
-        $user = new User;
-        $user->fill($request->all());
-        $user->password = bcrypt($request->input('password'));
-
-        if($user->save()){
-          return redirect("/")->with([
-            'flash_message' => 'Usuario agregado correctamente.',
-            'flash_class' => 'alert-success'
-            ]);
-        }else{
-          return redirect("/")->with([
-            'flash_message' => 'Ha ocurrido un error.',
-            'flash_class' => 'alert-danger',
-            'flash_important' => true
-            ]);
-        }
-      }
-    }
-
-    public function invitar($token,$id)
-    {
-      //dd($id);
-      return view('empresas.invitacion',['id' => $id]);
-    }
-
-    public function store_invitacion(Request $request)
-    {
-      $this->validate($request, [
-          'rut_user' => 'required|unique:users',
-          'email' =>'required|email|unique:users',
-          'password' => 'required|min:6|confirmed'
+            'rut_user' => 'required|unique:users',
+            'email'    => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed',
         ]);
 
         $user = new User;
@@ -111,24 +55,84 @@ class UserController extends Controller
         $user->password = bcrypt($request->input('password'));
 
         if ($user->save()) {
-          $user = User::orderBy('created_at', 'desc')->first();
-          $empresa = Empresas::findOrfail($request->id_empresa);
-          //dd($empresa->toArray());
-           $empresa_save = new Empresas;
-           $empresa_save->fill($empresa->toArray());
-           $empresa_save->logo = $empresa->logo;
-           $empresa_save->id_user = $user->id;
-
-             if($empresa_save->save()){
-              return redirect("/")->with([
+            return redirect("users")->with([
                 'flash_message' => 'Usuario agregado correctamente.',
-                'flash_class' => 'alert-success'
+                'flash_class'   => 'alert-success',
+            ]);
+        } else {
+            return redirect("users")->with([
+                'flash_message'   => 'Ha ocurrido un error.',
+                'flash_class'     => 'alert-danger',
+                'flash_important' => true,
+            ]);
+        }
+    }
+
+    public function register(Request $request)
+    {
+        {
+            $this->validate($request, [
+                'rut_user' => 'required|unique:users',
+                'email'    => 'required|email|unique:users',
+                'password' => 'required|min:6|confirmed',
+            ]);
+
+            $user = new User;
+            $user->fill($request->all());
+            $user->password = bcrypt($request->input('password'));
+
+            if ($user->save()) {
+                return redirect("/")->with([
+                    'flash_message' => 'Usuario agregado correctamente.',
+                    'flash_class'   => 'alert-success',
                 ]);
-            }else{
-              return redirect("/")->with([
-                'flash_message' => 'Ha ocurrido un error.',
-                'flash_class' => 'alert-danger',
-                'flash_important' => true
+            } else {
+                return redirect("/")->with([
+                    'flash_message'   => 'Ha ocurrido un error.',
+                    'flash_class'     => 'alert-danger',
+                    'flash_important' => true,
+                ]);
+            }
+        }
+    }
+
+    public function invitar($token, $id)
+    {
+        //dd($id);
+        return view('empresas.invitacion', ['id' => $id]);
+    }
+
+    public function store_invitacion(Request $request)
+    {
+        $this->validate($request, [
+            'rut_user' => 'required|unique:users',
+            'email'    => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = new User;
+        $user->fill($request->all());
+        $user->password = bcrypt($request->input('password'));
+
+        if ($user->save()) {
+            $user    = User::orderBy('created_at', 'desc')->first();
+            $empresa = Empresas::findOrfail($request->id_empresa);
+            //dd($empresa->toArray());
+            $empresa_save = new Empresas;
+            $empresa_save->fill($empresa->toArray());
+            $empresa_save->logo    = $empresa->logo;
+            $empresa_save->id_user = $user->id;
+
+            if ($empresa_save->save()) {
+                return redirect("/")->with([
+                    'flash_message' => 'Usuario agregado correctamente.',
+                    'flash_class'   => 'alert-success',
+                ]);
+            } else {
+                return redirect("/")->with([
+                    'flash_message'   => 'Ha ocurrido un error.',
+                    'flash_class'     => 'alert-danger',
+                    'flash_important' => true,
                 ]);
             }
         }
@@ -136,16 +140,16 @@ class UserController extends Controller
 
     public function sendEmail(Request $request)
     {
-      $url = route('users.invitar',['id'=>$request->id,'token' => str_random(60)]);
+        $url = route('users.invitar', ['id' => $request->id, 'token' => str_random(60)]);
 
         $empresa = Empresas::findOrfail($request->id);
-         \Mail::to($request->email)
-                 ->send(new Users($url,$empresa));
+        \Mail::to($request->email)
+            ->send(new Users($url, $empresa));
 
-         return redirect("empresas")->with([
-          'flash_message' => 'Correo enviado correctamente.',
-          'flash_class' => 'alert-success'
-          ]);
+        return redirect("empresas")->with([
+            'flash_message' => 'Correo enviado correctamente.',
+            'flash_class'   => 'alert-success',
+        ]);
     }
 
     /**
@@ -156,8 +160,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-      $user = user::findOrFail($id);
-      return view("users.view", ["user" => $user]);
+        $user = user::findOrFail($id);
+        return view("users.view", ["user" => $user]);
     }
 
     /**
@@ -168,8 +172,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-      $user = user::findOrFail($id);
-      return view("users.edit", ["user" => $user]);
+        $user = user::findOrFail($id);
+        return view("users.edit", ["user" => $user]);
     }
 
     /**
@@ -181,27 +185,27 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $user = User::findOrFail($id);
+        $user = User::findOrFail($id);
 
-      $this->validate($request, [
-        'name' => 'required',
-        'email' =>'required|email|unique:users,email,'.$user->id.',id'
-      ]);
+        $this->validate($request, [
+            'name'  => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id . ',id',
+        ]);
 
-      $user->fill($request->all());
+        $user->fill($request->all());
 
-      if($user->save()){
-        return redirect("users")->with([
-          'flash_message' => 'Usuario agregado correctamente.',
-          'flash_class' => 'alert-success'
-          ]);
-      }else{
-        return redirect("users")->with([
-          'flash_message' => 'Ha ocurrido un error.',
-          'flash_class' => 'alert-danger',
-          'flash_important' => true
-          ]);
-      }
+        if ($user->save()) {
+            return redirect("users")->with([
+                'flash_message' => 'Usuario agregado correctamente.',
+                'flash_class'   => 'alert-success',
+            ]);
+        } else {
+            return redirect("users")->with([
+                'flash_message'   => 'Ha ocurrido un error.',
+                'flash_class'     => 'alert-danger',
+                'flash_important' => true,
+            ]);
+        }
     }
 
     /**
@@ -212,56 +216,57 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-    	$user = User::findOrFail($id);
+        $user = User::findOrFail($id);
 
-    	if($user->delete()){
-    		return redirect('users')->with([
-    			'flash_class'   => 'alert-success',
-    			'flash_message' => 'Usuario eliminado con exito.'
-    		]);
-    	}else{
-    		return redirect('users')->with([
-    			'flash_class'     => 'alert-danger',
-    			'flash_message'   => 'Ha ocurrido un error.',
-    			'flash_important' => true
-    		]);
-    	}
+        if ($user->delete()) {
+            return redirect('users')->with([
+                'flash_class'   => 'alert-success',
+                'flash_message' => 'Usuario eliminado con exito.',
+            ]);
+        } else {
+            return redirect('users')->with([
+                'flash_class'     => 'alert-danger',
+                'flash_message'   => 'Ha ocurrido un error.',
+                'flash_important' => true,
+            ]);
+        }
     }
 
-    public function perfil(){
-    	$user = Auth::user();
-    	return view('users.perfil',['perfil'=>$user]);
+    public function perfil()
+    {
+        $user = Auth::user();
+        return view('users.perfil', ['perfil' => $user]);
     }
 
     public function update_perfil(Request $request)
     {
-    	$user = User::find(Auth::user()->id);
+        $user = User::find(Auth::user()->id);
 
-      $this->validate($request, [
-        'name' => 'required',
-        'email' =>'required|email|unique:users,email,'.$user->id.',id'
-      ]);
+        $this->validate($request, [
+            'name'  => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id . ',id',
+        ]);
 
-    	$user->fill($request->all());
+        $user->fill($request->all());
 
-      if($request->input('checkbox') === "Yes"){
-      	$this->validate($request,[
-          'password' => 'required|min:6|confirmed'
-    		]);
-  			$user->password = bcrypt($request->input('password'));
-      }
+        if ($request->input('checkbox') === "Yes") {
+            $this->validate($request, [
+                'password' => 'required|min:6|confirmed',
+            ]);
+            $user->password = bcrypt($request->input('password'));
+        }
 
-    	if($user->save()){
-        return redirect('perfil')->with([
-          'flash_message' => 'Cambios guardados correctamente.',
-          'flash_class' => 'alert-success'
-          ]);
-    	}else{
-        return redirect('perfil')->with([
-          'flash_message' => 'Ha ocurrido un error.',
-          'flash_class' => 'alert-danger',
-          'flash_important' => true
-        	]);
-    	}
+        if ($user->save()) {
+            return redirect('perfil')->with([
+                'flash_message' => 'Cambios guardados correctamente.',
+                'flash_class'   => 'alert-success',
+            ]);
+        } else {
+            return redirect('perfil')->with([
+                'flash_message'   => 'Ha ocurrido un error.',
+                'flash_class'     => 'alert-danger',
+                'flash_important' => true,
+            ]);
+        }
     }
 }

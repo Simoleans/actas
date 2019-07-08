@@ -15,6 +15,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('id_user_admin')->unsigned()->nullable(); //De uno a muchos,  una empresa,  muchos usuarios
+            $table->foreign('id_user_admin')->references('id')->on('users')->onDelete('cascade');
             $table->integer('id_user')->unsigned()->nullable(); //De uno a muchos,  una empresa,  muchos usuarios
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->integer('id_user_sucursal')->unsigned()->nullable(); //De uno a muchos,  una empresa,  muchos usuarios
