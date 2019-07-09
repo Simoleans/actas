@@ -31,7 +31,7 @@
 		      <div class="box-header with-border">
 		        <h3 class="box-title"><i class="fa fa-users"></i> Mis Clientes</h3>
 		        <span class="pull-right">
-							<a href="{{ route('clientes.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo Proveedor</a>
+							<a href="{{ route('clientes.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo Cliente</a>
 						</span>
 		      </div>
       			<div class="box-body">

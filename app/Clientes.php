@@ -13,5 +13,10 @@ class Clientes extends Model
      public function plan()
      {
      	return $this->belongsTo('App\Planes','id_plan');
-     }
+     }  
+
+    public function empresa()
+    {
+         return $this->hasOne('App\EmpresaClientes');
+    }
 }

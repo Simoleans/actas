@@ -28,9 +28,9 @@ class ClientesEmpresas extends Model
        return $this->belongsTo('App\User','id_user');
     }
 
-    public function clientes()
+
+   public function clientes()
     {
-       //return $this->belongsTo('App\User','id_user');
-       return $this->belongsTo('App\ClientesEmpresas','id_cliente')->where('status',0);
+        return $this->hasMany('App\Clientes','id');
     }
 }

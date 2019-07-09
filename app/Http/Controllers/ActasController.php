@@ -25,7 +25,12 @@ class ActasController extends Controller
      */
     public function index()
     {
-         $empresa  = Auth::user()->empresaExist(Auth::user()->id);
+       $empresa  = Auth::user()->empresaExist(Auth::user()->id);
+        
+        if (!$empresa) {
+            $empresa = Empresas::where('id_user',Auth::user()->id)->first();
+        }
+        
          $actas = Actas::where('id_empresa', $empresa->id)->get();
 
         return view('actas.index', ['actas' => $actas]);
@@ -45,7 +50,7 @@ class ActasController extends Controller
             $empresa = Empresas::where('id_user',Auth::user()->id)->first();
         }
 
-        $clientes = Clientes::where('id_empresa',$empresa->id);
+        $clientes = Clientes::where('id_empresa',$empresa->id)->get();
 
         $planes = Planes::where('id_empresa', $empresa->id)->get();
         
@@ -61,11 +66,6 @@ class ActasController extends Controller
      */
     public function store(Request $request)
     {
-        //dd(Input::file('foto'));
-
-        //$codigo=rand(11111, 99999);
-
-        //dd($request->all());
 
         $lastId = Actas::latest()->first();
 
@@ -94,16 +94,9 @@ class ActasController extends Controller
                     $filename = date("YmdHi") . $gImg->getClientOriginalName();
                     $patch    = public_path() . "/img/actas/fotos/";
                     $gImg->move($patch, $filename);
-                    // \Image::make($gImg)->save($patch. $filename );
-                    // \Image::make($gImg)->resize(300, null, function ($constraint) {
-                    //                     $constraint->aspectRatio();
-                    //                 })->save($patch.'thumb_'.$filename );
                     $name[] = $filename;
                 }
-                // return response()->json($name);
-                //$ultimo_id = Scort::orderBy('id', 'DESC')->first();//agarra el ultimo id
-                // return response()->json($ultimo_id->id);
-                //$scort->fotos = implode(',', $name);
+ 
 
                 for ($i = 0; $i < count($name); $i++) {
                     // for para guardar todas las fotos
@@ -144,7 +137,7 @@ class ActasController extends Controller
                 $acciones->save();
             } //fin for
 
-            return response()->json(['msg' => 'Se registro correctamente', 'url' => route('actas.show', ['acta' => $acta->id])]);
+            return response()->json(['msg' => 'Se registro correctamente','type' => 'success', 'url' => route('actas.show', ['acta' => $acta->id])]);
         }
     }
 
@@ -261,10 +254,11 @@ class ActasController extends Controller
     {
         //dd($request->all());
 
-        $participantes = Participantes::findOrfail($request->id);
+        $cliente = Clientes::findOrfail($request->id);
+        //dd($cliente->email);
 
-        \Mail::to($participantes->email)
-            ->send(new ActasMail($request->id, $request->acta));
+        \Mail::to($cliente->email)
+            ->send(new ActasMail($request->id, $request->acta,$request->id_acta));
 
         if (\Mail::failures()) {
             return response()->json(['msg' => 'No se ha enviado el correo :(', 'status' => false], 422);

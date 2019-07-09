@@ -159,10 +159,16 @@
 	            "</tr>";
 	            $("table tbody").append(table);
 
-	        swal(data.msg);
+	        Swal.fire({
+	          type: data.type,
+	          title: data.msg,
+	        })
 	        $('#modal-cliente').modal('hide');
 	      }else{
-	        swal(data.msg);
+	        Swal.fire({
+	          type: data.type,
+	          title: data.msg,
+	        })
 	      }
 	    })
 	    .fail(function() {
@@ -207,9 +213,32 @@
 			        cache: false,
 			        processData:false,
 					success: function (response) {
-						swal(response.msg);
+						let timerInterval
+							Swal.fire({
+							  title: response.msg,
+							  type: response.type,
+							  html: 'Sera redireccionado en <strong></strong> segundos',
+							  timer: 1900,
+							  onBeforeOpen: () => {
+							    Swal.showLoading()
+							    timerInterval = setInterval(() => {
+							      Swal.getContent().querySelector('strong')
+							        .textContent = Swal.getTimerLeft()
+							    }, 100)
+							  },
+							  onClose: () => {
+							    clearInterval(timerInterval)
+							  }
+							}).then((result) => {
+							  if (
+							    // Read more about handling dismissals
+							    result.dismiss === Swal.DismissReason.timer
+							  ) {
+							    window.location.replace(response.url);
+							  }
+							})
 						$('#exampleModal').modal('hide');
-					   window.location.replace(response.url);
+					   //window.location.replace(response.url);
 					},
 				});
 			}); //fin guardar formulario

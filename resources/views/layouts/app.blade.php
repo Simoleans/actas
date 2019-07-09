@@ -295,7 +295,7 @@
      <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="{{asset('js/fileinput.js')}}"></script>
     {{--  <script type="text/javascript" src="{{asset('js/signature_pad.js')}}"></script> --}}
-     <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
      <script type="text/javascript" src="{{asset('js/signature_pad.umd.js')}}"></script>
      <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.min.js')}}"></script>
      <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.es.min.js')}}"></script>

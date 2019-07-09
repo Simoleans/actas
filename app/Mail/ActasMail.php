@@ -18,11 +18,13 @@ class ActasMail extends Mailable
      */
     public $id;
     public $guia;
+    public $id_acta;
      
-    public function __construct($id,$guia)
+    public function __construct($id,$guia,$id_acta)
     {
         $this->id = $id;
         $this->guia = $guia;
+        $this->id_acta = $id_acta;
     }
 
     /**

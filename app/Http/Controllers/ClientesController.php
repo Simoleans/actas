@@ -70,16 +70,16 @@ class ClientesController extends Controller
           $rut = Clientes::where('rut',$request->rut)->exists();
 
           if ($rut) {
-              return response()->json(['msg' => 'Ya existe esta persona','status' => false]);
+              return response()->json(['msg' => 'Ya existe esta persona','status' => false ,'type' =>'error']);
           }
 
           $clientes = new Clientes;
           $clientes->fill($request->all());
 
               if($clientes->save()){
-                return response()->json(['msg' => '¡Registrado Correctamente!','status' => true,'id' => $clientes->id]);
+                return response()->json(['msg' => '¡Registrado Correctamente!','status' => true,'id' => $clientes->id ,'type' => 'success']);
               }else{
-               return response()->json(['msg' => '¡Error!','status' => false]);
+               return response()->json(['msg' => '¡Error!','status' => false ,'type' => 'error']);
               }
 
       }

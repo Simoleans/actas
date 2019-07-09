@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\ClientesEmpresas;
+use App\EmpresaClientes;
 use App\Empresas;
 use App\Clientes;
 
@@ -100,6 +101,27 @@ class ClientesEmpresasController extends Controller
               }
     }
 
+    public function storeEmpCli(Request $request)
+    {
+
+      //dd($request->all());
+
+      $store = new EmpresaClientes;
+      $store->fill($request->all());
+
+      $query = EmpresaClientes::where('id_cliente',$request->id_cliente)->where('id_empresa',$request->id_empresa)->exists();
+
+      if ($query) {
+         return response()->json(['msg' => 'Ya existe este cliente en esta empresa!', 'status'=> false, 'type' => 'error']);
+      }
+
+      if ($store->save()) {
+         return response()->json(['msg' => 'Se registro correctamente', 'status'=> true, 'type' => 'success']);
+      }else{
+        return response()->json(['msg' => '¡Error!', 'status'=> false, 'type' => 'error']);
+      }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -108,9 +130,22 @@ class ClientesEmpresasController extends Controller
      */
     public function show($id)
     {
-         $empresa = ClientesEmpresas::findOrfail($id);
+         $clienteEmpresa = ClientesEmpresas::findOrfail($id);
 
-        return view('clientes_empresas.view',['empresa' => $empresa]);
+         $empresaExists  = Auth::user()->exitsEmp(Auth::user()->id);
+         
+         if ($empresaExists) {
+                $empresa = Empresas::where('id_user',Auth::user()->id)->first();
+                //$actas = Actas::where('id_empresa', $empresa->id)->get();
+            } else{
+              $empresa  = Auth::user()->empresaExist(Auth::user()->id);
+            } 
+
+            $clientes = Clientes::where('id_empresa',$empresa->id)->get();
+
+            $empresaCliente = EmpresaClientes::where('id_empresa',$empresa->id)->get();
+
+        return view('clientes_empresas.view',['empresaCliente' => $clienteEmpresa,'clientes' => $clientes,'empresa' =>  $empresa,'clienteEmpresa'=>$empresaCliente]);
     }
 
     /**

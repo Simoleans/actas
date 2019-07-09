@@ -132,7 +132,7 @@ canvas {
   margin-top: 8px;
 }
   </style>
-  @if(!$firma)
+  @if($firma)
  <div class="row">
       <div class="col-md-12">
         <form method="POST" enctype="multipart/form-data" id="form_pad">

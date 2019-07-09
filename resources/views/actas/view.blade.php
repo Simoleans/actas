@@ -93,7 +93,7 @@
              </td>
              <td>
                @if($p->firma == NULL)
-                 <center><a  href="{{route('actas.firma',['id' => $p->id,'acta_id'=>$acta->id])}}" class="btn btn-flat btn-success btn-sm">Firmar</a></center>
+                 <center><a  href="{{route('actas.firma',['id' => $p->clientes->id,'acta_id'=>$acta->id])}}" class="btn btn-flat btn-success btn-sm">Firmar</a></center>
                 @else
                  <h3 class="text-center">¡Ya Firmo!</h3>
                 @endif
@@ -217,6 +217,8 @@
 
       var acta ='{{$acta->codigo}}';
 
+      var id_acta = '{{$acta->id}}'
+
       $.ajax({
         headers: {
                 'X-CSRF-TOKEN': $('input[name="_token"]').val()
@@ -224,7 +226,7 @@
         url: '{{route('actas.invitacion')}}',
         type: 'POST',
         dataType: 'JSON',
-        data: {id: id,acta: acta},
+        data: {id: id,acta: acta,id_acta: id_acta},
       })
       .done(function(data) {
         alert(data.msg)
