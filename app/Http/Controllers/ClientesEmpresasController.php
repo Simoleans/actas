@@ -108,7 +108,9 @@ class ClientesEmpresasController extends Controller
      */
     public function show($id)
     {
-        //
+         $empresa = ClientesEmpresas::findOrfail($id);
+
+        return view('clientes_empresas.view',['empresa' => $empresa]);
     }
 
     /**

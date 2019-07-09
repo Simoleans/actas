@@ -18,6 +18,7 @@ class User extends Authenticatable
     protected $fillable = [
           'id_user',
           'id_user_sucursal',
+          'id_user_admin',
           'nombre',
           'email',
           'rut_user',
@@ -80,14 +81,20 @@ class User extends Authenticatable
        //dd($user->belong_sucursal->users_belong->empresa); // empresa de una sucursal, el que registra el usuario que registro el admin, el tercer nivel
       $user = User::findOrfail($id);
 
-      
-      if (!$user->id_user_sucursal && !$user->id_user) {
-          $empresa = false;
-      }elseif (!$user->id_user_sucursal && $user->id_user) {
-          $empresa = $user->users_belong->empresa;
-      }elseif ($user->id_user_sucursal && !$user->id_user) {
-        $empresa = $user->belong_sucursal->users_belong->empresa;
+      if ($user->id_user_admin) {
+        $empresa = Empresas::where('id_user',$user->id_user_admin)->first();
+      }else{
+        $empresa = false;
       }
+
+      
+      // if (!$user->id_user_sucursal && !$user->id_user) {
+      //     $empresa = false;
+      // }elseif (!$user->id_user_sucursal && $user->id_user) {
+      //     $empresa = $user->users_belong->empresa;
+      // }elseif ($user->id_user_sucursal && !$user->id_user) {
+      //   $empresa = $user->belong_sucursal->users_belong->empresa;
+      // }
 
      //dd($user);
 

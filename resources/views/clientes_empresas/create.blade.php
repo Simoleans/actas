@@ -78,18 +78,7 @@
 								<input id="giro_comercial" class="form-control" type="text" name="giro_comercial" value="{{ old('giro_comercial')?old('giro_comercial'):'' }}" placeholder="Giro Comercial" required>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group {{ $errors->has('cliente_id')?'has-error':'' }}">
-								<label class="control-label" for="giro">Cliente: *</label>
-								<select name="id_cliente" required="" class="form-control">
-									<option value="">Seleccione...</option>
-									@foreach($clientes as $cliente)
-										<option value="{{$cliente->id}}">{{$cliente->nombre.' '.$cliente->apelido}}</option>
-									@endforeach
-								</select>
-							</div>
-						</div>
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<div class="form-group {{ $errors->has('logo')?'has-error':'' }}">
 								<label class="control-label" for="logo">Logo de la empresa: *</label>
 								<input id="logo" class="form-control img_upload" type="file" name="logo" required>

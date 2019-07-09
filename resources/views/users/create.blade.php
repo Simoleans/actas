@@ -27,11 +27,10 @@
 					<form class="" action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
 					{{ method_field( 'POST' ) }}
 					{{ csrf_field() }}
-					
-					@if(Auth::user()->id_user)
-						<input type="hidden" name="id_user_sucursal" value="{{Auth::user()->id}}">
+					@if(!Auth::user()->id_user_sucursal && !Auth::user()->id_user)
+						<input type="hidden" name="id_user_admin" value="{{Auth::user()->id}}">
 					@else
-					<input type="hidden" name="id_user" value="{{Auth::user()->id}}">
+					<input type="hidden" name="id_user_admin" value="{{Auth::user()->id_user_admin}}">
 					@endif
 					<h4>Agregar Usuario</h4>
 					<div class="row">

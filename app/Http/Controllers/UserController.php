@@ -21,7 +21,17 @@ class UserController extends Controller
 
         $online = User::findOrfail(Auth::user()->id);
 
-        $users = User::where('id_user', $online->user_id)->orWhere('id_user_sucursal', $online->id_user_sucursal)->get();
+        //dd($online->id_user_admin);
+
+        //$users = User::where('id_user', $online->user_id)->where('id_user_admin','!=' , $online->id_user_admin)->orWhere('id_user_sucursal', $online->id_user_sucursal)->get();
+
+        if (!$online->id_user_sucursal && !$online->id_user) {
+           $users = User::where('id_user_admin', $online->id)->get();
+        }else{
+           $users = User::where('id_user_admin', $online->id_user_admin)->get();
+        }
+
+       
 
         return view('users.index', ['users' => $users]);
     }
@@ -50,9 +60,17 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
 
-        $user = new User;
+
+         $user = new User;
         $user->fill($request->all());
         $user->password = bcrypt($request->input('password'));
+
+        if ($request->rol == 2) {
+            $user->id_user_sucursal = Auth::user()->id;
+        }else{
+            $user->id_user = Auth::user()->id;
+        }
+
 
         if ($user->save()) {
             return redirect("users")->with([

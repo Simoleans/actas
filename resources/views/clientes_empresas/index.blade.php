@@ -59,7 +59,7 @@
 									<td>{{$d->telefono}}</td>
 									<td>{{$d->giro_comercial}}</td>
 									<td>
-										 {{-- <a class="btn btn-primary btn-flat btn-sm" href="{{ route('clientese.show',[$d->id])}}"><i class="fa fa-search"></i></a>  --}}
+										 <a class="btn btn-primary btn-flat btn-sm" href="{{ route('clientese.show',[$d->id])}}"><i class="fa fa-search"></i></a> 
 										<a href="{{route('clientese.edit',[$d->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
 									</td>
 								</tr>

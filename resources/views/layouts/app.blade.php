@@ -155,6 +155,7 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MENÚ</li>
+          @if(Auth::user()->empresaExist(Auth::user()->id) || Auth::user()->exitsEmp(Auth::user()->id)) {{-- Si tiene empresa registrada --}}
           @if(Auth::user()->rol != 3) {{-- si el usuarioe s rol 3 --}}
             <li class="treeview">
               <a href="#">
@@ -167,6 +168,7 @@
                 <li><a href="{{ route('users.create') }}"><i class="fa fa-circle-o"></i>Agregar usuario</a></li>
               </ul>
             </li>
+            @endif
             @endif
              <li class="treeview">
               <a href="#">

@@ -10,7 +10,6 @@ class ClientesEmpresas extends Model
 
      protected $fillable = [
           'id_user',
-          'id_cliente',
           'id_empresa',
           'r_social',
           'ciudad',
