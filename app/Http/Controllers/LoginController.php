@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Actas;
 use App\Empresas;
+use App\Clientes;
 
 class LoginController extends Controller
 {
@@ -14,30 +15,32 @@ class LoginController extends Controller
     {
          $user = User::findOrfail(Auth::user()->id);
          
+        if ($user->rol == 3) {
+          $actas = Actas::where('id_user', $user->id)->get();
+          $clientes = [];
+          $users = [];
+        }else{ 
+            $empresa  = Auth::user()->empresaExist(Auth::user()->id);
         
-         $empresaExists  = Auth::user()->exitsEmp(Auth::user()->id);
-
-         //dd($empresaExists);
-         
-         if ($empresaExists) {
+            if (!$empresa) {
                 $empresa = Empresas::where('id_user',Auth::user()->id)->first();
-                $actas = Actas::where('id_empresa', $empresa->id)->get();
-            } else{
-              $actas= [];
-            }       
+            }
 
-         //dd($actas);
+            $actas = Actas::where('id_empresa',$empresa->id)->get();
+
+            $clientes = Clientes::where('id_empresa',$empresa->id)->get();
+
+             if (!$user->id_user_sucursal && !$user->id_user) {
+                 $users = User::where('id_user_admin', $user->id)->get();
+              }else{
+                 $users = User::where('id_user_admin', $user->id_user_admin)->get();
+              }
+
+              //dd($users);
+        }
          
 
-         
-
-       //dd($user->users_belong->empresa); // empresa de un usuario registrado por el admind e la empresa 2do nivel
-
-       //dd($user->belong_sucursal->users_belong->empresa); // empresa de una sucursal, el que registra el usuario que registro el admin, el tercer nivel
-
-
-
- 			return view('dashboard',['actas' => $actas]);
+ 			return view('dashboard',['actas' => $actas,'clientes' => $clientes,'users' => $users]);
 	}
 
 	 public function login(Request $request)

@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Firmar</title>
-     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
     <!-- Icon 16x16 -->
     <link rel="icon" type="image/png" sizes="240x240" href="{{asset('img/logo.png')}}">
     <!-- Bootstrap 3.3.5 -->
@@ -20,10 +20,7 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/css/inputmask.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{asset('css/_all-skins.min.css')}}"> -->
-
-</head>
-<body>
-  <style type="text/css">
+<style type="text/css">
 *,
 *::before,
 *::after {
@@ -106,7 +103,7 @@ body {
 
 .signature-pad--body
 canvas {
- /* position: absolute;*/
+  position: absolute;
   left: 0;
   top: 0;
   width: 100%;
@@ -132,39 +129,38 @@ canvas {
   margin-top: 8px;
 }
   </style>
+</head>
+<body>
+  
   @if($firma)
- <div class="row">
-      <div class="col-md-12">
-        <form method="POST" enctype="multipart/form-data" id="form_pad">
-           <meta name="csrf-token" content="{{ csrf_token() }}" />
-            <input type="hidden" name="id_participante" value="{{$participante->id}}">
-            <input type="hidden" name="firma" id="firma" required>
-            <input type="hidden" name="id_acta" value="{{$acta->id}}">
-            <div id="signature-pad" class="signature-pad">
-              <div class="signature-pad--body" id="signatura-pad-image">
-                <canvas></canvas>
+    <form method="POST" enctype="multipart/form-data" id="form_pad">
+       <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <input type="hidden" name="id_participante" value="{{$participante->id}}">
+        <input type="hidden" name="firma" id="firma" required>
+        <input type="hidden" name="id_acta" value="{{$acta->id}}">
+      </form>
+        <div id="signature-pad" class="signature-pad" >
+          <div class="signature-pad--body" id="signatura-pad-image">
+            <canvas></canvas>
+          </div>
+          <div class="signature-pad--footer">
+            <div class="description">VeanX Technology<br>{{$participante->clientes->nombre.' '.$participante->clientes->apellido}}</div>
+
+            <div class="signature-pad--actions">
+              <div>
+                <button type="button" class="button clear btn btn-sm btn-default btn-flat" data-action="clear">Limpiar</button>
+                <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="change-color">Cambiar Color</button>
+                <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="undo">Corregir</button>
+
               </div>
-              <div class="signature-pad--footer">
-                <div class="description">VeanX Technology<br>{{$participante->clientes->nombre.' '.$participante->clientes->apellido}}</div>
-
-                <div class="signature-pad--actions">
-                  <div>
-                    <button type="button" class="button clear btn btn-sm btn-default btn-flat" data-action="clear">Limpiar</button>
-                    <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="change-color">Cambiar Color</button>
-                    <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="undo">Corregir</button>
-
-                  </div>
-                  <div>
-                    <button type="button" class="button save btn btn-sm btn-success btn-flat"  data-action="save-png">Guardar</button>
-                    <button type="button" class="button save btn btn-sm btn-danger btn-flat"  data-action="save-jpg">Guardar en JPG</button>
-                    <button type="button" class="button save btn btn-sm btn-danger btn-flat"  data-action="save-svg">Guardar en SVG</button>
-                  </div>
-                </div>
+              <div>
+                <button type="button" class="button save btn btn-sm btn-success btn-flat"  data-action="save-png">Guardar</button>
+                <button type="button" class="button save btn btn-sm btn-danger btn-flat"  data-action="save-jpg">Guardar en JPG</button>
+                <button type="button" class="button save btn btn-sm btn-danger btn-flat"  data-action="save-svg">Guardar en SVG</button>
               </div>
             </div>
-          </form>
-      </div>
-    </div>
+          </div>
+        </div>
     @else
     <h2>¡Ya usted Ha Firmado!</h2>
     @endif
@@ -227,7 +223,7 @@ function resizeCanvas() {
 
   // This part causes the canvas to be cleared
   canvas.width = canvas.offsetWidth * ratio;
-  canvas.height = canvas.offsetHeight * ratio + 95;
+  canvas.height = canvas.offsetHeight * ratio;
   //console.log(canvas.width,canvas.height);
   canvas.getContext("2d").scale(ratio, ratio);
 

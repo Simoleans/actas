@@ -65,7 +65,7 @@ class UserController extends Controller
         $user->fill($request->all());
         $user->password = bcrypt($request->input('password'));
 
-        if ($request->rol == 2) {
+        if ($request->rol == 3) {
             $user->id_user_sucursal = Auth::user()->id;
         }else{
             $user->id_user = Auth::user()->id;
