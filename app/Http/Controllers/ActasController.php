@@ -208,7 +208,8 @@ class ActasController extends Controller
     {
         //$acta = Actas::findOrfail($id);
 
-        $participante = Participantes::findOrfail($id);
+        $participante = Participantes::where('id',$id)->first();
+       
 
         $acta = Actas::where('id', $acta_id)->first();
 
@@ -225,7 +226,7 @@ class ActasController extends Controller
 
         $acta = Actas::where('id', $acta_id)->first();
 
-        $acta_firma = Participantes::where('id_cliente', $id)->where('id_acta',$acta_id)->whereNull('firma')->exists();
+        $acta_firma = Participantes::where('id', $id)->where('id_acta',$acta_id)->whereNull('firma')->exists();
 
         //dd($acta_firma);
 
@@ -238,7 +239,7 @@ class ActasController extends Controller
         $name   = 'ac' . md5(date("dmYhisA")) . '.png';
         $nombre = public_path() . '/img/actas/' . $name;
 
-        $participante = Participantes::where('id_cliente', $request->id_participante)->where('id_acta', $request->id_acta)->first();
+        $participante = Participantes::where('id', $request->id_participante)->where('id_acta', $request->id_acta)->first();
         //dd($participante);
         $participante->firma = $name;
 

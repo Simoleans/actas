@@ -93,7 +93,7 @@
              </td>
              <td>
                @if($p->firma == NULL)
-                 <center><a  href="{{route('actas.firma',['id' => $p->clientes->id,'acta_id'=>$acta->id])}}" class="btn btn-flat btn-success btn-sm">Firmar</a></center>
+                 <center><a  href="{{route('actas.firma',['id' => $p->id,'acta_id'=>$acta->id])}}" class="btn btn-flat btn-success btn-sm">Firmar</a></center>
                 @else
                  <h3 class="text-center">¡Ya Firmo!</h3>
                 @endif
