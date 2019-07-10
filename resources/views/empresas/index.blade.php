@@ -32,7 +32,7 @@
 		        <h3 class="box-title"><i class="fa fa-users"></i> Empresas</h3>
 		        @if(Auth::user()->rol == 1)
 			        <span class="pull-right">
-						<a href="{{ route('empresas.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nueva Empresa</a>
+						{{-- <a href="{{ route('empresas.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nueva Empresa</a> --}}
 					</span>
 				@endif
 		      </div>

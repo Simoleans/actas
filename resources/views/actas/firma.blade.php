@@ -169,33 +169,7 @@ canvas {
             </a>
            </div>
          </div>
-        {{-- <form method="POST" enctype="multipart/form-data" id="form_pad">
-           <meta name="csrf-token" content="{{ csrf_token() }}" />
-            <input type="hidden" name="id_participante" value="{{$participante->id}}">
-            <input type="hidden" name="firma" id="firma" required>
-            <div id="signature-pad" class="signature-pad">
-                    <div class="signature-pad--body" id="signatura-pad-image">
-                      <canvas></canvas>
-                    </div>
-                    <div class="signature-pad--footer">
-                      <div class="description">VeanX Technology<br>{{$participante->clientes->nombre.' '.$participante->clientes->apellido}}</div>
-
-                      <div class="signature-pad--actions">
-                        <div>
-                          <button type="button" class="button clear btn-lg btn-warning" data-action="clear">Limpiar</button>
-                          <button type="button" class="button" style="display: none;" data-action="change-color">Cambiar Color</button>
-                          <button type="button" class="button" style="display: none;" data-action="undo">corregir</button>
-
-                        </div>
-                        <div>
-                          <button type="button" class="button save bt btn-lg btn-success"  data-action="save-png">Guardar</button>
-                          <button type="button" class="button save" style="display: none;" data-action="save-jpg">Guardar en JPG</button>
-                          <button type="button" class="button save" style="display: none;" data-action="save-svg">Guardar en SVG</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-          </form> --}}
+        
          @endif
 
       <br>

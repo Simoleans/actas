@@ -14,33 +14,41 @@ class LoginController extends Controller
     public function index()
     {
          $user = User::findOrfail(Auth::user()->id);
-         
-        if ($user->rol == 3) {
-          $actas = Actas::where('id_user', $user->id)->get();
-          $clientes = [];
-          $users = [];
-        }else{ 
-            $empresa  = Auth::user()->empresaExist(Auth::user()->id);
-        
-            if (!$empresa) {
-                $empresa = Empresas::where('id_user',Auth::user()->id)->first();
-            }
 
-            $actas = Actas::where('id_empresa',$empresa->id)->get();
+         $existsEmpresa  = Auth::user()->empresaExist(Auth::user()->id);
 
-            $clientes = Clientes::where('id_empresa',$empresa->id)->get();
+       if (!$existsEmpresa) {
+          return view('dashboard',['actas' => [],'clientes' => [],'users' => [] ,'empresaExist' => false]);
+       }else{
+           if ($user->rol == 3) {
+            $actas = Actas::where('id_user', $user->id)->get();
+            $clientes = [];
+            $users = [];
+          }else{ 
+              $empresasE  = Auth::user()->empresaExist(Auth::user()->id);
 
-             if (!$user->id_user_sucursal && !$user->id_user) {
-                 $users = User::where('id_user_admin', $user->id)->get();
+              if (!$empresasE) {
+                 $empresa = Empresas::where('id_user',Auth::user()->id)->first();
               }else{
-                 $users = User::where('id_user_admin', $user->id_user_admin)->get();
+                 $empresa = Empresas::where('id',$empresasE->id)->first();
               }
 
-              //dd($users);
-        }
-         
 
- 			return view('dashboard',['actas' => $actas,'clientes' => $clientes,'users' => $users]);
+              $actas = Actas::where('id_empresa',$empresa->id)->get();
+
+              $clientes = Clientes::where('id_empresa',$empresa->id)->get();
+
+               if (!$user->id_user_sucursal && !$user->id_user) {
+                   $users = User::where('id_user_admin', $user->id)->get();
+                }else{
+                   $users = User::where('id_user_admin', $user->id_user_admin)->get();
+                }
+               
+           }
+       }
+
+
+ 			return view('dashboard',['actas' => $actas,'clientes' => $clientes,'users' => $users,'empresaExist' => true]);
 	}
 
 	 public function login(Request $request)

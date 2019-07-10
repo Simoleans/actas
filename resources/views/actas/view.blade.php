@@ -206,6 +206,39 @@
       /* Caso contrario mostramos mensaje de alerta */
       else { alert('Para activar la opcion nativa de compartir debes utilizar Chrome en Android') }
     });// fin click deshabilitar
+
+    $(".data-table").on('click','.btn_invitar', function () {
+
+      var id = $(this).data('id');
+
+      var acta ='{{$acta->codigo}}';
+
+      var id_acta = '{{$acta->id}}'
+
+      $.ajax({
+        headers: {
+                'X-CSRF-TOKEN': $('input[name="_token"]').val()
+             },
+        url: '{{route('actas.invitacion')}}',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {id: id,acta: acta,id_acta: id_acta},
+      })
+      .done(function(data) {
+        Swal.fire({
+            title: data.msg,
+          })
+        console.log("success");
+      })
+      .fail(function(error) {
+        alert(error.responseJSON.msg)
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+    });// fin click invitar
+
      /* Recuperamos el boton */
     shareButton = document.getElementById("shareButton");
     /* Capturamos el evento CLICK */

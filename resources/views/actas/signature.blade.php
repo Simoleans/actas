@@ -148,15 +148,15 @@ canvas {
 
             <div class="signature-pad--actions">
               <div>
-                <button type="button" class="button clear btn btn-sm btn-default btn-flat" data-action="clear">Limpiar</button>
-                <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="change-color">Cambiar Color</button>
-                <button type="button" class="button btn btn-sm btn-warning btn-flat"  data-action="undo">Corregir</button>
+                <button type="button" class="button clear btn btn-lg btn-default btn-flat" data-action="clear">Limpiar</button>
+                <button type="button" class="button btn btn-lg btn-warning btn-flat"  data-action="change-color">Cambiar Color</button>
+                <button type="button" class="button btn btn-lg btn-warning btn-flat"  data-action="undo">Corregir</button>
 
               </div>
               <div>
-                <button type="button" class="button save btn btn-sm btn-success btn-flat"  data-action="save-png">Guardar</button>
-                <button type="button" class="button save btn btn-sm btn-danger btn-flat"  data-action="save-jpg">Guardar en JPG</button>
-                <button type="button" class="button save btn btn-sm btn-danger btn-flat"  data-action="save-svg">Guardar en SVG</button>
+                <button type="button" class="button save btn btn-lg btn-success btn-flat"  data-action="save-png">Guardar</button>
+                <button type="button" class="button save btn btn-sm btn-danger btn-flat" style="display: none;" data-action="save-jpg">Guardar en JPG</button>
+                <button type="button" class="button save btn btn-sm btn-danger btn-flat" style="display: none;" data-action="save-svg">Guardar en SVG</button>
               </div>
             </div>
           </div>
@@ -314,7 +314,7 @@ savePNGButton.addEventListener("click", function (event) {
     swal("Debe poner una firma.");
   } else {
     var dataURL = signaturePad.toDataURL();
-    download(dataURL, "signature.png");
+    // download(dataURL, "signature.png");
 
     html2canvas([document.getElementById('signatura-pad-image')], {
           onrendered: function (canvas) {

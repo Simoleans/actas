@@ -84,7 +84,7 @@ class User extends Authenticatable
       if ($user->id_user_admin) {
         $empresa = Empresas::where('id_user',$user->id_user_admin)->first();
       }else{
-        $empresa = false;
+        $empresa = Empresas::where('id_user',$user->id)->first();
       }
 
       

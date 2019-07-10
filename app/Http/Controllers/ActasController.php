@@ -237,10 +237,9 @@ class ActasController extends Controller
 
         $name   = 'ac' . md5(date("dmYhisA")) . '.png';
         $nombre = public_path() . '/img/actas/' . $name;
-        //dd($request->all());
 
-        $participante = Participantes::where('id', $request->id_participante)->where('id_acta', $request->id_acta)->first();
-       // dd($participante);
+        $participante = Participantes::where('id_cliente', $request->id_participante)->where('id_acta', $request->id_acta)->first();
+        //dd($participante);
         $participante->firma = $name;
 
         if ($participante->save()) {
