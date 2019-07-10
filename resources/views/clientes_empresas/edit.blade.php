@@ -12,7 +12,7 @@
 		<!-- Formulario -->
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				
+
 			</div>
 		</div>
 
@@ -78,24 +78,14 @@
 								<input id="giro_comercial" class="form-control" type="text" name="giro_comercial" value="{{ $empresa->giro_comercial }}" placeholder="Giro Comercial" required>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group {{ $errors->has('cliente_id')?'has-error':'' }}">
-								<label class="control-label" for="giro">Cliente: *</label>
-								<select name="id_cliente" required="" class="form-control">
-									<option value="">Seleccione...</option>
-									@foreach($clientes as $cliente)
-										<option value="{{$cliente->id}}" {{$cliente->id==$empresa->id_cliente?'selected':''}}>{{$cliente->nombre.' '.$cliente->apelido}}</option>
-									@endforeach
-								</select>
-							</div>
-						</div>
-						<div class="col-md-6">
+
+						<div class="col-md-12">
 							<div class="form-group {{ $errors->has('logo')?'has-error':'' }}">
 								<label class="control-label" for="logo">Logo de la empresa: *</label>
 								<input class="form-control img_upload_edit" id="input-20" type="file" name="logo" >
 							</div>
 						</div>
-						
+
 					</div>
 
 					@if (count($errors) > 0)
@@ -104,7 +94,7 @@
 				            @foreach($errors->all() as $error)
 				              <li>{{$error}}</li>
 				            @endforeach
-				          </ul>  
+				          </ul>
 			          </div>
 			        @endif
 					<div class="form-group text-right">

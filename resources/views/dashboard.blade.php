@@ -13,7 +13,7 @@
 		 {{-- @if(Auth::user()->exitsEmp(Auth::user()->id)) --}}
 			<div class="row">
 			  	<div class="col-md-12">
-			    	<div class="box box-danger">
+			    	<div class="box box-warning">
 				      <div class="box-header with-border">
 				        <h3 class="box-title"><i class="fa fa-users"></i> Actas</h3>
 				        <span class="pull-right">
@@ -52,13 +52,14 @@
 						</div>
 					</div>
 				</div>
-				@if(Auth::user()->rol == 1 || Auth::user()->rol == 2)
+				@if(Auth::user()->rol == 1 || Auth::user()->rol == 2 || Auth::user()->rol == 3)
+				@if(Auth::user()->rol != 3)
 				<div class="col-md-6">
 			    	<div class="box box-danger">
 				      <div class="box-header with-border">
 				        <h3 class="box-title"><i class="fa fa-users"></i> Usuarios</h3>
 				        <span class="pull-right">
-									<a href="{{ route('users.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo usuario</a>
+									<a href="{{ route('users.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo Usuario</a>
 								</span>
 				      </div>
 		      			<div class="box-body">
@@ -94,12 +95,13 @@
 						</div>
 					</div>
 				</div>
+				@endif
 				<div class="col-md-6">
 			    	<div class="box box-danger">
 				      <div class="box-header with-border">
 				        <h3 class="box-title"><i class="fa fa-users"></i> Clientes</h3>
 				        <span class="pull-right">
-									<a href="{{ route('users.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo usuario</a>
+									<a href="{{ route('clientes.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo Cliente</a>
 								</span>
 				      </div>
 		      			<div class="box-body">

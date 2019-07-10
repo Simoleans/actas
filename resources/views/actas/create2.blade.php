@@ -218,7 +218,7 @@
 							  title: response.msg,
 							  type: response.type,
 							  html: 'Sera redireccionado en <strong></strong> segundos',
-							  timer: 1900,
+							  timer: 1500,
 							  onBeforeOpen: () => {
 							    Swal.showLoading()
 							    timerInterval = setInterval(() => {

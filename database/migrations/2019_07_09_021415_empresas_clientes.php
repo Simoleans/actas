@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class EmpresasClientes extends Migration
 {
@@ -22,7 +22,7 @@ class EmpresasClientes extends Migration
             $table->integer('id_cliente')->unsigned(); //De uno a muchos,  una empresa,  muchos usuarios
             $table->foreign('id_cliente')->references('id')->on('clientes')->onDelete('cascade');
             $table->integer('id_empresa_cliente')->unsigned(); //De uno a muchos,  una empresa,  muchos usuarios
-            $table->foreign('id_empresa_cliente')->references('id')->on('empresa_clientes')->onDelete('cascade');
+            $table->foreign('id_empresa_cliente')->references('id')->on('clientes_empresa')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Acciones;
 use App\Actas;
 use App\Clientes;
+use App\Empresas;
 use App\Fotos;
 use App\Mail\ActasMail;
 use App\Observacion;
 use App\Participantes;
 use App\Planes;
-use App\Empresas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -25,13 +25,13 @@ class ActasController extends Controller
      */
     public function index()
     {
-       $empresa  = Auth::user()->empresaExist(Auth::user()->id);
-        
+        $empresa = Auth::user()->empresaExist(Auth::user()->id);
+
         if (!$empresa) {
-            $empresa = Empresas::where('id_user',Auth::user()->id)->first();
+            $empresa = Empresas::where('id_user', Auth::user()->id)->first();
         }
-        
-         $actas = Actas::where('id_empresa', $empresa->id)->get();
+
+        $actas = Actas::where('id_empresa', $empresa->id)->get();
 
         return view('actas.index', ['actas' => $actas]);
     }
@@ -43,17 +43,23 @@ class ActasController extends Controller
      */
     public function create()
     {
-        
-        $empresa  = Auth::user()->empresaExist(Auth::user()->id);
-        
+
+        $empresa = Auth::user()->empresaExist(Auth::user()->id);
+
         if (!$empresa) {
-            $empresa = Empresas::where('id_user',Auth::user()->id)->first();
+            $empresa = Empresas::where('id_user', Auth::user()->id)->first();
         }
 
-        $clientes = Clientes::where('id_empresa',$empresa->id)->get();
+        if (Auth::user()->rol == 1 || Auth::user()->rol == 2) {
+            $clientes = Clientes::where('id_empresa', $empresa->id)->get();
+        } else {
+            $clientes = Clientes::where('id_user', Auth::user()->id)->get();
+        }
+        //dd($
+
+        // $clientes = Clientes::where('id_empresa', $empresa->id)->get();
 
         $planes = Planes::where('id_empresa', $empresa->id)->get();
-        
 
         return view('actas.create2', ['empresa' => $empresa, 'clientes' => $clientes, 'planes' => $planes]);
     }
@@ -96,7 +102,6 @@ class ActasController extends Controller
                     $gImg->move($patch, $filename);
                     $name[] = $filename;
                 }
- 
 
                 for ($i = 0; $i < count($name); $i++) {
                     // for para guardar todas las fotos
@@ -137,7 +142,7 @@ class ActasController extends Controller
                 $acciones->save();
             } //fin for
 
-            return response()->json(['msg' => 'Se registro correctamente','type' => 'success', 'url' => route('actas.show', ['acta' => $acta->id])]);
+            return response()->json(['msg' => 'Se registro correctamente', 'type' => 'success', 'url' => route('actas.show', ['acta' => $acta->id])]);
         }
     }
 
@@ -208,14 +213,13 @@ class ActasController extends Controller
     {
         //$acta = Actas::findOrfail($id);
 
-        $participante = Participantes::where('id',$id)->first();
-       
+        $participante = Participantes::where('id', $id)->first();
 
         $acta = Actas::where('id', $acta_id)->first();
 
         $acta_firma = Participantes::where('id', $id)->where('id_acta', $acta->id)->whereNull('firma')->exists();
 
-        //dd($acta_firma);
+        //dd($participante);
 
         return view('actas.firma', ['acta' => $acta, 'participante' => $participante, 'firma' => $acta_firma]);
     }
@@ -226,9 +230,9 @@ class ActasController extends Controller
 
         $acta = Actas::where('id', $acta_id)->first();
 
-        $acta_firma = Participantes::where('id', $id)->where('id_acta',$acta_id)->whereNull('firma')->exists();
+        $acta_firma = Participantes::where('id', $id)->where('id_acta', $acta_id)->whereNull('firma')->exists();
 
-        //dd($acta_firma);
+        //dd($acta->id, $participante->id);
 
         return view('actas.signature', ['acta' => $acta, 'participante' => $participante, 'firma' => $acta_firma]);
     }
@@ -240,13 +244,13 @@ class ActasController extends Controller
         $nombre = public_path() . '/img/actas/' . $name;
 
         $participante = Participantes::where('id', $request->id_participante)->where('id_acta', $request->id_acta)->first();
-        //dd($participante);
+        //dd($participante->id_acta,$participante->id);
         $participante->firma = $name;
 
         if ($participante->save()) {
             file_put_contents($nombre, base64_decode($request->firma));
 
-            return response()->json(['msg' => 'Se ha registrado correctamente', 'url' => route('actas.firma', ['id' => $participante->id_acta, 'acta_id' => $participante->id_acta])]);
+            return response()->json(['msg' => 'Se ha registrado correctamente', 'url' => route('actas.firma', ['id' => $participante->id, 'acta_id' => $participante->id_acta])]);
         }
     }
 
@@ -258,7 +262,7 @@ class ActasController extends Controller
         //dd($cliente->email);
 
         \Mail::to($cliente->email)
-            ->send(new ActasMail($request->id, $request->acta,$request->id_acta));
+            ->send(new ActasMail($request->id, $request->acta, $request->id_acta));
 
         if (\Mail::failures()) {
             return response()->json(['msg' => 'No se ha enviado el correo :(', 'status' => false], 422);

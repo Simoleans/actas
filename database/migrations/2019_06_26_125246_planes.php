@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class Planes extends Migration
 {
@@ -17,6 +17,8 @@ class Planes extends Migration
             $table->increments('id');
             $table->integer('id_empresa')->unsigned(); //De uno a uno,  una empresa
             $table->foreign('id_empresa')->references('id')->on('empresas')->onDelete('cascade');
+            $table->integer('id_user')->unsigned(); //De uno a muchos,  una empresa,  muchos usuarios
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->string('nombre');
             $table->string('fecha_inicio');
             $table->string('fecha_fin');

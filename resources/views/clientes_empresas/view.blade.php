@@ -36,7 +36,7 @@
         <p><b>Giro Comercial: </b>{{ strtoupper($empresaCliente->giro_comercial) }}</p>
       </div>
 
-      <div class="col-md-4"> 
+      <div class="col-md-4">
         <p>&nbsp;</p>
         <p><b>Logo</b></p>
         <img src="{{asset('img/empresas/'.$empresaCliente->logo)}}" class="img-responsive">
@@ -120,7 +120,7 @@
                       @endforeach
                     </select>
                   </div>
-                </div>     
+                </div>
               </div>
               <div class="form-group text-right">
                 <button class="btn btn-flat btn-primary" type="submit"><i class="fa fa-send"></i> Guardar</button>
@@ -146,9 +146,16 @@
         data: $(this).serialize(),
       })
       .done(function(data) {
-        Swal.fire({
+          Swal.fire({
           type: data.type,
           title: data.msg,
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          if (result.value) {
+            window.location.reload();
+          }
         })
       })
       .fail(function() {
@@ -157,9 +164,8 @@
       .always(function() {
         console.log("complete");
       });
-      
+
     });
   });//fin document ready
 </script>
 @endsection
-

@@ -14,7 +14,7 @@
   	<div class="col-md-3 col-sm-6 col-xs-12">
       <div class="info-box">
         <span class="info-box-icon bg-red"><i class="fa fa-user"></i></span>
-        
+
         <div class="info-box-content">
           <span class="info-box-text">Planes</span>
           <span class="info-box-number">{{ count($planes) }}</span>
@@ -31,7 +31,7 @@
 		      <div class="box-header with-border">
 		        <h3 class="box-title"><i class="fa fa-users"></i> Mis Planes</h3>
 		        <span class="pull-right">
-							<a href="{{ route('clientes.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo Proveedor</a>
+							<a href="{{ route('planes.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo Plan</a>
 						</span>
 		      </div>
       			<div class="box-body">

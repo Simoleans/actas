@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\Planes;
 use App\Empresas;
+use App\Planes;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlanesController extends Controller
 {
@@ -16,16 +16,15 @@ class PlanesController extends Controller
      */
     public function index()
     {
-        $empresa  = Auth::user()->empresaExist(Auth::user()->id);
-        
+        $empresa = Auth::user()->empresaExist(Auth::user()->id);
+
         if (!$empresa) {
-            $empresa = Empresas::where('id_user',Auth::user()->id)->first();
+            $empresa = Empresas::where('id_user', Auth::user()->id)->first();
         }
-       
-        $planes = Planes::where('id_empresa',$empresa->id)->get();
 
-        return view('planes.index',['planes' => $planes]);
+        $planes = Planes::where('id_empresa', $empresa->id)->get();
 
+        return view('planes.index', ['planes' => $planes]);
 
     }
 
@@ -36,19 +35,19 @@ class PlanesController extends Controller
      */
     public function create()
     {
-         $empresaExists  = Auth::user()->exitsEmp(Auth::user()->id);
+        $empresaExists = Auth::user()->exitsEmp(Auth::user()->id);
 
-         //dd($empresaExists);
-         
-         if ($empresaExists) {
-                $empresa = Empresas::where('id_user',Auth::user()->id)->first();
-                //$actas = Actas::where('id_empresa', $empresa->id)->get();
-            } else{
-              $empresa  = Auth::user()->empresaExist(Auth::user()->id);
-            }       
-        
+        //dd($empresaExists);
+
+        if ($empresaExists) {
+            $empresa = Empresas::where('id_user', Auth::user()->id)->first();
+            //$actas = Actas::where('id_empresa', $empresa->id)->get();
+        } else {
+            $empresa = Auth::user()->empresaExist(Auth::user()->id);
+        }
+
         //dd($empresa);
-        return view('planes.create',['empresa' => $empresa]);
+        return view('planes.create', ['empresa' => $empresa]);
     }
 
     /**
@@ -59,23 +58,22 @@ class PlanesController extends Controller
      */
     public function store(Request $request)
     {
-        
 
-      $plan = new Planes;
-      $plan->fill($request->all());
+        $plan = new Planes;
+        $plan->fill($request->all());
 
-      if($plan->save()){
-        return redirect("planes")->with([
-          'flash_message' => 'Plan agregado correctamente.',
-          'flash_class' => 'alert-success'
-          ]);
-      }else{
-        return redirect("planes")->with([
-          'flash_message' => 'Ha ocurrido un error.',
-          'flash_class' => 'alert-danger',
-          'flash_important' => true
-          ]);
-      }
+        if ($plan->save()) {
+            return redirect("planes")->with([
+                'flash_message' => 'Plan agregado correctamente.',
+                'flash_class'   => 'alert-success',
+            ]);
+        } else {
+            return redirect("planes")->with([
+                'flash_message'   => 'Ha ocurrido un error.',
+                'flash_class'     => 'alert-danger',
+                'flash_important' => true,
+            ]);
+        }
     }
 
     /**
@@ -97,7 +95,16 @@ class PlanesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $plan = Planes::findOrfail($id);
+
+        $empresa = Auth::user()->empresaExist(Auth::user()->id);
+
+        if (!$empresa) {
+            $empresa = Empresas::where('id_user', Auth::user()->id)->first();
+        }
+
+        return view('planes.edit', ['plan' => $plan, 'empresa' => $empresa]);
+
     }
 
     /**
@@ -109,7 +116,20 @@ class PlanesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $plan->fill($request->all());
+
+        if ($empresa->save()) {
+            return redirect("planes")->with([
+                'flash_message' => 'Plan modificado correctamente.',
+                'flash_class'   => 'alert-success',
+            ]);
+        } else {
+            return redirect("planes")->with([
+                'flash_message'   => 'Ha ocurrido un error.',
+                'flash_class'     => 'alert-danger',
+                'flash_important' => true,
+            ]);
+        }
     }
 
     /**
