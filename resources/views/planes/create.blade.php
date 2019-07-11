@@ -28,6 +28,7 @@
 					{{ method_field( 'POST' ) }}
 					{{ csrf_field() }}
 					<input type="hidden" name="id_empresa" value="{{ strtoupper($empresa->id)}}">
+					<input type="hidden" name="id_user" value="{{Auth::user()->id}}">
 					<h4>Agregar Plan</h4>
 						<div class="row">
 							<div class="col-md-12">

@@ -16,9 +16,17 @@ class EmpresasController extends Controller
      */
     public function index()
     {
-        $empresa = Empresas::where('id_user', Auth::user()->id)->get();
+        // $empresa = Empresas::where('id_user', Auth::user()->id)->get();
 
-        return view('empresas.index',['empresas' => $empresa]);
+
+        $empresa = Auth::user()->empresaExist(Auth::user()->id);
+
+        if (!$empresa) {
+            $empresa = Empresas::where('id_user', Auth::user()->id)->first();
+        }
+
+        //dd($empresa);
+        return view('empresas.index',['empresa' => $empresa]);
     }
 
     /**

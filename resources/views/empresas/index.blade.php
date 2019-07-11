@@ -16,8 +16,8 @@
         <span class="info-box-icon bg-red"><i class="fa fa-industry"></i></span>
         
         <div class="info-box-content">
-          <span class="info-box-text">Empresas</span>
-          <span class="info-box-number">{{ count($empresas) }}</span>
+          <span class="info-box-text">Empresa:</span>
+          <span class="info-box-number">{{ strtoupper($empresa->r_social) }}</span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -40,7 +40,6 @@
 					<table class="table data-table table-bordered table-hover table-condensed">
 						<thead>
 							<tr>
-								<th class="text-center">#</th>
 								<th class="text-center">Razon S. </th>
 								<th class="text-center">RUT</th>
 								<th class="text-center">Contacto</th>
@@ -50,20 +49,17 @@
 							</tr>
 						</thead>
 						<tbody class="text-center">
-							@foreach($empresas as $d)
 								<tr>
-									<td>{{$loop->index+1}}</td>
-									<td>{{strtoupper($d->r_social)}}</td>
-									<td>{{$d->rut}}</td>
-									<td>{{$d->contacto}}</td>
-									<td>{{$d->telefono}}</td>
-									<td>{{$d->giro_comercial}}</td>
+									<td>{{strtoupper($empresa->r_social)}}</td>
+									<td>{{$empresa->rut}}</td>
+									<td>{{$empresa->contacto}}</td>
+									<td>{{$empresa->telefono}}</td>
+									<td>{{$empresa->giro_comercial}}</td>
 									<td>
-										 <a class="btn btn-primary btn-flat btn-sm" href="{{ route('empresas.show',[$d->id])}}"><i class="fa fa-search"></i></a> 
-										<a href="{{route('empresas.edit',[$d->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
+										 <a class="btn btn-primary btn-flat btn-sm" href="{{ route('empresas.show',[$empresa->id])}}"><i class="fa fa-search"></i></a> 
+										<a href="{{route('empresas.edit',[$empresa->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
 									</td>
 								</tr>
-							@endforeach
 						</tbody>
 					</table>
 				</div>
