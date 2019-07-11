@@ -178,9 +178,9 @@
               </a>
               <ul class="treeview-menu">
                 @if(Auth::user()->rol == 1)
-                @if(Auth::user()->empresaExist(Auth::user()->id)) {{-- Si tiene empresa registrada --}}
-                  <li><a href="{{route('empresas.create')}}"><i class="fa fa-circle-o"></i> Registrar Empresa</a></li>
-                @endif
+                  @if(!Auth::user()->empresaExist(Auth::user()->id)) {{-- Si tiene empresa registrada --}}
+                    <li><a href="{{route('empresas.create')}}"><i class="fa fa-circle-o"></i> Registrar Empresa</a></li>
+                  @endif
                 @endif
                 <li><a href="{{route('empresas.index')}}"><i class="fa fa-circle-o"></i> Mi Empresa</a></li>
               </ul>

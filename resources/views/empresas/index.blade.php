@@ -57,7 +57,9 @@
 									<td>{{$empresa->giro_comercial}}</td>
 									<td>
 										 <a class="btn btn-primary btn-flat btn-sm" href="{{ route('empresas.show',[$empresa->id])}}"><i class="fa fa-search"></i></a> 
-										<a href="{{route('empresas.edit',[$empresa->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
+										 @if(Auth::user()->rol != 3)
+											<a href="{{route('empresas.edit',[$empresa->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>
+										@endif
 									</td>
 								</tr>
 						</tbody>
