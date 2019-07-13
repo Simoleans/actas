@@ -25,15 +25,67 @@ class ActasController extends Controller
      */
     public function index()
     {
-        $empresa = Auth::user()->empresaExist(Auth::user()->id);
+        // $empresa = Auth::user()->empresaExist(Auth::user()->id);
 
-        if (!$empresa) {
+        // if (!$empresa) {
+        //     $empresa = Empresas::where('id_user', Auth::user()->id)->first();
+        // }
+
+        $empresaExists = Auth::user()->exitsEmp(Auth::user()->id);
+
+        //dd($empresaExists);
+
+        if ($empresaExists) {
             $empresa = Empresas::where('id_user', Auth::user()->id)->first();
+            //$actas = Actas::where('id_empresa', $empresa->id)->get();
+        } else {
+            $empresa = Auth::user()->empresaExist(Auth::user()->id);
         }
 
-        $actas = Actas::where('id_empresa', $empresa->id)->get();
+        if (Auth::user()->rol == 1 || Auth::user()->rol == 2) {
+            $clientes = Clientes::where('id_empresa', $empresa->id)->get();
+            $planes   = Planes::where('id_empresa', $empresa->id)->get();
+            $actas    = Actas::where('id_empresa', $empresa->id)->get();
+        } else {
+            $clientes = Clientes::where('id_user', Auth::user()->id)->get();
+            $planes   = Planes::where('id_user', Auth::user()->id)->get();
+            $actas    = Actas::where('id_user', Auth::user()->id)->get();
+        }
 
-        return view('actas.index', ['actas' => $actas]);
+        return view('actas.index', ['actas' => $actas, 'clientes' => $clientes, 'planes' => $planes, 'empresa' => $empresa]);
+    }
+
+    public function search(Request $request)
+    {
+        $empresaExists = Auth::user()->exitsEmp(Auth::user()->id);
+
+        if ($empresaExists) {
+            $empresa = Empresas::where('id_user', Auth::user()->id)->first();
+            //$actas = Actas::where('id_empresa', $empresa->id)->get();
+        } else {
+            $empresa = Auth::user()->empresaExist(Auth::user()->id);
+        }
+
+        if (Auth::user()->rol == 1 || Auth::user()->rol == 2) {
+            $clientes = Clientes::where('id_empresa', $empresa->id)->get();
+            $planes   = Planes::where('id_empresa', $empresa->id)->get();
+            //dd($request->id_cliente);
+            $actas = Participantes::orderBy('id', 'DESC')
+                ->empresa($empresa->id)
+                ->plan($request->id_plan)
+                ->cliente($request->id_cliente)
+                ->get();
+        } else {
+            $clientes = Clientes::where('id_user', Auth::user()->id)->get();
+            $planes   = Planes::where('id_user', Auth::user()->id)->get();
+            $actas    = Participantes::orderBy('id', 'DESC')
+                ->plan($request->id_plan)
+                ->cliente($request->id_cliente)
+                ->where('id_user', Auth::user()->id)
+                ->get();
+        }
+
+        return view('actas.search', ['actas' => $actas, 'clientes' => $clientes, 'planes' => $planes, 'empresa' => $empresa]);
     }
 
     /**
@@ -44,22 +96,27 @@ class ActasController extends Controller
     public function create()
     {
 
-        $empresa = Auth::user()->empresaExist(Auth::user()->id);
+        $empresaExists = Auth::user()->exitsEmp(Auth::user()->id);
 
-        if (!$empresa) {
+        //dd($empresaExists);
+
+        if ($empresaExists) {
             $empresa = Empresas::where('id_user', Auth::user()->id)->first();
+            //$actas = Actas::where('id_empresa', $empresa->id)->get();
+        } else {
+            $empresa = Auth::user()->empresaExist(Auth::user()->id);
         }
 
         if (Auth::user()->rol == 1 || Auth::user()->rol == 2) {
             $clientes = Clientes::where('id_empresa', $empresa->id)->get();
+            $planes   = Planes::where('id_empresa', $empresa->id)->get();
         } else {
             $clientes = Clientes::where('id_user', Auth::user()->id)->get();
+            $planes   = Planes::where('id_user', Auth::user()->id)->get();
         }
         //dd($
 
         // $clientes = Clientes::where('id_empresa', $empresa->id)->get();
-
-        $planes = Planes::where('id_empresa', $empresa->id)->get();
 
         return view('actas.create2', ['empresa' => $empresa, 'clientes' => $clientes, 'planes' => $planes]);
     }
@@ -120,7 +177,10 @@ class ActasController extends Controller
                 $cliente = new Participantes;
                 //$cliente->codigo_acta = 'AC'.$codigo;
                 $cliente->id_acta    = $acta->id;
+                $cliente->id_user    = Auth::user()->id;
                 $cliente->id_cliente = $request->id[$i];
+                $cliente->id_plan    = $request->id_plan[$i];
+                $cliente->id_empresa = $request->id_empresa;
                 $cliente->save();
 
             } //fin for

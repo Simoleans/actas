@@ -40,19 +40,19 @@
 						<div class="col-md-6">
 							<div class="form-group {{ $errors->has('nombre')?'has-error':'' }}">
 								<label class="control-label" for="nombre">Nombre: *</label>
-								<input id="nombre" class="form-control" type="text" name="nombre" value="{{ old('nombre')?old('nombre'):'' }}" placeholder="Razon Social" required>
+								<input id="nombre" class="form-control" type="text" name="nombre" value="{{ old('nombre')?old('nombre'):'' }}" placeholder="Nombre" required>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group {{ $errors->has('apellido')?'has-error':'' }}">
 								<label class="control-label" for="apellido">Apellido: *</label>
-								<input id="apellido" class="form-control" type="text" name="apellido" value="{{ old('apellido')?old('apellido'):'' }}" placeholder="Razon Social" required>
+								<input id="apellido" class="form-control" type="text" name="apellido" value="{{ old('apellido')?old('apellido'):'' }}" placeholder="Apellido" required>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group {{ $errors->has('email')?'has-error':'' }}">
 								<label class="control-label" for="email">Email: *</label>
-								<input id="email" class="form-control" type="text" name="email" value="{{ old('email')?old('email'):'' }}" placeholder="Contacto" required>
+								<input id="email" class="form-control" type="text" name="email" value="{{ old('email')?old('email'):'' }}" placeholder="Email" required>
 							</div>
 						</div>
 						<div class="col-md-6">

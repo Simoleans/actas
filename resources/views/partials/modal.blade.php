@@ -25,7 +25,8 @@
                           <th class="text-center">Apellido</th>
                           <th class="text-center">RUT</th>
                           <th class="text-center">Email</th>
-                          <th class="text-center">Accion</th>
+                          <th class="text-center">Plan</th>
+                          <th class="text-center" style="display: none;">Accion</th>
                         </tr>
                       </thead>
                       <tbody id="tbody-clientes" class="text-center">
@@ -36,6 +37,7 @@
                             <td class="cliente-apellido">{{$d->apellido}}</td>
                             <td class="cliente-rut">{{$d->rut}}</td>
                             <td class="cliente-email">{{$d->email}}</td>
+                            <td class="cliente-plan" style="display: none;">{{$d->plan->id}}</td>
                             <td>
                               <a class="btn btn-flat btn-success btn-sm add-row" title="Add"><i class="fa fa-plus"></i></a>
                               {{-- <a href="{{route('ordencompra.edit',[$d->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>  --}}

@@ -41,7 +41,6 @@
 								<input type="hidden" name="id_empresa" value="{{$empresa->id}}">
 								{{ method_field( 'POST' ) }}
 								{{ csrf_field() }}
-
 							  <div class="form-group">
 							    <label for="exampleInputEmail2">Plan</label>
 							     <select name="id_plan" class="form-control">
@@ -78,7 +77,6 @@
 						<thead>
 							<tr>
 								<th class="text-center">Codigo</th>
-								<th class="text-center">Usuario</th>
 								<th class="text-center">Participantes</th>
 								<th class="text-center">Fecha inicio</th>
 								<th class="text-center">Accion</th>
@@ -87,13 +85,12 @@
 						<tbody class="text-center">
 							@foreach($actas as $d)
 								<tr>
-									<td>{{$d->codigo}}</td>
-									<td>{{$d->user->nombre}}</td>
-									<td>{{$d->total($d->id)}}</td>
-									<td>{{$d->created_at->format('Y-m-d')}}</td>
+									<td>{{$d->acta->codigo}}</td>
+									<td>{{$d->acta->total($d->acta->id)}}</td>
+									<td>{{$d->acta->created_at->format('Y-m-d')}}</td>
 									<td>
-										<a class="btn btn-primary btn-flat btn-sm" href="{{ route('actas.show',[$d->id])}}"><i class="fa fa-search"></i></a>
-										 <a class="btn btn-danger btn-flat btn-sm" href="{{ route('actas.pdf',[$d->id])}}"><i class="fa fa-print"></i></a>
+										<a class="btn btn-primary btn-flat btn-sm" href="{{ route('actas.show',[$d->acta->id])}}"><i class="fa fa-search"></i></a>
+										 <a class="btn btn-danger btn-flat btn-sm" href="{{ route('actas.pdf',[$d->acta->id])}}"><i class="fa fa-print"></i></a>
 									</td>
 								</tr>
 							@endforeach

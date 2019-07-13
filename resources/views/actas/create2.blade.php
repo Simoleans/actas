@@ -153,6 +153,7 @@
 	              "<td class='cliente-apellido'>"+$("#apellido").val()+"</td>"+
 	              "<td class='cliente-email'>"+$("#email").val()+"</td>"+
 	              "<td class='cliente-rut'>"+$("#rut").val()+"</td>"+
+	               "<td class='cliente-plan' style='display:none'>"+$("#plan").val()+"</td>"+
 	              "<td>"+
 	                "<a class='btn btn-flat btn-success btn-sm add-row' title='Add'><i class='fa fa-plus'></i></a>"+
 	              "</td>"+
@@ -256,10 +257,13 @@
         		email = tr.find('.cliente-email').text(),
         		rut = tr.find('.cliente-rut').text(),
         		id = tr.find('.cliente-id').text();
+        		id_plan = tr.find('.cliente-plan').text();
+        		id_empresa = '{{$empresa->id}}';
 
             x++; //Increment field counter
             $(wrapper).append('<div class="remove">'+
             						'<input class="id" type="hidden" value="'+id+'" name="id[]">'+
+            						'<input class="plan" type="hidden" value="'+id_plan+'" name="id_plan[]">'+
 		    						'<div class="col-md-3">'+
 										'<div class="form-group">'+
 											'<label class="control-label" for="razon_social">Nombre: *</label>'+
@@ -343,7 +347,7 @@
             $(wrapper_acciones).append(fieldHTML_acciones); // Add field html
         }
     });
-    $(wrapper).on('click', '.remove_button_acciones', function(e){ //Once remove button is clicked
+    $(wrapper_acciones).on('click', '.remove_button_acciones', function(e){ //Once remove button is clicked
         e.preventDefault();
         //alert($(this).parent('div'));
         console.log($(this).parent('div'));
@@ -378,7 +382,7 @@
         	alert("¡Ya tiene un maximo de 8 observaciones")
         }
     });
-    $(wrapper).on('click', '.remove_button_observaciones', function(e){ //Once remove button is clicked
+    $(wrapper_observaciones).on('click', '.remove_button_observaciones', function(e){ //Once remove button is clicked
         e.preventDefault();
         //alert($(this).parent('div'));
         console.log($(this).parent('div'));

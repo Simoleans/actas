@@ -16,13 +16,24 @@ class PlanesController extends Controller
      */
     public function index()
     {
-        $empresa = Auth::user()->empresaExist(Auth::user()->id);
+        $empresaExists = Auth::user()->exitsEmp(Auth::user()->id);
 
-        if (!$empresa) {
+        //dd($empresaExists);
+
+        if ($empresaExists) {
             $empresa = Empresas::where('id_user', Auth::user()->id)->first();
+            //$actas = Actas::where('id_empresa', $empresa->id)->get();
+        } else {
+            $empresa = Auth::user()->empresaExist(Auth::user()->id);
         }
 
-        $planes = Planes::where('id_empresa', $empresa->id)->get();
+        if (Auth::user()->rol == 1 || Auth::user()->rol == 2) {
+            $planes = Planes::where('id_empresa', $empresa->id)->get();
+        } else {
+            $planes = Planes::where('id_user', Auth::user()->id)->get();
+        }
+
+        //dd($planes);
 
         return view('planes.index', ['planes' => $planes]);
 

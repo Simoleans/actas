@@ -64,10 +64,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('empresas/sendmail', 'UserController@sendEmail')->name('empresas.mail');
 
     /* Empresas Clientes */
-    Route::resource('/clientese','ClientesEmpresasController');
+    Route::resource('/clientese', 'ClientesEmpresasController');
 
     /* Cliente Empresas */
-    Route::post('/EmpCli','ClientesEmpresasController@storeEmpCli')->name('store.clienteEmpresa');
+    Route::post('/EmpCli', 'ClientesEmpresasController@storeEmpCli')->name('store.clienteEmpresa');
 
     /* Proveedores */
     Route::resource('/clientes', 'ClientesController');
@@ -76,6 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
     /* actas*/
     Route::resource('/actas', 'ActasController');
     Route::get('actas/sign/{id}/acta/{acta_id}', 'ActasController@signature')->name('actas.sign');
+    Route::post('/serachAc', 'ActasController@search')->name('search.actas');
 
     /* Planes */
     Route::resource('/planes', 'PlanesController');

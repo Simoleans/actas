@@ -23,7 +23,7 @@
 					@include('partials.flash')
 				  <div class="form-group col-md-4 col-md-offset-4 {{$errors->has('name')?'has-error':''}}">
 				    <label for="name">Nombre: *</label>
-				    <input type="text" class="form-control" name="name"  value="{{$perfil->name}}" required>
+				    <input type="text" class="form-control" name="name"  value="{{$perfil->nombre}}" required>
 				  </div>
 				  <div class="form-group col-md-4 col-md-offset-4 {{$errors->has('email')?'has-error':''}}">
 				    <label for="email">Email: *</label>
@@ -37,7 +37,7 @@
 					    </label>
 				    </div>
 				  </div>
-				  
+
 				  <section id="password_fields" style="display:none">
 					  <div class="form-group col-md-4 col-md-offset-4">
 					  	<label>Contraseña nueva: *</label>
@@ -57,7 +57,7 @@
 			            @foreach($errors->all() as $error)
 			              <li>{{$error}}</li>
 			            @endforeach
-	          		</ul>  
+	          		</ul>
           		</div>
           	</div>
           </div>

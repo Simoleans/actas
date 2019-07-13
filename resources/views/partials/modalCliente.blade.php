@@ -11,6 +11,7 @@
           {{ method_field( 'POST' ) }}
           {{ csrf_field() }}
           <input type="hidden" name="id_empresa" value="{{ $empresa->id}}">
+          <input type="hidden" name="id_user" value="{{Auth::user()->id}}">
           <h4>Agregar Cliente</h4>
           <div class="row">
             <div class="col-md-12">
@@ -22,29 +23,29 @@
             <div class="col-md-6">
               <div class="form-group {{ $errors->has('nombre')?'has-error':'' }}">
                 <label class="control-label" for="nombre">Nombre: *</label>
-                <input id="nombre" class="form-control" type="text" name="nombre" value="{{ old('nombre')?old('nombre'):'' }}" placeholder="Razon Social" required>
+                <input id="nombre" class="form-control" type="text" name="nombre" value="{{ old('nombre')?old('nombre'):'' }}" placeholder="Nombre" required>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group {{ $errors->has('apellido')?'has-error':'' }}">
                 <label class="control-label" for="apellido">Apellido: *</label>
-                <input id="apellido" class="form-control" type="text" name="apellido" value="{{ old('apellido')?old('apellido'):'' }}" placeholder="Razon Social" required>
+                <input id="apellido" class="form-control" type="text" name="apellido" value="{{ old('apellido')?old('apellido'):'' }}" placeholder="Apellido" required>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group {{ $errors->has('email')?'has-error':'' }}">
                 <label class="control-label" for="email">Email: *</label>
-                <input id="email" class="form-control" type="text" name="email" value="{{ old('email')?old('email'):'' }}" placeholder="Contacto" required>
+                <input id="email" class="form-control" type="text" name="email" value="{{ old('email')?old('email'):'' }}" placeholder="Email" required>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group {{ $errors->has('rut')?'has-error':'' }}">
                 <label class="control-label" for="rut">RUT: *</label>
-                
+
                   <input type="text" id="rut" name="rut" required  placeholder="Ingrese RUT" class="form-control rut" maxlength="12">
               </div>
             </div>
-            
+
             <div class="col-md-6">
               <div class="form-group {{ $errors->has('telefono')?'has-error':'' }}">
                 <label class="control-label" for="telefono_user">Telefono: *</label>
@@ -68,20 +69,19 @@
                 <textarea class="form-control" name="direccion" required=""></textarea>
               </div>
             </div>
-            
+
           </div>
 
-    
+
           <div class="form-group text-right">
 {{--        <a class="btn btn-flat btn-default" href="{{route('users.index')}}"><i class="fa fa-reply"></i> Atras</a> --}}
             <button class="btn btn-flat btn-primary" type="submit"><i class="fa fa-send"></i> Guardar</button>
           </div>
         </form>
       </div>
-     
+
     </form>
     </div>
   </div>
 </div>
 <!-- fin modal -->
-

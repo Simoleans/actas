@@ -59,7 +59,12 @@ class ClientesController extends Controller
             $empresa = Auth::user()->empresaExist(Auth::user()->id);
         }
 
-        $planes = Planes::where('id_empresa', $empresa->id)->get();
+        if (Auth::user()->rol == 1 || Auth::user()->rol == 2) {
+            $planes = Planes::where('id_empresa', $empresa->id)->get();
+        } else {
+            $planes = Planes::where('id_user', Auth::user()->id)->get();
+        }
+
         return view('clientes.create', ['planes' => $planes, 'empresa' => $empresa]);
     }
 
@@ -97,7 +102,7 @@ class ClientesController extends Controller
 
         if ($clientes->save()) {
             return redirect("clientes")->with([
-                'flash_message' => 'Proveedor agregado correctamente.',
+                'flash_message' => 'Cliente agregado correctamente.',
                 'flash_class'   => 'alert-success',
             ]);
         } else {

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateActasTable extends Migration
 {
@@ -20,7 +20,6 @@ class CreateActasTable extends Migration
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->integer('id_empresa')->unsigned(); //saber que usuario registro el proveedor
             $table->foreign('id_empresa')->references('id')->on('empresas')->onDelete('cascade');
-            $table->longText('observaciones')->nullable();
             $table->integer('status');
             $table->timestamps();
         });
