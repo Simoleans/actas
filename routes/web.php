@@ -43,7 +43,7 @@ Route::get('actas/pdf/{id}', 'ActasController@pdf')->name('actas.pdf');
 Route::get('actas/firma/{id}/{acta_id}', 'ActasController@firma')->name('actas.firma');
 Route::post('/actas/signature', 'ActasController@firmaSend')->name('actas.send');
 Route::post('/invitacion', 'ActasController@invitacion')->name('actas.invitacion');
-Route::post('/recordatorio','ActasController@sendPDF')->name('acta.sendMail');
+Route::post('/pdf','ActasController@sendPDF')->name('acta.sendMail');
 
 Route::group(['middleware' => 'auth'], function () {
     //middleware auth

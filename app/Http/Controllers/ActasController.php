@@ -8,6 +8,7 @@ use App\Clientes;
 use App\Empresas;
 use App\Fotos;
 use App\Mail\ActasMail;
+use App\Mail\ActasPDF;
 use App\Observacion;
 use App\Participantes;
 use App\Planes;
@@ -336,16 +337,18 @@ class ActasController extends Controller
 
     public function sendPDF(Request $request)
     {
-        $cliente = Clientes::findOrfail($request->id);
-        
-        $ruta = route('actas.pdf',['id' => $request->id_acta]);
+        $participantes = Participantes::where('id_acta',$request->id)->get();
 
-        \Mail::to($cliente->email)
-            ->send(new ActasMail($request->id, $request->acta, $request->id_acta));
+        $ruta = route('actas.pdf',['id' => $request->id]);
 
-        if (\Mail::failures()) {
-            return response()->json(['msg' => 'No se ha enviado el correo :(', 'status' => false], 422);
-        }
+        //dd($participantes);
+
+        foreach ($participantes as $p) {
+
+            \Mail::to($p->clientes->email)
+                ->send(new ActasPDF($ruta, $request->acta, $request->id));
+
+           }
 
         return response()->json(['msg' => 'Se envio el correo correctamente', 'status' => true], 200);
     }

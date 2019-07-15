@@ -11,6 +11,44 @@
 @if($empresaExist)
 	@if(Auth::user()->empresaExist(Auth::user()->id)  || Auth::user()->exitsEmp(Auth::user()->id))
 		 {{-- @if(Auth::user()->exitsEmp(Auth::user()->id)) --}}
+		  <div class="row">
+		    <div class="col-md-4 col-sm-6 col-xs-12">
+		      <div class="info-box">
+		        <span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
+
+		        <div class="info-box-content">
+		          <span class="info-box-text">Clientes</span>
+		          <span class="info-box-number">{{ count($clientes) }}</span>
+		        </div>
+		        <!-- /.info-box-content -->
+		      </div>
+		      <!-- /.info-box -->
+		    </div>
+		    <div class="col-md-4 col-sm-6 col-xs-12">
+		      <div class="info-box">
+		        <span class="info-box-icon bg-green"><i class="fa fa-file-text"></i></span>
+
+		        <div class="info-box-content">
+		          <span class="info-box-text">Actas</span>
+		          <span class="info-box-number">{{ count($actas) }}</span>
+		        </div>
+		        <!-- /.info-box-content -->
+		      </div>
+		      <!-- /.info-box -->
+		    </div>
+		    <div class="col-md-4 col-sm-6 col-xs-12">
+		      <div class="info-box">
+		        <span class="info-box-icon bg-red"><i class="fa fa-times-circle"></i></span>
+
+		        <div class="info-box-content">
+		          <span class="info-box-text">Actas SIN FIRMAR</span>
+		          <span class="info-box-number">{{ count($participantes) }}</span>
+		        </div>
+		        <!-- /.info-box-content -->
+		      </div>
+		      <!-- /.info-box -->
+		    </div>
+		  </div><!--row-->
 			<div class="row">
 			  	<div class="col-md-6">
 			    	<div class="box box-warning">
@@ -42,8 +80,8 @@
 											<td>{{$d->created_at->format('Y-m-d')}}</td>
 											<td>
 												<a class="btn btn-primary btn-flat btn-sm" href="{{ route('actas.show',[$d->id])}}"><i class="fa fa-search"></i></a>
-												 <a class="btn btn-danger btn-flat btn-sm" href="{{ route('actas.pdf',[$d->id])}}"><i class="fa fa-print"></i></a>
-												{{-- <a href="{{route('ordencompra.edit',[$d->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>  --}}
+												<a class="btn btn-danger btn-flat btn-sm" href="{{ route('actas.pdf',[$d->id])}}"><i class="fa fa-print"></i></a>
+												<a href="#" data-id="{{$d->id}}" data-acta="{{$d->codigo}}" title="Enviar Acta" class="btn btn-flat btn-success btn-sm btn_sendPDF" title="Editar"><i class="fa fa-envelope"></i></a>  
 											</td>
 										</tr>
 									@endforeach
@@ -68,7 +106,6 @@
 										<th class="text-center">Codigo</th>
 										<th class="text-center">Usuario</th>
 										<th class="text-center">Empresa</th>
-										<th class="text-center">Participantes</th>
 										<th class="text-center">Fecha inicio</th>
 										<th class="text-center">Accion</th>
 									</tr>
@@ -76,12 +113,11 @@
 								<tbody class="text-center">
 									@foreach($participantes as $d)
 										<tr>
-											<td>{{$d->acta->codigo}}</td>
-											<td>{{$d->acta->user->nombre}}</td>
-											<td>{{strtoupper($d->acta->empresa->r_social)}}</td>
-											<td>{{$d->acta->total($d->acta->id)}}</td>
-											<td>{{$d->acta->created_at->format('Y-m-d')}}</td>
-											<td>
+											<td style="background-color: #F99C9C;">{{$d->acta->codigo}}</td>
+											<td style="background-color: #F99C9C;">{{$d->acta->user->nombre}}</td>
+											<td style="background-color: #F99C9C;">{{strtoupper($d->acta->empresa->r_social)}}</td>
+											<td style="background-color: #F99C9C;">{{$d->acta->created_at->format('Y-m-d')}}</td>
+											<td style="background-color: #F99C9C;">
 												<a class="btn btn-primary btn-flat btn-sm" href="{{ route('actas.show',[$d->acta->id])}}"><i class="fa fa-search"></i></a>
 												 <a class="btn btn-danger btn-flat btn-sm" href="{{ route('actas.pdf',[$d->acta->id])}}"><i class="fa fa-print"></i></a>
 												{{-- <a href="{{route('ordencompra.edit',[$d->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>  --}}
@@ -95,7 +131,7 @@
 				</div>
 				@if(Auth::user()->rol == 1 || Auth::user()->rol == 2 || Auth::user()->rol == 3)
 				@if(Auth::user()->rol != 3)
-				<div class="col-md-6">
+				<div class="col-md-12">
 			    	<div class="box box-danger">
 				      <div class="box-header with-border">
 				        <h3 class="box-title"><i class="fa fa-users"></i> Usuarios</h3>
@@ -137,13 +173,13 @@
 					</div>
 				</div>
 				@endif
-				<div class="col-md-6">
+				<div class="col-md-12">
 			    	<div class="box box-danger">
 				      <div class="box-header with-border">
 				        <h3 class="box-title"><i class="fa fa-users"></i> Clientes</h3>
 				        <span class="pull-right">
-									<a href="{{ route('clientes.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo Cliente</a>
-								</span>
+							<a href="{{ route('clientes.create') }}" class="btn btn-flat btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo Cliente</a>
+						</span>
 				      </div>
 		      			<div class="box-body">
 							<table class="table data-table table-bordered table-hover table-condensed">
@@ -177,6 +213,16 @@
 				</div>
 				@endif
 			</div>
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-body">
+			        <h3 id="text_response" class="text-center"></h3>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 		{{-- @endif --}}
 	@endif
 @else
@@ -196,15 +242,25 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$(".data-table").on('click','.btn_invitar', function () {
+		$(".data-table").on('click','.btn_sendPDF', function () {
+			$('#exampleModal').modal('toggle');
+			$("#text_response").text("Enviando...");
+			let acta = $(this).data('acta');
+				id =  $(this).data('id'); //id del acta
 			$.ajax({
+				headers: {
+                'X-CSRF-TOKEN': $('input[name="_token"]').val()
+           			  },
 				url: '{{route('acta.sendMail')}}',
-				type: 'default GET (Other values: POST)',
-				dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-				data: {param1: 'value1'},
+				type: 'POST',
+				dataType: 'JSON',
+				data: {id: id,acta: acta},
 			})
-			.done(function() {
-				console.log("success");
+			.done(function(data) {
+				$('#exampleModal').modal('hide');
+				Swal.fire({
+		            title: data.msg,
+		          })
 			})
 			.fail(function() {
 				console.log("error");

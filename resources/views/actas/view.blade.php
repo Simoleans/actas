@@ -38,18 +38,8 @@
 
       </div>
 
-      <div class="col-md-4">
-        <h4>Fotos</h4>
-        <div class="row">
-          @forelse($acta->fotos($acta->codigo) as $f)
-            <div class="col-md-5"><img src="{{asset('img/actas/fotos/'.$f->foto)}}" class="img-responsive"></div>
-          @empty
-          <h3>Sin foto</h3>
-          @endforelse
-        </div>
-      </div>
 
-      <div class="col-md-2">
+      <div class="col-md-4 col-md-offset-3">
         <p>&nbsp;</p>
         <p><b>Logo De la empresa</b></p>
         <img src="{{asset('img/empresas/'.$acta->empresa->logo)}}" class="img-responsive">
@@ -163,6 +153,21 @@
        </table>
       </div>
     </div>
+
+     <div class="row">
+      <div class="col-md-12">
+        <h2 class="page-header" style="margin-top:0!important">
+          <i class="fa fa-eye" aria-hidden="true"></i>
+          Fotos
+          <span class="clearfix"></span>
+        </h2>
+      </div>
+       @forelse($acta->fotos($acta->codigo) as $f)
+          <div class="col-md-4"><img src="{{asset('img/actas/fotos/'.$f->foto)}}" class="img-responsive"></div>
+       @empty
+          <h3>Sin foto</h3>
+       @endforelse
+    </div>
   </section>
 
   <div id="delModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="delModalLabel">
@@ -228,7 +233,6 @@
         Swal.fire({
             title: data.msg,
           })
-        console.log("success");
       })
       .fail(function(error) {
         alert(error.responseJSON.msg)

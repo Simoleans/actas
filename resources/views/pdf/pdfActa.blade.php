@@ -43,12 +43,12 @@
           <h4 class="text-left">Acciones</h4>
           <table class="table table-bordered table-condensed" border="1">
             <tr>
-              <td class="text-center" height="2" width="100" style="background-color: #A4A4A4; color:#000000">#</td>
+              <td class="text-center" height="2" width="30" style="background-color: #A4A4A4; color:#000000">#</td>
               <td class="text-center" height="2" width="100"  style="background-color: #A4A4A4; color:#000000">Nombre</td>
             </tr>
             @foreach($detalles as $p)
                <tr>
-                <td class="text-center" height="2" width="100">{{$loop->index+1}}</td>
+                <td class="text-center" height="2" width="30">{{$loop->index+1}}</td>
                 <td class="text-center" height="2" width="100" >{{strtoupper($p->accion)}}</td>
               </tr>
             @endforeach
@@ -60,12 +60,12 @@
           <h4 class="text-left">Observaciones</h4>
           <table class="table table-bordered table-condensed" border="1">
             <tr>
-              <td class="text-center" height="2" width="100" style="background-color: #A4A4A4; color:#000000">#</td>
+              <td class="text-center" height="2" width="30" style="background-color: #A4A4A4; color:#000000">#</td>
               <td class="text-center" height="2" width="100"  style="background-color: #A4A4A4; color:#000000">Observación</td>
             </tr>
             @foreach($orden->observaciones($orden->codigo) as $p)
                <tr>
-                <td class="text-center" height="2" width="100">{{$loop->index+1}}</td>
+                <td class="text-center" height="2" width="30">{{$loop->index+1}}</td>
                 <td class="text-center" height="2" width="100" >{{strtoupper($p->observacion)}}</td>
               </tr>
             @endforeach
