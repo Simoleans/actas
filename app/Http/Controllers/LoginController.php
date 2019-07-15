@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actas;
 use App\Clientes;
+use App\Participantes;
 use App\Empresas;
 use App\User;
 use Illuminate\Http\Request;
@@ -24,6 +25,8 @@ class LoginController extends Controller
                 $actas    = Actas::where('id_user', $user->id)->get();
                 $clientes = Clientes::where('id_user', $user->id)->get();
                 $users    = [];
+                $participantes = Participantes::whereNull('firma')->where('id_user',Auth::user()->id)->groupBy('id_acta')->get(); // actas sin firmar, las traigo desde participantes
+
             } else {
                 $empresasE = Auth::user()->empresaExist(Auth::user()->id);
 
@@ -43,10 +46,15 @@ class LoginController extends Controller
                     $users = User::where('id_user_admin', $user->id_user_admin)->get();
                 }
 
+                $participantes = Participantes::whereNull('firma')->where('id_empresa',$empresa->id)->groupBy('id_acta')->get(); // actas sin firmar, las traigo desde participantes
+
+                //// Actas sin firmar ///
+
+
             }
         }
 
-        return view('dashboard', ['actas' => $actas, 'clientes' => $clientes, 'users' => $users, 'empresaExist' => true]);
+        return view('dashboard', ['actas' => $actas, 'clientes' => $clientes, 'users' => $users, 'empresaExist' => true,'participantes' => $participantes]);
     }
 
     public function login(Request $request)

@@ -148,12 +148,12 @@
 	    .done(function(data) {
 	      if (data.status) {
 	        var table = "<tr class='data-cliente'>"+
+	        		"<td style='display:none' class='cliente-plan'>"+$("#plan_id").val()+"</td>"+
 	        	  "<td style='display:none' class='cliente-id'>"+data.id+"</td>"+
 	              "<td class='cliente-nombre'>"+$("#nombre").val()+"</td>"+
 	              "<td class='cliente-apellido'>"+$("#apellido").val()+"</td>"+
 	              "<td class='cliente-email'>"+$("#email").val()+"</td>"+
 	              "<td class='cliente-rut'>"+$("#rut").val()+"</td>"+
-	               "<td class='cliente-plan' style='display:none'>"+$("#plan").val()+"</td>"+
 	              "<td>"+
 	                "<a class='btn btn-flat btn-success btn-sm add-row' title='Add'><i class='fa fa-plus'></i></a>"+
 	              "</td>"+

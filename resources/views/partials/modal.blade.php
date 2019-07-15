@@ -32,12 +32,12 @@
                       <tbody id="tbody-clientes" class="text-center">
                         @foreach($clientes as $d)
                           <tr class="data-cliente">
+                            <td class="cliente-plan" style="display: none;">{{$d->id_plan}}</td>
                             <td class="cliente-id" style="display: none;">{{$d->id}}</td>
                             <td class="cliente-nombre">{{$d->nombre}}</td>
                             <td class="cliente-apellido">{{$d->apellido}}</td>
                             <td class="cliente-rut">{{$d->rut}}</td>
                             <td class="cliente-email">{{$d->email}}</td>
-                            <td class="cliente-plan" style="display: none;">{{$d->plan->id}}</td>
                             <td>
                               <a class="btn btn-flat btn-success btn-sm add-row" title="Add"><i class="fa fa-plus"></i></a>
                               {{-- <a href="{{route('ordencompra.edit',[$d->id])}}" class="btn btn-flat btn-success btn-sm" title="Editar"><i class="fa fa-edit"></i></a>  --}}

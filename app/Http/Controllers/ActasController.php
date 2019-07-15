@@ -52,6 +52,8 @@ class ActasController extends Controller
             $actas    = Actas::where('id_user', Auth::user()->id)->get();
         }
 
+        //dd($clientes);
+
         return view('actas.index', ['actas' => $actas, 'clientes' => $clientes, 'planes' => $planes, 'empresa' => $empresa]);
     }
 
@@ -314,12 +316,29 @@ class ActasController extends Controller
         }
     }
 
+
     public function invitacion(Request $request)
     {
         //dd($request->all());
 
         $cliente = Clientes::findOrfail($request->id);
         //dd($cliente->email);
+
+        \Mail::to($cliente->email)
+            ->send(new ActasMail($request->id, $request->acta, $request->id_acta));
+
+        if (\Mail::failures()) {
+            return response()->json(['msg' => 'No se ha enviado el correo :(', 'status' => false], 422);
+        }
+
+        return response()->json(['msg' => 'Se envio el correo correctamente', 'status' => true], 200);
+    }
+
+    public function sendPDF(Request $request)
+    {
+        $cliente = Clientes::findOrfail($request->id);
+        
+        $ruta = route('actas.pdf',['id' => $request->id_acta]);
 
         \Mail::to($cliente->email)
             ->send(new ActasMail($request->id, $request->acta, $request->id_acta));

@@ -55,7 +55,7 @@
            <div class="col-md-6">
               <div class="form-group {{ $errors->has('id_plan')?'has-error':'' }}">
                 <label class="control-label" for="id_plan">Planes: *</label>
-                <select class="form-control" name="id_plan" required="">
+                <select class="form-control" name="id_plan" required="" id="plan_id">
                   <option value="">Seleccione...</option>
                   @foreach($planes as $p)
                     <option value="{{$p->id}}">{{$p->nombre}}</option>

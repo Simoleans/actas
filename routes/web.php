@@ -43,6 +43,7 @@ Route::get('actas/pdf/{id}', 'ActasController@pdf')->name('actas.pdf');
 Route::get('actas/firma/{id}/{acta_id}', 'ActasController@firma')->name('actas.firma');
 Route::post('/actas/signature', 'ActasController@firmaSend')->name('actas.send');
 Route::post('/invitacion', 'ActasController@invitacion')->name('actas.invitacion');
+Route::post('/recordatorio','ActasController@sendPDF')->name('acta.sendMail');
 
 Route::group(['middleware' => 'auth'], function () {
     //middleware auth
@@ -81,21 +82,5 @@ Route::group(['middleware' => 'auth'], function () {
     /* Planes */
     Route::resource('/planes', 'PlanesController');
 
-    /* Guia Despacho */
-    Route::resource('/guiadespacho', 'GuiaDespachoController');
-    Route::post('/guiaDespacho/empresa', 'GuiaDespachoController@empresa')->name('guiadespacho.empresa');
-    Route::get('/guiad/pdf/{id}', 'GuiaDespachoController@pdf')->name('guiadespacho.pdf');
-    Route::post('/mail/guiad', 'GuiaDespachoController@sendEmail')->name('guiadespacho.mail');
-
-    /* Guia Entrega*/
-    Route::resource('/guiaentrega', 'GuiaEntregaController');
-    Route::post('/guiaEnrega/empresa', 'GuiaEntregaController@empresa')->name('guiaentrega.empresa');
-    Route::get('/guiae/pdf/{id}', 'GuiaEntregaController@pdf')->name('guiaentrega.pdf');
-    Route::post('/mail/guiae', 'GuiaEntregaController@sendEmail')->name('guiaentrega.mail');
-
-    /* Recibo De Gastos */
-    Route::resource('/recibogastos', 'ReciboGastosController');
-    Route::get('/recibog/pdf/{id}', 'ReciboGastosController@pdf')->name('recibogastos.pdf');
-    Route::post('/mail/recibog', 'ReciboGastosController@sendEmail')->name('recibogastos.mail');
 
 });
