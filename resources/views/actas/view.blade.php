@@ -12,8 +12,7 @@
   <section>
     <a class="btn btn-flat btn-default" href="{{ route('actas.index') }}"><i class="fa fa-reply" aria-hidden="true"></i> Volver</a>
     <a class="btn btn-danger btn-flat" href="{{ route('actas.pdf',[$acta->id])}}"><i class="fa fa-print"></i></a>
-    {{-- <a class="btn btn-flat btn-success" href="{{ route('actas.edit',[$acta->id]) }}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</a> --}}
-    <!-- <button class="btn btn-flat btn-danger" data-toggle="modal" data-target="#delModal"><i class="fa fa-times" aria-hidden="true"></i> Eliminar</button> -->
+    <a href="#" data-id="{{$acta->id}}" data-acta="{{$acta->codigo}}" title="Enviar Acta" class="btn btn-flat btn-success btn_sendPDF" title="Editar"><i class="fa fa-envelope"></i> Enviar Acta</a>
   </section>
 
   <section class="perfil">
@@ -194,12 +193,54 @@
       </div>
     </div>
   </div>
+
+
+  <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h3 id="text_response" class="text-center"></h3>
+          </div>
+        </div>
+      </div>
+    </div>
 @endsection
 
 @section('script')
 
 <script type="text/javascript">
   $(document).ready(function() {
+
+      $(".btn_sendPDF").click(function(event) {
+        event.preventDefault();
+        $('#exampleModal').modal('toggle');
+        $("#text_response").text("Enviando...");
+        let acta = $(this).data('acta');
+          id =  $(this).data('id'); //id del acta
+        $.ajax({
+          headers: {
+                  'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                    },
+          url: '{{route('acta.sendMail')}}',
+          type: 'POST',
+          dataType: 'JSON',
+          data: {id: id,acta: acta},
+        })
+        .done(function(data) {
+          $('#exampleModal').modal('hide');
+          Swal.fire({
+                  title: data.msg,
+                })
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+        
+      });
 
     $(".data-table").on('click','.shareButton', function () {
 

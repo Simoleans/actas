@@ -2,6 +2,14 @@
 
 @section('content')
 
+<style type="text/css">
+  .box {
+  float: left;
+  width: 160px;
+  height: 110px;
+ /* margin: 0.5em;*/
+}
+</style>
    <div class="row">
       <div class="col-md-6">
         <img class="" src="{{asset('img/empresas'.'/'.$orden->empresa->logo)}}" height="170" width="190">
@@ -101,5 +109,18 @@
           </table>
         </div>
       </div> {{-- fin row --}}
+
+     <div class="row">
+        <div class="col-md-12">
+          <h4 class="text-left">Fotos</h4>
+        </div>
+         @forelse($orden->fotos($orden->codigo) as $f)
+            <div class="box">
+              <img src="{{asset('img/actas/fotos/'.$f->foto)}}"  height="105px">
+            </div>
+         @empty
+          <h3 class="text-center">Sin foto</h3>
+         @endforelse
+    </div>
 
 @endsection

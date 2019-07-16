@@ -94,6 +94,7 @@
 									<td>
 										<a class="btn btn-primary btn-flat btn-sm" href="{{ route('actas.show',[$d->id])}}"><i class="fa fa-search"></i></a>
 										 <a class="btn btn-danger btn-flat btn-sm" href="{{ route('actas.pdf',[$d->id])}}"><i class="fa fa-print"></i></a>
+										 <a href="#" data-id="{{$d->id}}" data-acta="{{$d->codigo}}" title="Enviar Acta" class="btn btn-flat btn-success btn-sm btn_sendPDF" title="Editar"><i class="fa fa-envelope"></i></a>
 									</td>
 								</tr>
 							@endforeach
@@ -103,4 +104,51 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-body">
+			        <h3 id="text_response" class="text-center"></h3>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+@endsection
+
+@section('script')
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".data-table").on('click','.btn_sendPDF', function () {
+			$('#exampleModal').modal('toggle');
+			$("#text_response").text("Enviando...");
+			let acta = $(this).data('acta');
+				id =  $(this).data('id'); //id del acta
+			$.ajax({
+				headers: {
+                'X-CSRF-TOKEN': $('input[name="_token"]').val()
+           			  },
+				url: '{{route('acta.sendMail')}}',
+				type: 'POST',
+				dataType: 'JSON',
+				data: {id: id,acta: acta},
+			})
+			.done(function(data) {
+				$('#exampleModal').modal('hide');
+				Swal.fire({
+		            title: data.msg,
+		          })
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+			
+		});
+	});
+</script>
 @endsection
