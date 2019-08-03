@@ -59,7 +59,7 @@
 							<div class="form-group {{ $errors->has('rut')?'has-error':'' }}">
 								<label class="control-label" for="rut">RUT: *</label>
 
-								  <input type="text" id="rut" name="rut" required  placeholder="Ingrese RUT" class="form-control rut" maxlength="12">
+								  <input type="tel" id="rut" name="rut" required  placeholder="Ingrese RUT" class="form-control rut" maxlength="12">
 							</div>
 						</div>
 

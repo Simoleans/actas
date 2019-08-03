@@ -89,7 +89,7 @@
 
              </td>
              <td class="hidden-lg">
-               <button type="button"  class="btn btn-sm btn-warning shareButton"><i class="fa fa-share-alt-square" aria-hidden="true"></i></button>
+               <button type="button"  class="btn btn-sm btn-warning shareButton" data-url="{{route('actas.firma',['id' => $p->id,'acta_id'=>$acta->id])}}"><i class="fa fa-share-alt-square" aria-hidden="true"></i></button>
              </td>
            </tr>
           @endforeach
@@ -244,10 +244,12 @@
 
     $(".data-table").on('click','.shareButton', function () {
 
+      var DataUrl = $(this).data('url');
+
       /* Mostramos la opcion nativa de compartir si se navega desde Android */
       if (navigator.userAgent.match(/Android/i)) {
         /* Use the Web Share API from Chrome 61+ */
-        navigator.share({title: 'Example Page', url: 'https://viktormorales.com'}).then(console.log('Share successful'));
+        navigator.share({title: 'Acta', url: DataUrl}).then(console.log('Share successful'));
       }
       /* Caso contrario mostramos mensaje de alerta */
       else { alert('Para activar la opcion nativa de compartir debes utilizar Chrome en Android') }
