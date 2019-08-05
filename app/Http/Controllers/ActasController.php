@@ -276,13 +276,15 @@ class ActasController extends Controller
     {
         //$acta = Actas::findOrfail($id);
 
-        $participante = Participantes::where('id', $id)->first();
+                //$participante = Participantes::where('id_cliente',$id)->first();
+        $participante = Participantes::findOrfail($id);
+
 
         $acta = Actas::where('id', $acta_id)->first();
 
         $acta_firma = Participantes::where('id', $id)->where('id_acta', $acta->id)->whereNull('firma')->exists();
 
-        //dd($participante);
+        //dd($participante->clientes->nombre);
 
         return view('actas.firma', ['acta' => $acta, 'participante' => $participante, 'firma' => $acta_firma]);
     }
@@ -322,10 +324,10 @@ class ActasController extends Controller
     {
         //dd($request->all());
 
-        $cliente = Clientes::findOrfail($request->id);
-        //dd($cliente->email);
+        $participantes = Participantes::findOrfail($request->id);
+        //dd($participantes->email);
 
-        \Mail::to($cliente->email)
+        \Mail::to($participantes->clientes->email)
             ->send(new ActasMail($request->id, $request->acta, $request->id_acta));
 
         if (\Mail::failures()) {

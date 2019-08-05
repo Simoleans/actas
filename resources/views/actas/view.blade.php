@@ -75,7 +75,7 @@
              <td class="text-center">{{$p->clientes->email}}</td>
              <td class="text-center">
                 @if($p->firma == NULL)
-                 <a  data-id="{{$p->clientes->id}}" class="btn btn-flat btn-success btn_invitar">Invitar</a>
+                 <a  data-id="{{$p->id}}" class="btn btn-flat btn-success btn_invitar">Invitar</a>
                 @else
                  <h3 class="text-center">Autorizado</h3>
                 @endif
