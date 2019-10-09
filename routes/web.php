@@ -26,6 +26,8 @@ Route::post('/pass/resetsend', 'ResetController@reset')->name('reset.send');
 Route::get('/pass/reset/{token}', 'ResetController@change')->name('reset.url');
 Route::post('/pass/reset', 'ResetController@reset_password')->name('password.update');
 
+Route::get('actas/sign/{id}/acta/{acta_id}', 'ActasController@signature')->name('actas.sign');
+
 Route::post('/users/invitation', 'UserController@store_invitacion')->name('users.storeInivitation');
 
 Route::get('/register/partner/{id}', 'UserController@invitation')->name('users.invitar');
@@ -76,7 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* actas*/
     Route::resource('/actas', 'ActasController');
-    Route::get('actas/sign/{id}/acta/{acta_id}', 'ActasController@signature')->name('actas.sign');
+    
     Route::post('/serachAc', 'ActasController@search')->name('search.actas');
 
     /* Planes */

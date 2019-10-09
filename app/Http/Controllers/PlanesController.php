@@ -127,9 +127,10 @@ class PlanesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $plan = new Planes;
         $plan->fill($request->all());
 
-        if ($empresa->save()) {
+        if ($plan->save()) {
             return redirect("planes")->with([
                 'flash_message' => 'Plan modificado correctamente.',
                 'flash_class'   => 'alert-success',

@@ -88,7 +88,7 @@
 								<div class="col-md-12">
 									<label class="control-label" for="razon_social">Fotos: *</label>
 									<input id="multimedia" name="foto[]" type="file" class="file" multiple
-		    						data-show-upload="false" data-show-caption="false" >
+		    						data-show-upload="false" data-show-caption="false" accept="image/*" capture="camera">
 								</div>
 							</div>
 						</div>

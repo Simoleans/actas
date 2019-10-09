@@ -17,7 +17,8 @@
                   </span>
                     </div>
                       <div class="box-body">
-                    <table class="table table-bordered table-hover table-condensed nowrap" style="width:100%">
+                  <div class="table-responsive">
+                    <table class="table data-table table-bordered table-hover table-condensed nowrap display" cellspacing="0" width="100%">
                       <thead>
                         <tr>
                           <th class="text-center" style="display: none;">id</th>
@@ -46,7 +47,8 @@
                         @endforeach
                       </tbody>
                     </table>
-                  </div>
+                  </div><!-- box body fin -->
+                </div> <!-- fin tabla repsonsive -->
               </div>
             </div>
       </div>

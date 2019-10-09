@@ -278,7 +278,7 @@
           })
       })
       .fail(function(error) {
-        alert(error.responseJSON.msg)
+        //alert(error.responseJSON.msg)
         console.log("error");
       })
       .always(function() {
@@ -290,37 +290,37 @@
     shareButton = document.getElementById("shareButton");
     /* Capturamos el evento CLICK */
 
-    $(".btn_invitar").click(function(event) {
-      event.preventDefault();
+    // $(".btn_invitar").click(function(event) {
+    //   event.preventDefault();
 
-      var id = $(this).data('id');
+    //   var id = $(this).data('id');
 
-      var acta ='{{$acta->codigo}}';
+    //   var acta ='{{$acta->codigo}}';
 
-      var id_acta = '{{$acta->id}}'
+    //   var id_acta = '{{$acta->id}}'
 
-      $.ajax({
-        headers: {
-                'X-CSRF-TOKEN': $('input[name="_token"]').val()
-             },
-        url: '{{route('actas.invitacion')}}',
-        type: 'POST',
-        dataType: 'JSON',
-        data: {id: id,acta: acta,id_acta: id_acta},
-      })
-      .done(function(data) {
-        alert(data.msg)
-        console.log("success");
-      })
-      .fail(function(error) {
-        alert(error.responseJSON.msg)
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
+    //   $.ajax({
+    //     headers: {
+    //             'X-CSRF-TOKEN': $('input[name="_token"]').val()
+    //          },
+    //     url: '{{route('actas.invitacion')}}',
+    //     type: 'POST',
+    //     dataType: 'JSON',
+    //     data: {id: id,acta: acta,id_acta: id_acta},
+    //   })
+    //   .done(function(data) {
+    //     alert(data.msg)
+    //     console.log("success");
+    //   })
+    //   .fail(function(error) {
+    //     alert(error.responseJSON.msg)
+    //     console.log("error");
+    //   })
+    //   .always(function() {
+    //     console.log("complete");
+    //   });
 
-    });
+    // });
 
 
 
